@@ -1,6 +1,14 @@
 // A0 Poster: oauth2-passkey
 // Compile: typst compile poster.typ --root ../..
 
+// Color palette (CMYK for print)
+#let title-color  = cmyk(72%, 47%, 0%, 64%)   // dark navy
+#let line-color   = cmyk(72%, 47%, 0%, 64%)   // same as title
+#let box-fill     = cmyk(0%, 0%, 0%, 1%)      // near-white bg
+#let box-stroke   = cmyk(0%, 0%, 0%, 22%)     // light gray border
+#let code-fill    = cmyk(0%, 0%, 0%, 4%)      // slightly darker bg
+#let code-stroke  = cmyk(0%, 0%, 0%, 14%)     // code border
+
 #set page(
   width: 841mm,
   height: 1189mm,
@@ -18,8 +26,8 @@
     width: 100%,
     inset: 14pt,
     radius: 8pt,
-    stroke: 1pt + luma(200),
-    fill: luma(252),
+    stroke: 1pt + box-stroke,
+    fill: box-fill,
     [
       #text(size: 30pt, weight: "bold")[#title]
       #v(6pt)
@@ -33,8 +41,8 @@
     width: 100%,
     inset: 10pt,
     radius: 6pt,
-    fill: luma(245),
-    stroke: 1pt + luma(220),
+    fill: code-fill,
+    stroke: 1pt + code-stroke,
     text(font: "Noto Sans Mono", size: 15pt)[#code],
   )
 }
@@ -49,12 +57,12 @@
   align: horizon,
   [],
   align(center)[
-    #text(size: 64pt, weight: "bold", fill: rgb("#1a3a5c"))[oauth2-passkey]
+    #text(size: 64pt, weight: "bold", fill: title-color)[oauth2-passkey]
     #v(1pt)
     #text(size: 36pt)[Passwordless Authentication Library for Rust]
     #v(4pt)
     #text(size: 28pt)[
-      *\@ktaka* #h(20pt) | #h(20pt) Tokyo Rust Show & Tell #h(20pt) | #h(20pt) 2026/03/31
+      *Kimitoshi Takahashi (\@ktaka)* #h(20pt) | #h(20pt) Tokyo Rust Show & Tell #h(20pt) | #h(20pt) 2026/03/31
     ]
   ],
   [
@@ -79,7 +87,7 @@
 )
 
 #v(6pt)
-#line(length: 100%, stroke: 2pt + rgb("#1a3a5c"))
+#line(length: 100%, stroke: 2pt + line-color)
 #v(8pt)
 
 // ============================================================

@@ -94,7 +94,7 @@ style: |
 
 ### Passwordless Authentication Library for Rust
 
-**@ktaka** | Tokyo Rust Show & Tell | 2026/03/31
+**Kimitoshi Takahashi (@ktaka)** | Tokyo Rust Show & Tell | 2026/03/31
 
 `crates.io/crates/oauth2-passkey`
 `crates.io/crates/oauth2-passkey-axum`
@@ -531,7 +531,7 @@ GitHub
 
 ### Questions?
 
-**@ktaka** on X / GitHub
+**Kimitoshi Takahashi (@ktaka)** on X / GitHub
 
 ---
 
