@@ -5,51 +5,82 @@ paginate: true
 size: 16:9
 style: |
   section {
-    font-size: 26px;
-    justify-content: flex-start;
-    padding-top: 30px;
+    font-size: 24px;
+    display: flex !important;
+    flex-flow: column nowrap !important;
+    justify-content: flex-start !important;
+    padding: 40px 60px 25px 60px !important;
+  }
+  section:not(.lead) > h2:first-of-type {
+    margin-top: 0 !important;
+    margin-bottom: 0.15em;
   }
   section.lead {
-    justify-content: center;
-    padding-top: 0;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
+    padding: 0 !important;
   }
   code {
-    font-size: 20px;
+    font-size: 19px;
   }
   pre {
-    font-size: 18px;
-    margin: 0.3em 0;
+    font-size: 17px;
+    margin: 0.2em 0;
+    padding: 0.4em;
   }
   h1 {
-    font-size: 42px;
+    font-size: 40px;
+    margin-bottom: 0.2em;
   }
   h2 {
-    font-size: 34px;
-    margin-bottom: 0.3em;
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 0.15em;
   }
   h3 {
-    font-size: 26px;
-    margin: 0.2em 0;
-  }
-  table {
-    font-size: 22px;
-  }
-  ul, ol {
-    margin: 0.2em 0;
-  }
-  li {
+    font-size: 24px;
     margin: 0.1em 0;
   }
+  table {
+    font-size: 21px;
+  }
+  ul, ol {
+    margin: 0.1em 0;
+  }
+  li {
+    margin: 0.05em 0;
+    line-height: 1.4;
+  }
   p {
-    margin: 0.3em 0;
+    margin: 0.2em 0;
   }
   .columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1em;
+    gap: 0.8em;
+    align-content: start;
   }
   .columns pre {
-    font-size: 16px;
+    font-size: 15px;
+  }
+  .columns-60-40 {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 0.8em;
+    align-content: start;
+  }
+  .with-qr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5em;
+    align-items: center;
+  }
+  .columns-40-60 {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 0.8em;
+    align-content: start;
   }
 ---
 
@@ -72,9 +103,10 @@ style: |
 
 ---
 
-![bg right:25%](diagrams/qr-demo.svg)
-
 ## Demo
+
+<div class="with-qr">
+<div>
 
 - **Passkey Registration** - Create account with fingerprint/face
 - **Passkey Login** - Authenticate without password
@@ -83,17 +115,13 @@ style: |
 
 passkey-demo.ccmp.jp
 
----
+</div>
+<div>
 
-## Motivation
+![w:180](diagrams/qr-demo.svg)
 
-I wanted to build **exactly what you just saw** - and do it myself in Rust.
-
-- Existing Rust ecosystem:
-  - `webauthn-rs` - WebAuthn only
-  - Various OAuth2 crates - OAuth2 only
-  - **No combined solution** with session management
-- So I built one. Published on **crates.io**.
+</div>
+</div>
 
 ---
 
@@ -109,18 +137,72 @@ I wanted to build **exactly what you just saw** - and do it myself in Rust.
 All handled by a single library: `oauth2-passkey`
 
 ---
+## Motivation
+
+I wanted to build **exactly what you just saw** - and do it myself in Rust.
+
+- Existing Rust ecosystem:
+  - `webauthn-rs` - WebAuthn only
+  - Various OAuth2 crates - OAuth2 only
+  - **No combined solution** with session management
+- So I built one. Published on **crates.io**.
+
+---
+
+## Agenda
+
+1. **How OAuth2 & Passkey Work** - What happened behind the demo
+2. **Using the Library** - init, extractor, middleware
+3. **Storage & LazyLock** - Multi-DB support, why not Axum State
+4. **Integrating with Your App** - Linking your data to auth users
+5. **Wrap-up** - Summary & links
+
+---
 
 ## How OAuth2/OIDC Works
 
-![w:500 center](diagrams/oauth2-flow.svg)
+<div class="columns-60-40">
+<div>
+
+![w:650](diagrams/oauth2-flow.svg)
+
+</div>
+<div>
+
+**Page-redirect based auth:**
+1. User clicks "Login with Google"
+2. Redirect to Google consent screen
+3. Google returns authorization code
+4. Server exchanges code for **id_token** (JWT)
+5. Extract user info, create session
+6. Set session cookie
+
+</div>
+</div>
 
 ---
 
 ## How Passkey/WebAuthn Works
 
-![w:500 center](diagrams/passkey-flow.svg)
+<div class="columns-60-40">
+<div>
+
+![w:650](diagrams/passkey-flow.svg)
+
+</div>
+<div>
+
+**JavaScript-driven, no redirects:**
+1. Server generates **challenge**
+2. Browser calls `navigator.credentials.get()`
+3. Authenticator signs challenge with **private key**
+4. Server verifies with stored **public key**
+5. Create session, set cookie
 
 Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
+
+</div>
+</div>
 
 ---
 
@@ -413,6 +495,9 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 
 ## Summary
 
+<div class="columns-60-40">
+<div>
+
 | What | Details |
 |------|---------|
 | **Library** | `oauth2-passkey` + `oauth2-passkey-axum` |
@@ -426,6 +511,14 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 - **GitHub**: github.com/ktaka-ccmp/oauth2-passkey
 - **X**: @ktaka
 
+</div>
+<div>
+
+![w:180](diagrams/qr-github.svg)
+
+</div>
+</div>
+
 ---
 
 <!-- _class: lead -->
@@ -438,9 +531,10 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 
 ---
 
-![bg right:25%](diagrams/qr-contact.svg)
-
 ## About Me
+
+<div class="with-qr">
+<div>
 
 - **@ktaka** (X / GitHub)
 - Self-employed, reskilling in Rust
@@ -448,6 +542,14 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 - Third year writing Rust
 
 ktaka.blog.ccmp.jp/p/p.html
+
+</div>
+<div>
+
+![w:180](diagrams/qr-contact.svg)
+
+</div>
+</div>
 
 ---
 
@@ -676,13 +778,31 @@ Supporting 3 databases means handling these quirks per-backend.
 
 ## LazyLock Initialization Flow
 
-![w:800 center](diagrams/lazylock-flow.svg)
+<div class="columns-60-40">
+<div>
+
+![w:650](diagrams/lazylock-flow.svg)
+
+</div>
+<div>
+
+**Startup sequence:**
+1. App calls `init().await?`
+2. Forces all `LazyLock` globals to evaluate
+3. Reads env vars (`DB_TYPE`, `DB_URL`, ...)
+4. Creates appropriate connection pool
+5. Panics on invalid config (fail-fast)
+
+After init, any internal function can access `GENERIC_DATA_STORE` directly - no state parameter needed.
+
+</div>
+</div>
 
 ---
 
 ## Crate Structure (Detail)
 
-![w:900 center](diagrams/crate-structure.svg)
+![w:750 center](diagrams/crate-structure.svg)
 
 ---
 
