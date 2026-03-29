@@ -51,6 +51,7 @@
    - DPoP、Bearer Token 対応の展望
    - crates.io リンク
    - 自己紹介、連絡先
+ - 
 
 ## 発表構成案（5分）
 

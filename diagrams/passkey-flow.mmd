@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant C as Client (Browser)
+    participant A as Authenticator
+    participant S as Server
+
+    C->>S: 1. POST /auth/start
+    Note over S: Generate & store challenge
+    S-->>C: 2. Return challenge + options
+
+    C->>A: 3. navigator.credentials.get()
+    Note over A: Verify user (fingerprint/face)
+    Note over A: Sign challenge with private key
+    A-->>C: 4. Return signed assertion
+
+    C->>S: 5. POST /auth/verify (assertion)
+    Note over S: Verify signature with stored public key
+    Note over S: Create session
+    S-->>C: 6. Set session cookie
