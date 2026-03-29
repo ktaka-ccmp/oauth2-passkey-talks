@@ -73,8 +73,12 @@ style: |
   .with-qr {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 1.5em;
+    gap: 2em;
     align-items: center;
+    flex: 1;
+  }
+  .with-qr img {
+    display: block;
   }
   .columns-40-60 {
     display: grid;
@@ -113,12 +117,11 @@ style: |
 - **Google OAuth2 Login** - Sign in with Google
 - **Account Linking** - Connect OAuth2 + Passkey to same user
 
-passkey-demo.ccmp.jp
-
 </div>
-<div>
+<div style="text-align: center;">
 
-![w:180](diagrams/qr-demo.svg)
+![w:220](diagrams/qr-demo.svg)
+passkey-demo.ccmp.jp
 
 </div>
 </div>
@@ -495,7 +498,7 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 
 ## Summary
 
-<div class="columns-60-40">
+<div class="with-qr">
 <div>
 
 | What | Details |
@@ -512,9 +515,10 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 - **X**: @ktaka
 
 </div>
-<div>
+<div style="text-align: center;">
 
-![w:180](diagrams/qr-github.svg)
+![w:220](diagrams/qr-github.svg)
+GitHub
 
 </div>
 </div>
@@ -541,12 +545,11 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 - Building web authentication libraries
 - Third year writing Rust
 
-ktaka.blog.ccmp.jp/p/p.html
-
 </div>
-<div>
+<div style="text-align: center;">
 
-![w:180](diagrams/qr-contact.svg)
+![w:220](diagrams/qr-contact.svg)
+ktaka.blog.ccmp.jp/p/p.html
 
 </div>
 </div>
