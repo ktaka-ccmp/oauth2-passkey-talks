@@ -66,16 +66,6 @@ style: |
 
 ---
 
-## Agenda
-
-1. **Live Demo** - See it in action (4 min)
-2. **Motivation** - Why build this? (2 min)
-3. **How OAuth2 & Passkey Work** - Quick overview (2 min)
-4. **Architecture & Rust Patterns** - The interesting parts (5 min)
-5. **Wrap-up** - What's next & links (2 min)
-
----
-
 <!-- _class: lead -->
 
 # Live Demo
@@ -84,7 +74,7 @@ style: |
 
 ![bg right:25%](diagrams/qr-demo.svg)
 
-## Demo: What We'll See
+## Demo
 
 - **Passkey Registration** - Create account with fingerprint/face
 - **Passkey Login** - Authenticate without password
@@ -95,58 +85,38 @@ passkey-demo.ccmp.jp
 
 ---
 
-## Demo: What Just Happened?
+## Motivation
 
-| Flow | How it works |
-|------|-------------|
-| **Passkey** | Browser talks to authenticator (fingerprint/YubiKey), public key stored on server |
-| **OAuth2** | Redirect to Google, get authorization code, exchange for ID token |
-| **Account Linking** | Both auth methods map to same user record in DB |
+I wanted to build **exactly what you just saw** - and do it myself in Rust.
 
-All handled by the `oauth2-passkey` library.
-
----
-
-<!-- _class: lead -->
-
-# Motivation
-
----
-
-## Why Passwordless?
-
-- Passwords are the #1 attack vector (phishing, reuse, breaches)
-- Passkeys use **public-key cryptography** - nothing secret on the server
-- **Phishing-resistant** - bound to origin (domain)
-- Adoption growing fast: Google, Apple, Microsoft all support Passkeys
-- OAuth2/OIDC is the standard for "Sign in with Google/GitHub/..."
-
----
-
-## Why Build This Library?
-
-- Wanted **OAuth2 + Passkey** in a single, composable library
 - Existing Rust ecosystem:
-  - `webauthn-rs` - WebAuthn only, great but low-level
+  - `webauthn-rs` - WebAuthn only
   - Various OAuth2 crates - OAuth2 only
-  - **No combined solution** that handles both + session management
-- Goal: **Add auth to your Axum app in 3 lines**
+  - **No combined solution** with session management
+- So I built one. Published on **crates.io**.
 
 ---
 
-<!-- _class: lead -->
+## What the Demo Showed
 
-# How OAuth2 & Passkey Work
+| Feature | Details |
+|---------|---------|
+| **OAuth2/OIDC** | Google login (also works with FedCM) |
+| **Passkey** | Google Password Manager, Apple, Windows Hello, bitwarden, Proton Pass, YubiKey |
+| **Account Linking** | OAuth2 + Passkey mapped to same user |
+| **Session** | Cookie-based session with CSRF protection |
+
+All handled by a single library: `oauth2-passkey`
 
 ---
 
-## OAuth2/OIDC Flow (Google)
+## How OAuth2/OIDC Works
 
 ![w:500 center](diagrams/oauth2-flow.svg)
 
 ---
 
-## Passkey/WebAuthn Flow
+## How Passkey/WebAuthn Works
 
 ![w:500 center](diagrams/passkey-flow.svg)
 
@@ -156,21 +126,15 @@ Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
 
 <!-- _class: lead -->
 
-# Architecture & Rust Patterns
+# Using the Library
 
 ---
 
-## Crate Structure
-
-![w:900 center](diagrams/crate-structure.svg)
-
----
-
-## Usage: 3 Lines to Add Auth
+## Setup: init + merge
 
 ```rust
 use oauth2_passkey_axum::{
-    AuthUser, oauth2_passkey_full_router, init,
+    AuthUser, oauth2_passkey_full_router,
 };
 
 #[tokio::main]
@@ -182,12 +146,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .route("/", get(index))
         .merge(oauth2_passkey_full_router()); // 2. Merge router
 
+    // Auth endpoints are now at /o2p/*
     spawn_http_server(3001, app).await?;
     Ok(())
 }
 ```
-
-// That's it! Auth endpoints are now at /o2p/*
 
 ---
 
@@ -248,59 +211,59 @@ All prefixed with `is_authenticated`
 
 ---
 
-## Multi-DB with sqlx: DataStore Trait
+<!-- _class: lead -->
 
+# Storage & LazyLock Pattern
+
+---
+
+## Multi-DB Support with sqlx
+
+<div class="columns">
+<div>
+
+**DataStore trait:**
 ```rust
 pub(crate) trait DataStore: Send + Sync {
-    fn as_sqlite(&self)   -> Option<&Pool<Sqlite>>;
-    fn as_postgres(&self) -> Option<&Pool<Postgres>>;
-    fn as_mysql(&self)    -> Option<&Pool<MySql>>;
-}
-
-// Each backend implements the trait
-impl DataStore for SqliteDataStore {
-    fn as_sqlite(&self)   -> Option<&Pool<Sqlite>>   { Some(&self.pool) }
-    fn as_postgres(&self) -> Option<&Pool<Postgres>>  { None }
-    fn as_mysql(&self)    -> Option<&Pool<MySql>>     { None }
+    fn as_sqlite(&self)
+        -> Option<&Pool<Sqlite>>;
+    fn as_postgres(&self)
+        -> Option<&Pool<Postgres>>;
+    fn as_mysql(&self)
+        -> Option<&Pool<MySql>>;
 }
 ```
 
-One trait, three implementations - no runtime downcasting needed.
+One trait, three implementations.
+No runtime downcasting needed.
 
----
+</div>
+<div>
 
-## Multi-DB Dispatch Pattern
-
+**Dispatch pattern:**
 ```rust
-impl UserStore {
-    pub(crate) async fn init() -> Result<(), UserError> {
-        let store = GENERIC_DATA_STORE.lock().await;
+let store = GENERIC_DATA_STORE
+    .lock().await;
 
-        match (store.as_sqlite(), store.as_postgres(), store.as_mysql()) {
-            (Some(pool), _, _) => {
-                create_tables_sqlite(pool).await?;
-                validate_user_tables_sqlite(pool).await?;
-            }
-            (_, Some(pool), _) => {
-                create_tables_postgres(pool).await?;
-                validate_user_tables_postgres(pool).await?;
-            }
-            (_, _, Some(pool)) => {
-                create_tables_mysql(pool).await?;
-                validate_user_tables_mysql(pool).await?;
-            }
-            _ => return Err(UserError::Storage("Unsupported".into())),
-        }
-        Ok(())
-    }
+match (store.as_sqlite(),
+       store.as_postgres(),
+       store.as_mysql()) {
+    (Some(pool), _, _) =>
+        do_sqlite(pool).await?,
+    (_, Some(pool), _) =>
+        do_postgres(pool).await?,
+    (_, _, Some(pool)) =>
+        do_mysql(pool).await?,
+    _ => return Err(...),
 }
 ```
 
-Same code structure for all storage operations (users, OAuth2 accounts, passkey credentials).
+</div>
+</div>
 
 ---
 
-## Why Not Axum State? LazyLock Instead
+## Why LazyLock Instead of Axum State?
 
 <div class="columns">
 <div>
@@ -346,7 +309,7 @@ let store = GENERIC_DATA_STORE
 
 ---
 
-## LazyLock: Why It Works Here
+## LazyLock: Benefits & Trade-offs
 
 ### Benefits
 - **Zero boilerplate for users** - no `AppState` struct to create
@@ -359,48 +322,71 @@ let store = GENERIC_DATA_STORE
 - Implicit dependencies (function signatures don't show DB access)
 - Test isolation needs `#[serial]` (shared global state)
 
-### Why not Axum State?
 A library that requires users to manage `AppState` is harder to adopt.
 LazyLock keeps complexity **inside** the library.
 
 ---
 
-## LazyLock Initialization Flow
+<!-- _class: lead -->
 
-![w:800 center](diagrams/lazylock-flow.svg)
+# Integrating with Your App
 
 ---
 
-## Integrating with Your App's Database
+## Account Linking: Internal DB Structure
+
+```
+oauth2-passkey manages these tables:
+┌──────────┐     ┌──────────────────┐     ┌─────────────────────┐
+│  users   │────<│  oauth2_accounts │     │ passkey_credentials │
+│          │────<│                  │     │                     │
+│  id (PK) │     │  user_id (FK)    │     │ user_id (FK)        │
+│  account │     │  provider        │     │ credential_id       │
+│  label   │     │  provider_uid    │     │ public_key          │
+└──────────┘     └──────────────────┘     └─────────────────────┘
+       │
+       │ user_id
+       ▼
+┌──────────────┐  ┌──────────┐
+│user_profiles │  │  todos   │    <- Your app's tables
+│  (1:1)       │  │  (1:N)   │
+└──────────────┘  └──────────┘
+```
+
+One user can have multiple OAuth2 accounts AND multiple passkeys.
+
+---
+
+## Your App's Data: Link via AuthUser.id
 
 <div class="columns">
 <div>
 
-**oauth2-passkey manages auth:**
-- users, sessions, OAuth2 accounts, passkey credentials
+**Setup: two databases, one app**
+```rust
+// 1. oauth2-passkey init
+oauth2_passkey_axum::init().await?;
 
-**Your app manages its own data:**
-- Link via `AuthUser.id` as foreign key
-- Separate tables (even separate DB)
+// 2. App's own DB
+let pool = db::init_db().await?;
+let state = AppState { pool };
 
-```sql
--- App's table (demo-todo)
-CREATE TABLE todos (
-    id SERIAL PRIMARY KEY,
-    user_id TEXT NOT NULL, -- AuthUser.id
-    title TEXT NOT NULL,
-    completed BOOLEAN DEFAULT FALSE
-);
+// 3. Combine routes
+let app = Router::new()
+    .route("/", get(index))
+    .merge(handlers::router())
+    .with_state(state)
+    .merge(oauth2_passkey_full_router());
 ```
 
 </div>
 <div>
 
-**Pattern: user.id in handlers**
+**Handler: use user.id as FK**
 ```rust
 async fn create_todo(
     State(state): State<AppState>,
-    user: AuthUser, // from oauth2-passkey
+    user: AuthUser,
     Form(form): Form<TodoForm>,
 ) -> Result<Response, ...> {
     db::create_todo(
@@ -412,10 +398,62 @@ async fn create_todo(
 }
 ```
 
-See `demo-profile` (1:1) and `demo-todo` (1:N) for full examples.
+See `demo-profile` (1:1) and `demo-todo` (1:N).
 
 </div>
 </div>
+
+---
+
+<!-- _class: lead -->
+
+# Wrap-up
+
+---
+
+## Summary
+
+| What | Details |
+|------|---------|
+| **Library** | `oauth2-passkey` + `oauth2-passkey-axum` |
+| **What it does** | Passkey + OAuth2 auth for Axum apps |
+| **DB support** | SQLite, PostgreSQL, MySQL (via sqlx) |
+| **Key design** | LazyLock globals, DataStore trait dispatch |
+| **Integration** | `AuthUser.id` links your app data to auth |
+
+### Links
+- **crates.io**: `oauth2-passkey`, `oauth2-passkey-axum`
+- **GitHub**: github.com/ktaka-ccmp/oauth2-passkey
+- **X**: @ktaka
+
+---
+
+<!-- _class: lead -->
+
+# Thank You!
+
+### Questions?
+
+**@ktaka** on X / GitHub
+
+---
+
+![bg right:25%](diagrams/qr-contact.svg)
+
+## About Me
+
+- **@ktaka** (X / GitHub)
+- Self-employed, reskilling in Rust
+- Building web authentication libraries
+- Third year writing Rust
+
+ktaka.blog.ccmp.jp/p/p.html
+
+---
+
+<!-- _class: lead -->
+
+# Extra Slides
 
 ---
 
@@ -468,9 +506,6 @@ impl UserId {
         if !id.chars().all(|c| c.is_ascii_alphanumeric()
             || matches!(c, '-' | '_' | '.' | '@' | '+')) {
             return Err(SessionError::Validation("Invalid characters".into()));
-        }
-        if id.contains("..") || id.contains("--") {
-            return Err(SessionError::Validation("Dangerous sequences".into()));
         }
         Ok(UserId(id))
     }
@@ -639,6 +674,18 @@ Supporting 3 databases means handling these quirks per-backend.
 
 ---
 
+## LazyLock Initialization Flow
+
+![w:800 center](diagrams/lazylock-flow.svg)
+
+---
+
+## Crate Structure (Detail)
+
+![w:900 center](diagrams/crate-structure.svg)
+
+---
+
 ## From/Into: Clean Layer Boundaries
 
 <div class="columns">
@@ -684,12 +731,6 @@ Each layer has its own type. `From` impls make conversion seamless with `into()`
 
 ---
 
-<!-- _class: lead -->
-
-# What's Next
-
----
-
 ## Future Plans
 
 - **DPoP (Demonstration of Proof-of-Possession)**
@@ -701,43 +742,3 @@ Each layer has its own type. `From` impls make conversion seamless with `into()`
   - Browser-native identity UI (experimental, already partially implemented)
 - **More OAuth2 providers**
   - GitHub, Apple, Microsoft, etc.
-
----
-
-## Summary
-
-| What | Details |
-|------|---------|
-| **Library** | `oauth2-passkey` + `oauth2-passkey-axum` |
-| **What it does** | Passkey + OAuth2 auth for Axum apps |
-| **DB support** | SQLite, PostgreSQL, MySQL (via sqlx) |
-| **Design** | Layered (core + framework), LazyLock globals |
-| **Rust patterns** | Newtypes, thiserror hierarchy, From/Into, DataStore trait dispatch |
-
-### Links
-- **crates.io**: `oauth2-passkey`, `oauth2-passkey-axum`
-- **GitHub**: github.com/ktaka-ccmp/oauth2-passkey
-- **X**: @ktaka
-
----
-
-<!-- _class: lead -->
-
-# Thank You!
-
-### Questions?
-
-**@ktaka** on X / GitHub
-
----
-
-![bg right:25%](diagrams/qr-contact.svg)
-
-## About Me
-
-- **@ktaka** (X / GitHub)
-- Self-employed, reskilling in Rust
-- Building web authentication libraries
-- Third year writing Rust
-
-ktaka.blog.ccmp.jp/p/p.html
