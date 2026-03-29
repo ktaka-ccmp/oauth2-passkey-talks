@@ -43,23 +43,44 @@
 // HEADER
 // ============================================================
 
-#align(center)[
-  #text(size: 64pt, weight: "bold", fill: rgb("#1a3a5c"))[oauth2-passkey]
-  #v(4pt)
-  #text(size: 36pt)[Passwordless Authentication Library for Rust]
-  #v(4pt)
-  #text(size: 28pt)[
-    *\@ktaka* #h(20pt) | #h(20pt) Tokyo Rust Show & Tell #h(20pt) | #h(20pt) 2026/03/31
-  ]
-  #v(2pt)
-  #text(size: 24pt)[
-    `crates.io/crates/oauth2-passkey` #h(30pt) `crates.io/crates/oauth2-passkey-axum`
-  ]
-]
+#grid(
+  columns: (1fr, 3fr, 1fr),
+  gutter: 15pt,
+  align: horizon,
+  [],
+  align(center)[
+    #text(size: 64pt, weight: "bold", fill: rgb("#1a3a5c"))[oauth2-passkey]
+    #v(1pt)
+    #text(size: 36pt)[Passwordless Authentication Library for Rust]
+    #v(4pt)
+    #text(size: 28pt)[
+      *\@ktaka* #h(20pt) | #h(20pt) Tokyo Rust Show & Tell #h(20pt) | #h(20pt) 2026/03/31
+    ]
+  ],
+  [
+    #grid(
+      columns: 3,
+      gutter: 8pt,
+      align: center,
+      [
+        #image("../../shared/qr-demo.svg", width: 45mm)
+        #text(size: 16pt)[Demo]
+      ],
+      [
+        #image("../../shared/qr-github.svg", width: 45mm)
+        #text(size: 16pt)[GitHub]
+      ],
+      [
+        #image("../../shared/qr-contact.svg", width: 45mm)
+        #text(size: 16pt)[Author]
+      ],
+    )
+  ],
+)
 
-#v(10pt)
+#v(6pt)
 #line(length: 100%, stroke: 2pt + rgb("#1a3a5c"))
-#v(10pt)
+#v(8pt)
 
 // ============================================================
 // BODY - 2 column layout
@@ -245,34 +266,10 @@
     #v(8pt)
 
     #section-box("Links")[
-      #grid(
-        columns: (1fr, auto, auto, auto),
-        gutter: 12pt,
-        align: horizon,
-        [
-          - *crates.io:* `oauth2-passkey`, `oauth2-passkey-axum`
-          - *GitHub:* github.com/ktaka-ccmp/oauth2-passkey
-          - *X:* \@ktaka
-        ],
-        [
-          #align(center)[
-            #image("../../shared/qr-demo.svg", width: 40mm)
-            #text(size: 16pt)[Demo]
-          ]
-        ],
-        [
-          #align(center)[
-            #image("../../shared/qr-github.svg", width: 40mm)
-            #text(size: 16pt)[GitHub]
-          ]
-        ],
-        [
-          #align(center)[
-            #image("../../shared/qr-contact.svg", width: 40mm)
-            #text(size: 16pt)[Contact]
-          ]
-        ],
-      )
+      - *crates.io:* `oauth2-passkey`, `oauth2-passkey-axum`
+      - *GitHub:* github.com/ktaka-ccmp/oauth2-passkey
+      - *Demo:* passkey-demo.ccmp.jp
+      - *X:* \@ktaka
     ]
   ],
 )
