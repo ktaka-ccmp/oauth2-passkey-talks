@@ -120,7 +120,7 @@ style: |
 </div>
 <div style="text-align: center;">
 
-![w:220](diagrams/qr-demo.svg)
+![w:220](../../shared/qr-demo.svg)
 passkey-demo.ccmp.jp
 
 </div>
@@ -167,7 +167,7 @@ I wanted to build **exactly what you just saw** - and do it myself in Rust.
 <div class="columns-60-40">
 <div>
 
-![w:650](diagrams/oauth2-flow.svg)
+![w:650](../diagrams/oauth2-flow.svg)
 
 </div>
 <div>
@@ -190,7 +190,7 @@ I wanted to build **exactly what you just saw** - and do it myself in Rust.
 <div class="columns-60-40">
 <div>
 
-![w:650](diagrams/passkey-flow.svg)
+![w:650](../diagrams/passkey-flow.svg)
 
 </div>
 <div>
@@ -517,7 +517,7 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 </div>
 <div style="text-align: center;">
 
-![w:220](diagrams/qr-github.svg)
+![w:220](../../shared/qr-github.svg)
 GitHub
 
 </div>
@@ -548,7 +548,7 @@ GitHub
 </div>
 <div style="text-align: center;">
 
-![w:220](diagrams/qr-contact.svg)
+![w:220](../../shared/qr-contact.svg)
 ktaka.blog.ccmp.jp/p/p.html
 
 </div>
@@ -784,7 +784,7 @@ Supporting 3 databases means handling these quirks per-backend.
 <div class="columns-60-40">
 <div>
 
-![w:650](diagrams/lazylock-flow.svg)
+![w:650](../diagrams/lazylock-flow.svg)
 
 </div>
 <div>
@@ -805,7 +805,7 @@ After init, any internal function can access `GENERIC_DATA_STORE` directly - no 
 
 ## Crate Structure (Detail)
 
-![w:750 center](diagrams/crate-structure.svg)
+![w:750 center](../diagrams/crate-structure.svg)
 
 ---
 
