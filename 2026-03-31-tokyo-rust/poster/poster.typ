@@ -44,7 +44,7 @@
     fill: code-fill,
     stroke: 1pt + code-stroke,
     {
-      set par(leading: 0.7em)
+      set par(leading: 0.8em)
       text(font: "Noto Sans Mono", size: 18pt)[#code]
     },
   )
@@ -102,12 +102,12 @@
     // Try it Yourself!
     #section-box("Try it Yourself!")[
       #grid(
-        columns: (7fr, 10fr, 10fr),
+        columns: (9fr, 10fr, 10fr),
         gutter: 20pt,
         align: horizon,
         [
           #align(center)[
-            #image("../../shared/qr-demo.svg", width: 80mm)
+            #image("../../shared/qr-demo.svg", width: 76mm)
             #text(size: 18pt, weight: "bold")[passkey-demo.ccmp.jp]
           ]
         ],
@@ -122,13 +122,13 @@
             #set list(spacing: 1em)
             - _Admin access granted to all_
             - _Privacy masked_
-            - _Ephemeral — data resets on restart._
+            - _Ephemeral: data resets on restart_
           ]
         ],
       )
     ]
 
-    #v(12pt)
+    #v(10pt)
 
     // p7: Flow: Google Login → Passkey Setup
     #section-box("Flow: Google Login → Passkey Setup")[
@@ -161,24 +161,24 @@
       One user can have multiple OAuth2 accounts and multiple Passkey credentials.
     ]
 
-    #v(12pt)
+    #v(10pt)
 
     // p8: How OAuth2/OIDC Works
     #section-box("How OAuth2/OIDC Works")[
       #align(center)[
-        #image("../diagrams/oauth2-flow.svg", width: 92%)
+        #image("../diagrams/oauth2-flow.svg", width: 96%)
       ]
       _Page-redirect: Google → code → id\_token → session_
     ]
 
-    #v(12pt)
+    #v(10pt)
 
     // p9: How Passkey/WebAuthn Works
     #section-box("How Passkey/WebAuthn Works")[
       #align(center)[
-        #image("../diagrams/passkey-flow.svg", width: 92%)
+        #image("../diagrams/passkey-flow.svg", width: 96%)
       ]
-      _JS-driven: challenge → sign → verify → session_
+      _JavaScript-driven: challenge → sign → verify → session_
     ]
   ],
 
@@ -214,7 +214,7 @@
       ]
     ]
 
-    #v(12pt)
+    #v(10pt)
 
     // p13-14: Page Protection
     #section-box("Page Protection")[
@@ -248,42 +248,59 @@
           ]
         ],
         [
-          *`is_authenticated_{Variant}`*
+          #v(4pt)
+          #text(weight: "bold")[`is_authenticated_{Variant}`]
+          #v(6pt)
           #table(
             columns: (auto, auto, auto, auto),
             inset: 7pt,
             align: left,
             table.header([*Variant*], [*Error*], [*DB?*], [*Ext.*]),
             [`401`], [401], [No], [`CsrfToken`],
-            [`redirect`], [Login], [No], [`CsrfToken`],
             [`user_401`], [401], [Yes], [`AuthUser`],
+            [`redirect`], [Login], [No], [`CsrfToken`],
             [`user_redirect`], [Login], [Yes], [`AuthUser`],
           )
         ],
       )
     ]
 
-    #v(12pt)
+    #v(10pt)
 
     // p16-18: Storage & LazyLock
     #section-box("Storage & LazyLock Pattern")[
       *Switch DB by changing `.env` only — no code changes:*
-      #code-block[
-        ```
-        # Data store (pick one):
-        GENERIC_DATA_STORE_TYPE=sqlite
-        GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
-        # GENERIC_DATA_STORE_TYPE=postgres
-        # GENERIC_DATA_STORE_URL='postgres://user:pass@localhost/db'
-        # GENERIC_DATA_STORE_TYPE=mysql
-        # GENERIC_DATA_STORE_URL='mysql://user:pass@localhost/db'
+      #grid(
+        columns: (11fr, 7fr),
+        gutter: 10pt,
+        [
+          #code-block[
+            ```
+            # Data store (pick one):
+            GENERIC_DATA_STORE_TYPE=sqlite
+            GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
 
-        # Cache store (pick one):
-        GENERIC_CACHE_STORE_TYPE=memory
-        # GENERIC_CACHE_STORE_TYPE=redis
-        # GENERIC_CACHE_STORE_URL='redis://localhost:6379'
-        ```
-      ]
+            GENERIC_DATA_STORE_TYPE=postgres
+            GENERIC_DATA_STORE_URL='postgres://id:pw@host:5432/db'
+
+            GENERIC_DATA_STORE_TYPE=mysql
+            GENERIC_DATA_STORE_URL='mysql://id:pw@host:3306/db'
+            ```
+          ]
+        ],
+        [
+          #code-block[
+            ```
+            # Cache store (pick one):
+            GENERIC_CACHE_STORE_TYPE=memory
+
+            GENERIC_CACHE_STORE_TYPE=redis
+            GENERIC_CACHE_STORE_URL=
+                           'redis://host:6379'
+            ```
+          ]
+        ],
+      )
 
       SQLite/PostgreSQL/MySQL abstracted via `DataStore` trait, held in a `LazyLock`:
       #code-block[
@@ -368,6 +385,7 @@
       - *Setup*: `init().await?` + `merge(oauth2_passkey_full_router())` — 3 lines to add auth
       - *Protect*: `AuthUser` extractor or `is_authenticated_*` middleware (401/redirect, ±DB query)
       - *Storage*: SQLite/PostgreSQL/MySQL + Memory/Redis — switch via `.env`, no code changes
+      #v(18pt)
     ],
     [
       - *crates.io:* `oauth2-passkey`, `oauth2-passkey-axum`
