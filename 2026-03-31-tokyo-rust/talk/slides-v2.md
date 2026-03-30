@@ -211,6 +211,29 @@ Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
 
 ---
 
+## Account Linking: How It Works
+
+```
+┌──────────┐
+│  users   │  One user can have multiple auth methods:
+│  id (PK) │
+│  account │──────┬──────────────────────────────────┐
+│  label   │      │                                  │
+└──────────┘      ▼                                  ▼
+          ┌──────────────────┐          ┌─────────────────────┐
+          │  oauth2_accounts │          │ passkey_credentials │
+          │  user_id (FK)    │          │ user_id (FK)        │
+          │  provider        │          │ credential_id       │
+          │  provider_uid    │          │ public_key          │
+          └──────────────────┘          └─────────────────────┘
+          Google, GitHub, ...           Fingerprint, YubiKey, ...
+```
+
+Google OAuth2 creates user → Passkey Promotion links a passkey to the same user.
+One user can have multiple Google accounts and multiple passkey credentials.
+
+---
+
 <!-- _class: lead -->
 
 # Using the Library
@@ -460,31 +483,24 @@ LazyLock: simpler for both library users and library internals.
 
 ---
 
-## Account Linking: Internal DB Structure
+## Extending User Data in Your App
+
+The library manages `users` table. Your app adds its own tables, linked by `AuthUser.id`:
 
 ```
-oauth2-passkey manages these tables:
-┌──────────┐     ┌──────────────────┐     ┌─────────────────────┐
-│  users   │────<│  oauth2_accounts │     │ passkey_credentials │
-│          │────<│                  │     │                     │
-│  id (PK) │     │  user_id (FK)    │     │ user_id (FK)        │
-│  account │     │  provider        │     │ credential_id       │
-│  label   │     │  provider_uid    │     │ public_key          │
-└──────────┘     └──────────────────┘     └─────────────────────┘
-       │
-       │ user_id
-       ▼
-┌──────────────┐  ┌──────────┐
-│user_profiles │  │  todos   │    <- Your app's tables
-│  (1:1)       │  │  (1:N)   │
-└──────────────┘  └──────────┘
+Library manages:          Your app adds:
+┌──────────┐              ┌──────────────┐  ┌──────────┐
+│  users   │─────────────>│user_profiles │  │  todos   │
+│  id (PK) │  AuthUser.id │  user_id(FK) │  │ user_id  │
+│  account │              │  bio         │  │ title    │
+│  label   │              │  avatar_url  │  │ done     │
+└──────────┘              └──────────────┘  └──────────┘
+                            1:1 profile       1:N todos
 ```
-
-One user can have multiple OAuth2 accounts AND multiple passkeys.
 
 ---
 
-## Your App's Data: Link via AuthUser.id
+## Using AuthUser.id in Your Handlers
 
 <div class="columns">
 <div>
