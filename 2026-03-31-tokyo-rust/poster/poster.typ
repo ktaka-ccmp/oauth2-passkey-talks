@@ -16,10 +16,10 @@
 )
 
 #set text(font: "Noto Sans", size: 22pt)
-#show heading.where(level: 1): set text(size: 44pt, weight: "bold")
-#show heading.where(level: 2): set text(size: 32pt, weight: "bold")
-#show heading.where(level: 3): set text(size: 26pt, weight: "semibold")
-#show raw: set text(font: "Noto Sans Mono", size: 16pt)
+#show heading.where(level: 1): set text(size: 45pt, weight: "bold")
+#show heading.where(level: 2): set text(size: 33pt, weight: "bold")
+#show heading.where(level: 3): set text(size: 27pt, weight: "semibold")
+#show raw: set text(font: "Noto Sans Mono", size: 18pt)
 
 #let section-box(title, body) = {
   block(
@@ -29,7 +29,7 @@
     stroke: 1pt + box-stroke,
     fill: box-fill,
     [
-      #text(size: 30pt, weight: "bold")[#title]
+      #text(size: 31pt, weight: "bold")[#title]
       #v(6pt)
       #body
     ],
@@ -43,7 +43,10 @@
     radius: 6pt,
     fill: code-fill,
     stroke: 1pt + code-stroke,
-    text(font: "Noto Sans Mono", size: 15pt)[#code],
+    {
+      set par(leading: 0.7em)
+      text(font: "Noto Sans Mono", size: 18pt)[#code]
+    },
   )
 }
 
@@ -62,7 +65,7 @@
     #text(size: 36pt)[Passwordless Authentication Library for Rust]
     #v(4pt)
     #text(size: 28pt)[
-      *Kimitoshi Takahashi (\@ktaka)* #h(20pt) | #h(20pt) Tokyo Rust Show & Tell #h(20pt) | #h(20pt) 2026/03/31
+      *Kimitoshi Takahashi* #h(20pt) | #h(20pt) Tokyo Rust Show & Tell #h(20pt) | #h(20pt) 2026/03/31
     ]
   ],
   [
@@ -99,24 +102,28 @@
     // Try it Yourself!
     #section-box("Try it Yourself!")[
       #grid(
-        columns: (auto, 1fr),
+        columns: (7fr, 10fr, 10fr),
         gutter: 20pt,
         align: horizon,
         [
           #align(center)[
-            #image("../../shared/qr-demo.svg", width: 75mm)
+            #image("../../shared/qr-demo.svg", width: 80mm)
             #text(size: 18pt, weight: "bold")[passkey-demo.ccmp.jp]
           ]
         ],
         [
-          Try passwordless auth on your own device:
-
-          + *Login with Google*
-          + *Register your fingerprint* \ (Passkey Promotion — the library prompts you)
-          + *Logout → Login with fingerprint only* \ No redirect, instant
-          + *Check account page* \ See OAuth2 + Passkey linked to one account
-
-          _Works with: Google Password Manager, Apple, Windows Hello, YubiKey_
+          #align(center)[
+            #image("../../shared/passkey.demo.cropped.png", width: 80mm)
+            #text(size: 18pt, weight: "bold")[ Give it a try & tell me your thoughts!]
+          ]
+        ],
+        [
+          #[
+            #set list(spacing: 1em)
+            - _Admin access granted to all_
+            - _Privacy masked_
+            - _Ephemeral — data resets on restart._
+          ]
         ],
       )
     ]
@@ -159,13 +166,9 @@
     // p8: How OAuth2/OIDC Works
     #section-box("How OAuth2/OIDC Works")[
       #align(center)[
-        #image("../diagrams/oauth2-flow.svg", width: 85%)
+        #image("../diagrams/oauth2-flow.svg", width: 92%)
       ]
-      *Page-redirect based auth:*
-      + User clicks "Login with Google"
-      + Redirect to Google consent screen, get authorization code
-      + Server exchanges code for *id_token* (JWT)
-      + Extract user info, create session, set cookie
+      _Page-redirect: Google → code → id\_token → session_
     ]
 
     #v(12pt)
@@ -173,15 +176,9 @@
     // p9: How Passkey/WebAuthn Works
     #section-box("How Passkey/WebAuthn Works")[
       #align(center)[
-        #image("../diagrams/passkey-flow.svg", width: 85%)
+        #image("../diagrams/passkey-flow.svg", width: 92%)
       ]
-      *JavaScript-driven, no redirects:*
-      + Server generates *challenge*
-      + Browser calls `navigator.credentials.get()`
-      + Authenticator signs challenge with *private key*
-      + Server verifies with stored *public key*, set cookie
-
-      _Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello_
+      _JS-driven: challenge → sign → verify → session_
     ]
   ],
 
@@ -198,7 +195,7 @@
         OAUTH2_GOOGLE_CLIENT_ID='xxx.apps.googleusercontent.com'
         ```
       ]
-      *Steps 2--3:* Initialize and merge router. Built-in login UI, account management, and admin panel included.
+      *Steps 2--3:* Initialize and merge router — login UI, account mgmt & admin panel built-in.
       #code-block[
         ```rust
         use oauth2_passkey_axum::{AuthUser, oauth2_passkey_full_router};
@@ -232,15 +229,37 @@
         ```
       ]
       *Middleware* — choose 401 vs redirect, and skip DB when user info isn't needed:
-      #table(
-        columns: (auto, auto, auto, auto),
-        inset: 7pt,
-        align: left,
-        table.header([*Middleware*], [*Unauth*], [*DB Query*], [*Extension*]),
-        [`is_authenticated_401`], [401], [No], [`CsrfToken`],
-        [`is_authenticated_redirect`], [Login], [No], [`CsrfToken`],
-        [`is_authenticated_user_401`], [401], [Yes], [`AuthUser`],
-        [`is_authenticated_user_redirect`], [Login], [Yes], [`AuthUser`],
+      #grid(
+        columns: (5fr, 3fr),
+        gutter: 10pt,
+        align: top,
+        [
+          #code-block[
+            ```rust
+            let app = Router::new()
+                .route("/api/1", get(h1)
+                    .route_layer(from_fn(is_authenticated_401)))
+                .route("/api/2", get(h2)
+                    .route_layer(from_fn(is_authenticated_user_401)));
+
+            async fn h1(Extension(csrf): Extension<CsrfToken>) { ... }
+            async fn h2(Extension(user): Extension<AuthUser>) { ... }
+            ```
+          ]
+        ],
+        [
+          *`is_authenticated_{Variant}`*
+          #table(
+            columns: (auto, auto, auto, auto),
+            inset: 7pt,
+            align: left,
+            table.header([*Variant*], [*Error*], [*DB?*], [*Ext.*]),
+            [`401`], [401], [No], [`CsrfToken`],
+            [`redirect`], [Login], [No], [`CsrfToken`],
+            [`user_401`], [401], [Yes], [`AuthUser`],
+            [`user_redirect`], [Login], [Yes], [`AuthUser`],
+          )
+        ],
       )
     ]
 
@@ -251,12 +270,18 @@
       *Switch DB by changing `.env` only — no code changes:*
       #code-block[
         ```
-        # Data store: sqlite / postgres / mysql
+        # Data store (pick one):
         GENERIC_DATA_STORE_TYPE=sqlite
         GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
+        # GENERIC_DATA_STORE_TYPE=postgres
+        # GENERIC_DATA_STORE_URL='postgres://user:pass@localhost/db'
+        # GENERIC_DATA_STORE_TYPE=mysql
+        # GENERIC_DATA_STORE_URL='mysql://user:pass@localhost/db'
 
-        # Cache store: memory / redis
+        # Cache store (pick one):
         GENERIC_CACHE_STORE_TYPE=memory
+        # GENERIC_CACHE_STORE_TYPE=redis
+        # GENERIC_CACHE_STORE_URL='redis://localhost:6379'
         ```
       ]
 
@@ -278,72 +303,76 @@
       ]
 
       *Why LazyLock instead of Axum State?*
-      #grid(
-        columns: (1fr, 1fr),
-        gutter: 8pt,
-        [
-          *With Axum State:*
-          - User must compose `AuthState` into their own `AppState`
-          - 80+ internal library functions all need `&State`
-        ],
-        [
-          *With LazyLock:*
-          - User just calls `init().await?`
-          - Any function accesses storage directly
-          - Fail-fast: bad config panics at startup
-        ],
-      )
+      - *Axum State*: user composes `AppState`; 80+ internal fns all need `&State`
+      - *LazyLock*: just `init()` — globals accessed directly; fail-fast at startup
     ]
 
     #v(8pt)
 
     // p20-21: Integrating with Your App
     #section-box("Integrating with Your App's Database")[
-      Library manages `users`, `oauth2_accounts`, `passkey_credentials`, `sessions`. Your app adds its own tables linked by `AuthUser.id`:
-      #code-block[
-        ```
-        Library manages:           Your app adds:
-        ┌──────────┐               ┌──────────────┐  ┌──────────┐
-        │  users   │──AuthUser.id─>│user_profiles │  │  todos   │
-        │  id (PK) │               │  user_id(FK) │  │ user_id  │
-        └──────────┘               └──────────────┘  └──────────┘
-                                     1:1 profile       1:N todos
-        ```
-      ]
-      #code-block[
-        ```rust
-        async fn create_todo(
-            State(state): State<AppState>,
-            user: AuthUser, // from oauth2-passkey
-            Form(form): Form<TodoForm>,
-        ) -> Result<Response, ...> {
-            db::create_todo(&state.pool, &user.id, &form.title).await?;
-            Ok(Redirect::to("/").into_response())
-        }
-        ```
-      ]
-      See `demo-profile` (1:1) and `demo-todo` (1:N) for full examples.
+      Your app adds its own tables linked by `AuthUser.id`:
+      #grid(
+        columns: (3fr, 2fr),
+        gutter: 10pt,
+        align: top,
+        [
+          #code-block[
+            ```rust
+            async fn create_todo(
+                State(state): State<AppState>,
+                user: AuthUser, // from oauth2-passkey
+                Form(form): Form<TodoForm>,
+            ) -> Result<Response, ...> {
+                db::create_todo(
+                  &state.pool,
+                  &user.id, // ──> todos.user_id
+                  &form.title
+                ).await?;
+                Ok(Redirect::to("/").into_response())
+            }
+            ```
+          ]
+        ],
+        [
+          #code-block[
+            ```
+            Library:        Your app:           
+            ┌──────────┐    ┌──────────┐
+            │  users   │    │  todos   │
+            │ id (PK) ─┼────┼► user_id │
+            └──────────┘    │  title   │
+            AuthUser.id     └──────────┘
+                             1:N todos
+            ```
+          ]
+        ],
+      )
     ]
 
-    #v(8pt)
+  ],
+)
 
-    // p23: Summary + Links
-    #section-box("Summary")[
-      #table(
-        columns: (auto, 1fr),
-        inset: 8pt,
-        align: left,
-        [*What*], [OAuth2 + Passkey auth library for Axum],
-        [*Highlights*], [Passkey Promotion, Built-in UI, Account Linking],
-        [*Usage*], [`init()` + `merge(router)` + `AuthUser` extractor],
-        [*Protection*], [Extractor or Middleware (401/redirect, with/without DB)],
-        [*Storage*], [SQLite/PostgreSQL/MySQL + Memory/Redis, switch via `.env`],
-        [*Your app*], [Link your data to `AuthUser.id`],
-      )
+// ============================================================
+// FOOTER - Full width Summary
+// ============================================================
 
+#v(12pt)
+#section-box("Summary")[
+  #grid(
+    columns: (3fr, 2fr),
+    gutter: 20pt,
+    [
+      #set list(spacing: 0.8em)
+      - *Library*: OAuth2 + Passkey/WebAuthn auth for Axum; Passkey Promotion, Built-in UI, Account Linking
+      - *Setup*: `init().await?` + `merge(oauth2_passkey_full_router())` — 3 lines to add auth
+      - *Protect*: `AuthUser` extractor or `is_authenticated_*` middleware (401/redirect, ±DB query)
+      - *Storage*: SQLite/PostgreSQL/MySQL + Memory/Redis — switch via `.env`, no code changes
+    ],
+    [
       - *crates.io:* `oauth2-passkey`, `oauth2-passkey-axum`
       - *GitHub:* github.com/ktaka-ccmp/oauth2-passkey
       - *Demo:* passkey-demo.ccmp.jp
-    ]
-  ],
-)
+    ],
+  )
+]

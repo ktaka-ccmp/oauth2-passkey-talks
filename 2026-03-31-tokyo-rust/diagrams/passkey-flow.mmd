@@ -1,3 +1,4 @@
+%%{init: {'sequence': {'width': 220}}}%%
 sequenceDiagram
     participant C as Client (Browser)
     participant A as Authenticator
@@ -9,10 +10,10 @@ sequenceDiagram
 
     C->>A: 3. navigator.credentials.get()
     Note over A: Verify user (fingerprint/face)
-    Note over A: Sign challenge with private key
+    Note over A: Sign with private key
     A-->>C: 4. Return signed assertion
 
     C->>S: 5. POST /auth/verify (assertion)
-    Note over S: Verify signature with stored public key
+    Note over S: Verify w/ stored public key
     Note over S: Create session
     S-->>C: 6. Set session cookie
