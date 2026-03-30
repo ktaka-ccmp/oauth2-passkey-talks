@@ -160,23 +160,21 @@ All handled by a single library: `oauth2-passkey`
 ---
 ## Motivation
 
-I wanted to build **exactly what you just saw** - and do it myself in Rust.
+I wanted to build **exactly what you just saw** — in Rust.
 
-- Existing Rust ecosystem:
-  - `webauthn-rs` - WebAuthn only
-  - Various OAuth2 crates - OAuth2 only
-  - **No combined solution** with session management
-- So I built one. Published on **crates.io**.
+- **OAuth2/OIDC**: delegate auth to trusted providers — no passwords to manage
+- **Passkey**: phishing-resistant, biometrics/hardware key — no server-side secrets
+- No integrated Rust/Axum library existed → built one → published to **crates.io**
 
 ---
 
 ## Agenda
 
-1. **How OAuth2 & Passkey Work** - What happened behind the demo
-2. **Using the Library** - init, extractor, middleware
-3. **Storage & LazyLock** - Multi-DB support, why not Axum State
-4. **Integrating with Your App** - Linking your data to auth users
-5. **Wrap-up** - Summary & links
+1. **How OAuth2 & Passkey Work**
+2. **Using the Library**
+3. **Internals of Multi Storage Support**
+4. **Integrating with Your App**
+5. **Wrap-up**
 
 ---
 
@@ -195,6 +193,9 @@ I wanted to build **exactly what you just saw** - and do it myself in Rust.
 3. **Next Login**
    ➔ Login with either Passkey or Google OAuth2
 
+&nbsp;
+
+One user can have multiple OAuth2 accounts and multiple passkey credentials.
 </div>
 
 <div>
@@ -217,8 +218,6 @@ I wanted to build **exactly what you just saw** - and do it myself in Rust.
       └── (YubiKey)
 
 ```
-One user can have multiple OAuth2 accounts and multiple passkey credentials.
-
 </div>
 </div>
 
@@ -234,13 +233,7 @@ One user can have multiple OAuth2 accounts and multiple passkey credentials.
 </div>
 <div>
 
-**Page-redirect based auth:**
-1. User clicks "Login with Google"
-2. Redirect to Google consent screen
-3. Google returns authorization code
-4. Server exchanges code for **id_token** (JWT)
-5. Extract user info, create session
-6. Set session cookie
+_Page-redirect: Google → code → id\_token → session_
 
 </div>
 </div>
@@ -257,14 +250,9 @@ One user can have multiple OAuth2 accounts and multiple passkey credentials.
 </div>
 <div>
 
-**JavaScript-driven, no redirects:**
-1. Server generates **challenge**
-2. Browser calls `navigator.credentials.get()`
-3. Authenticator signs challenge with **private key**
-4. Server verifies with stored **public key**
-5. Create session, set cookie
+_JavaScript-driven: challenge → sign → verify → session_
 
-Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
+_Authenticators: Google Password Manager, Apple, Windows Hello, YubiKey, ..._
 
 </div>
 </div>
@@ -278,7 +266,7 @@ Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
 
 ---
 
-## Environment Variables (.env)
+## .env Setup (Minimal)
 
 ```env
 ORIGIN='http://localhost:3001'
@@ -294,25 +282,26 @@ GENERIC_CACHE_STORE_TYPE=memory
 GENERIC_CACHE_STORE_URL='memory'
 ```
 
-Swap to PostgreSQL/MySQL by changing `DATA_STORE_TYPE` and `URL`.
+- Data store: SQLite, PostgreSQL, MySQL
+- Cache store: memory, Redis
 
 ---
 
-## Setup: init + merge
+## How to Use
 
 ```rust
 use oauth2_passkey_axum::{
-    AuthUser, oauth2_passkey_full_router,
+    AuthUser, oauth2_passkey_full_router, // 1, Import
 };
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
-    oauth2_passkey_axum::init().await?;       // 1. Initialize
+    oauth2_passkey_axum::init().await?;       // 2. Initialize
 
     let app = Router::new()
         .route("/", get(index))
-        .merge(oauth2_passkey_full_router()); // 2. Merge router
+        .merge(oauth2_passkey_full_router()); // 3. Merge router
 
     // Auth endpoints are now at /o2p/*
     spawn_http_server(3001, app).await?;
@@ -320,7 +309,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-Built-in login UI, account management, and admin panel included.
+Under `/o2p/*`, we have:
+- OAuth2 endpoints and Passkey endpoints
+- Built-in login UI, account management, and admin panel
 
 ---
 
@@ -342,16 +333,16 @@ async fn public(user: Option<AuthUser>) -> impl IntoResponse {
 ```
 
 Implemented via Axum's `FromRequestParts` trait:
-- `AuthUser` -> auto-redirect on failure + DB query every time
-- `Option<AuthUser>` -> no redirect, `None` for anonymous
+- `AuthUser` → GET: redirect to login, others: 401
+- `Option<AuthUser>` → `OptionalFromRequestParts` impl returns `None` on failure — no redirect
 
-Limitation: always redirects, always hits DB. What about APIs that need 401?
+Limitation: always hits DB, GET always redirects. Middleware gives more control: skip DB, or return 401 even on GET.
 
 ---
 
 ## Page Protection: Middleware
 
-Middleware solves both: **choose 401 vs redirect, and skip DB when you don't need user info.**
+Middleware gives more control: **skip DB, or return 401 even on GET.**
 
 ```rust
 let app = Router::new()
@@ -365,7 +356,11 @@ let app = Router::new()
 async fn h1(Extension(csrf): Extension<CsrfToken>) { ... }
 async fn h2(Extension(user): Extension<AuthUser>) { ... }
 ```
-&nbsp;
+
+---
+
+## Page Protection: Middleware Variants
+
 | Variant | Unauthenticated | DB Query | Handler Extension |
 |---------|-----------------|----------|------------------|
 | `is_authenticated_401` | 401 | No | `CsrfToken` |
@@ -405,7 +400,7 @@ No code changes. Just swap the env vars and restart.
 
 ---
 
-## How It Works: env → LazyLock → DataStore trait
+## How Multi-DB Support Works Internally
 
 <div class="columns">
 <div>
@@ -475,8 +470,6 @@ struct AppState {
 }
 let app = Router::new().with_state(state);
 ```
-User: manage state composition
-Library: thread state through 80+ internal functions
 
 </div>
 <div>
@@ -491,15 +484,12 @@ let store = GENERIC_DATA_STORE
     .lock().await;
 // No state parameter needed
 ```
-User: just call `init()`, done
-Library: any function accesses storage directly
 
 </div>
 </div>
 
-&nbsp;
-
-LazyLock: simpler for both library users and library internals.
+**For users:** No need to worry about library state
+**For library development:** No state threading — any function can access DB directly
 
 ---
 
@@ -525,10 +515,6 @@ CREATE TABLE todos (
 CREATE INDEX idx_todos_user_id ON todos(user_id);
 ```
 
-- `user_id` is a FK to `users.id` managed by oauth2-passkey
-- Index on `user_id` for efficient per-user queries
-- Library DB and app DB can be same or separate
-
 </div>
 <div>
 
@@ -543,12 +529,12 @@ Your app:       Library:
   1:N todos
 ```
 
-- One user → many todos
-- Filter by `user_id` to get only the user's records
-- Delete/update always include `user_id` check for isolation
+</div>
+</div>
 
-</div>
-</div>
+- `user_id` links to `users.id` managed by oauth2-passkey — get it from `AuthUser.id`
+- Index on `user_id` is essential for efficient per-user queries
+- Library DB and app DB can be the same or separate
 
 ---
 
@@ -558,20 +544,22 @@ Your app:       Library:
 <div>
 
 ```rust
-// Setup: oauth2-passkey + your own DB
+// main.rs
 oauth2_passkey_axum::init().await?;
-let pool = db::init_db().await?;　// user's own DB
+let pool = db::init_db().await?;
 let app = Router::new()
-    .merge(handlers::router())
-    .with_state(AppState { pool })　// user's own state
+    .merge(todos_router())              // ← protected routes
+    .with_state(AppState { pool })
     .merge(oauth2_passkey_full_router());
 ```
 
 ```rust
-// Route protection
-Router::new()
-    .route("/todos", get(list_todos).post(create_todo))
-    .route_layer(from_fn(is_authenticated_redirect))
+// handlers.rs
+pub fn todos_router() -> Router<AppState> {
+    Router::new()
+        .route("/todos", get(list_todos).post(create_todo))
+        .route_layer(from_fn(is_authenticated_redirect))
+}
 ```
 
 </div>
@@ -595,6 +583,10 @@ async fn create_todo(
 </div>
 </div>
 
+- Your `AppState` holds your own DB pool — independent from oauth2-passkey's storage
+- Protect routes with middleware injecting `AuthUser` — no extra DB query at route level
+- Pass `user.id` as FK when writing to your DB
+
 ---
 
 ## Integrating Your App: 1:1 Schema (demo-profile)
@@ -614,9 +606,6 @@ CREATE TABLE user_profiles (
 );
 ```
 
-- `user_id TEXT PRIMARY KEY` — both PK and FK, enforces 1:1
-- No separate `id` column needed
-
 </div>
 <div>
 
@@ -632,12 +621,12 @@ Your app:            Library:
   1:1 profile
 ```
 
-- One user → exactly one profile
-- Profile auto-created on first login
-- Can pre-populate `avatar_url` from Google OAuth2 account
+</div>
+</div>
 
-</div>
-</div>
+- `user_id TEXT PRIMARY KEY` — both PK and FK, enforces 1:1 at DB level
+- No separate `id` column needed
+- Profile auto-created on first login
 
 ---
 
@@ -647,20 +636,22 @@ Your app:            Library:
 <div>
 
 ```rust
-// Setup: oauth2-passkey + your own DB
+// main.rs
 oauth2_passkey_axum::init().await?;
-let pool = db::init_db().await?; // user's own DB
+let pool = db::init_db().await?;
 let app = Router::new()
-    .merge(handlers::router())
-    .with_state(AppState { pool }) // user's own state
+    .merge(profile_router())            // ← protected routes
+    .with_state(AppState { pool })
     .merge(oauth2_passkey_full_router());
 ```
 
 ```rust
-// Route protection
-Router::new()
-    .route("/profile", get(show_profile).post(update_profile))
-    .route_layer(from_fn(is_authenticated_redirect))
+// handlers.rs
+pub fn profile_router() -> Router<AppState> {
+    Router::new()
+        .route("/profile", get(show_profile).post(update_profile))
+        .route_layer(from_fn(is_authenticated_redirect))
+}
 ```
 
 </div>
@@ -686,6 +677,10 @@ async fn update_profile(
 
 </div>
 </div>
+
+- Your `AppState` holds your own DB pool — independent from oauth2-passkey's storage
+- Protect routes with middleware injecting `AuthUser` — no extra DB query at route level
+- Pass `user.id` as FK when writing to your DB
 
 ---
 
@@ -728,6 +723,134 @@ async fn update_profile(
 <!-- _class: lead -->
 
 # Extra Slides
+
+---
+
+## Why Not Axum State: The State Threading Problem
+
+<div class="columns">
+<div>
+
+**With Axum State — state must flow through every layer:**
+```rust
+// parent doesn't use DB, but must accept State
+// just to pass it down to grandchild
+async fn parent(
+    State(state): State<AppState>,
+) -> impl IntoResponse {
+    child(state).await
+}
+
+async fn child(state: AppState) -> impl IntoResponse {
+    grandchild(&state).await
+}
+
+// Only grandchild actually needs DB
+async fn grandchild(state: &AppState) -> impl IntoResponse {
+    let users = db::get_users(&state.auth_pool).await;
+    // ...
+}
+```
+
+</div>
+<div>
+
+**With LazyLock — no threading needed:**
+```rust
+// parent and child have no idea DB exists
+async fn parent() -> impl IntoResponse {
+    child().await
+}
+
+async fn child() -> impl IntoResponse {
+    grandchild().await
+}
+
+// grandchild accesses DB directly
+async fn grandchild() -> impl IntoResponse {
+    let store = GENERIC_DATA_STORE.lock().await;
+    // ...
+}
+```
+
+</div>
+</div>
+
+The library has 80+ internal functions. With State, all of them would need `&State` — even those that just call something else.
+
+---
+
+## AuthUser: FromRequestParts Implementation
+
+<div class="columns">
+<div>
+
+```rust
+impl<B> FromRequestParts<B> for AuthUser
+where
+    B: Send + Sync,
+{
+    type Rejection = AuthRedirect;
+
+    async fn from_request_parts(
+        parts: &mut Parts, _: &B,
+    ) -> Result<Self, Self::Rejection> {
+        let method = parts.method.clone();
+
+        // 1. Extract session cookie
+        let session_cookie = cookies
+            .get(SESSION_COOKIE_NAME.as_str())
+            .ok_or_else(|| AuthRedirect::new(method.clone()))?;
+
+        // 2. Validate session → get user
+        let (session_user, csrf_token) =
+            get_user_and_csrf_token_from_session(...)
+                .await
+                .map_err(|_| AuthRedirect::new(method.clone()))?;
+
+        Ok(AuthUser::from(session_user))
+    }
+}
+```
+
+</div>
+<div>
+
+```rust
+// AuthRedirect: redirect on GET, 401 otherwise
+impl IntoResponse for AuthRedirect {
+    fn into_response(self) -> Response {
+        if self.method == Method::GET {
+            Redirect::temporary(LOGIN_URL).into_response()
+        } else {
+            (StatusCode::UNAUTHORIZED,
+             "Unauthorized").into_response()
+        }
+    }
+}
+```
+
+```rust
+// Option<AuthUser>: explicit OptionalFromRequestParts
+impl<B> OptionalFromRequestParts<B> for AuthUser
+where
+    B: Send + Sync,
+{
+    type Rejection = AuthRedirect;
+
+    async fn from_request_parts(...)
+        -> Result<Option<Self>, Self::Rejection>
+    {
+        let result =
+            <AuthUser as FromRequestParts<B>>
+                ::from_request_parts(parts, state).await;
+        Ok(result.ok()) // Err → None, no redirect
+    }
+}
+```
+
+</div>
+</div>
 
 ---
 
