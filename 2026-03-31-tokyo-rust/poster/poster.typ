@@ -208,7 +208,7 @@
       *Steps 2--3:* Initialize and merge router — login UI, account mgmt & admin panel built-in.
       #code-block[
         ```rust
-        use oauth2_passkey_axum::{AuthUser, oauth2_passkey_full_router};
+        use oauth2_passkey_axum::{AuthUser, oauth2_passkey_full_router};  // 1. Import
 
         #[tokio::main]
         async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -261,6 +261,7 @@
           #v(4pt)
           #text(weight: "bold")[`is_authenticated_{Variant}`]
           #v(6pt)
+          #set text(size: 18pt)
           #table(
             columns: (auto, auto, auto, auto),
             inset: 7pt,
@@ -305,7 +306,8 @@
             GENERIC_CACHE_STORE_TYPE=memory
 
             # GENERIC_CACHE_STORE_TYPE=redis
-            # GENERIC_CACHE_STORE_URL= 'redis://host:6379'
+            # GENERIC_CACHE_STORE_URL=\
+            # 'redis://host:6379'
             ```
           ]
         ],
@@ -377,7 +379,7 @@
       - *Easy*: Add passwordless auth to your Axum app in minutes — Built-in UI included
       - *Secure*: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies
       - *Flexible*: Switch between SQLite, PostgreSQL, MySQL, and Redis with a single `.env` change
-    #v(16pt)
+      #v(16pt)
     ]
 
   ],
