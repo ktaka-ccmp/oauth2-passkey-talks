@@ -280,11 +280,11 @@
             GENERIC_DATA_STORE_TYPE=sqlite
             GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
 
-            GENERIC_DATA_STORE_TYPE=postgres
-            GENERIC_DATA_STORE_URL='postgres://id:pw@host:5432/db'
+            # GENERIC_DATA_STORE_TYPE=postgres
+            # GENERIC_DATA_STORE_URL='postgres://id:pw@host:5432/db'
 
-            GENERIC_DATA_STORE_TYPE=mysql
-            GENERIC_DATA_STORE_URL='mysql://id:pw@host:3306/db'
+            # GENERIC_DATA_STORE_TYPE=mysql
+            # GENERIC_DATA_STORE_URL='mysql://id:pw@host:3306/db'
             ```
           ]
         ],
@@ -294,9 +294,8 @@
             # Cache store (pick one):
             GENERIC_CACHE_STORE_TYPE=memory
 
-            GENERIC_CACHE_STORE_TYPE=redis
-            GENERIC_CACHE_STORE_URL=
-                           'redis://host:6379'
+            # GENERIC_CACHE_STORE_TYPE=redis
+            # GENERIC_CACHE_STORE_URL='redis://host:6379'
             ```
           ]
         ],
