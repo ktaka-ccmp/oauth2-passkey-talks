@@ -178,6 +178,50 @@ I wanted to build **exactly what you just saw** - and do it myself in Rust.
 
 ---
 
+## Flow: Google Login → Passkey Setup
+
+<div class="columns-60-40">
+<div>
+
+### Step-by-step
+
+&nbsp;
+1. **OAuth2 Login**
+   ➔ Create a user in db linked with Google account
+2. **Passkey Promotion**
+   ➔ Register Passkey ➔ link to the user
+3. **Next Login**
+   ➔ Login with either Passkey or Google OAuth2
+
+</div>
+
+<div>
+
+### Internal Result (Linking)
+
+&nbsp;
+
+```text
+
+ 👤 [User] id: 1
+  │
+  ├── 🌐 [oauth2_accounts]
+  │   ├── (Google ID)
+  │   └── (GitHub ID)
+  │
+  └── 🔑 [passkey_credentials]
+      ├── (Google Password Manager)
+      ├── (Apple Password Manager)
+      └── (YubiKey)
+
+```
+One user can have multiple OAuth2 accounts and multiple passkey credentials.
+
+</div>
+</div>
+
+---
+
 ## How OAuth2/OIDC Works
 
 <div class="columns-60-40">
@@ -223,74 +267,6 @@ Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
 </div>
 </div>
 
----
-
-## Flow: Google Login → Passkey Setup
-
-<div class="columns-60-40">
-<div>
-
-### Step-by-step
-
-&nbsp;
-1. **OAuth2 Login**
-   ➔ Create a user in db linked with Google account
-2. **Passkey Promotion**
-   ➔ Register Passkey ➔ link to the user
-3. **Next Login**
-   ➔ Login with either Passkey or Google OAuth2
-
-</div>
-
-<div>
-
-### Internal Result (Linking)
-
-&nbsp;
-
-```text
-
- 👤 [User] id: 1
-  │
-  ├── 🌐 [oauth2_accounts]
-  │   ├── (Google ID)
-  │   └── (GitHub ID)
-  │
-  └── 🔑 [passkey_credentials]
-      ├── (Google Password Manager)
-      ├── (Apple Password Manager)
-      └── (YubiKey)
-
-```
-One user can have multiple OAuth2 accounts and multiple passkey credentials.
-
-</div>
-</div>
-
----
-
-
-
-## Account Linking: How It Works
-
-```
-┌──────────┐
-│  users   │  One user can have multiple auth methods:
-│  id (PK) │
-│  account │──────┬──────────────────────────────────┐
-│  label   │      │                                  │
-└──────────┘      ▼                                  ▼
-          ┌──────────────────┐          ┌─────────────────────┐
-          │  oauth2_accounts │          │ passkey_credentials │
-          │  user_id (FK)    │          │ user_id (FK)        │
-          │  provider        │          │ credential_id       │
-          │  provider_uid    │          │ public_key          │
-          └──────────────────┘          └─────────────────────┘
-          Google, GitHub, ...           Fingerprint, YubiKey, ...
-```
-
-Google OAuth2 creates user → Passkey Promotion links a passkey to the same user.
-One user can have multiple Google accounts and multiple passkey credentials.
 
 ---
 
@@ -933,31 +909,20 @@ Supporting 3 databases means handling these quirks per-backend.
 
 ## LazyLock Initialization Flow
 
-<div class="columns-60-40">
-<div>
+**Fail-fast at Startup:** Evaluates all configs/DB immediately.
+**No Axum State:** Any handler can safely access `GENERIC_DATA_STORE` globally.
 
-![w:650](../diagrams/lazylock-flow.svg)
+<div style="text-align: center;">
 
-</div>
-<div>
+![w:900 center](../diagrams/lazylock-flow.svg)
 
-**Startup sequence:**
-1. App calls `init().await?`
-2. Forces all `LazyLock` globals to evaluate
-3. Reads env vars (`DB_TYPE`, `DB_URL`, ...)
-4. Creates appropriate connection pool
-5. Panics on invalid config (fail-fast)
-
-After init, any internal function can access `GENERIC_DATA_STORE` directly - no state parameter needed.
-
-</div>
 </div>
 
 ---
 
 ## Crate Structure (Detail)
 
-![w:750 center](../diagrams/crate-structure.svg)
+![w:800 center](../diagrams/crate-structure.svg)
 
 ---
 

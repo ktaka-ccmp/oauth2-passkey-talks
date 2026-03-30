@@ -1,27 +1,14 @@
 sequenceDiagram
-    participant App as Your App
-    participant Init as init().await?
-    participant LL as LazyLock Globals
-    participant Env as Environment (.env)
-    participant DB as Database
+    participant App
+    participant Init as init()
+    participant LL as LazyLock
+    participant Env
+    participant DB
 
-    App->>Init: oauth2_passkey_axum::init()
-    Init->>LL: Force evaluate GENERIC_DATA_STORE
-    LL->>Env: Read GENERIC_DATA_STORE_TYPE
-    LL->>Env: Read GENERIC_DATA_STORE_URL
-    Note over LL: match store_type
-    alt sqlite
-        LL->>DB: SqlitePool::connect_lazy()
-    else postgres
-        LL->>DB: PgPool::connect_lazy()
-    else mysql
-        LL->>DB: MySqlPool::connect_lazy()
-    end
-    LL-->>Init: Mutex<Box<dyn DataStore>>
-
-    Init->>LL: Force evaluate config LazyLocks
-    LL->>Env: Read O2P_*, SESSION_*, PASSKEY_*
-    Note over LL: Panic on invalid values<br/>(fail fast at startup)
+    App->>Init: call
+    Init->>LL: trigger eval
+    LL->>Env: read configs
+    LL->>DB: create pool
+    LL-->>Init: ready
+    Note over Init: Panic on<br>invalid config
     Init-->>App: Ok(())
-
-    Note over App: Any handler can now access<br/>GENERIC_DATA_STORE directly<br/>No State parameter needed
