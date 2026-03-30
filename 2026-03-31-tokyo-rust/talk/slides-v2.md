@@ -84,11 +84,13 @@ style: |
   section .with-qr > div:last-child {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    text-align: center;
   }
   section .with-qr > div:last-child p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
   .columns-40-60 {
@@ -353,22 +355,22 @@ Middleware solves both: **choose 401 vs redirect, and skip DB when you don't nee
 
 ```rust
 let app = Router::new()
-    .route("/page", get(page_handler)
-        .route_layer(from_fn(is_authenticated_redirect)))   // <-- Web: protect + error redirect
-    .route("/api/data", get(api_handler)
-        .route_layer(from_fn(is_authenticated_401)));       // <-- API: protect + error 401
+    .route("/api/1", get(h1)
+        .route_layer(from_fn(is_authenticated_401)))        // <-- No DB query
+    .route("/api/2", get(h2)
+        .route_layer(from_fn(is_authenticated_user_401)));  // <-- DB query, user info available
 ```
 ```rust
 // In handler: access user or CSRF token via Extension
-async fn page_handler(Extension(user): Extension<AuthUser>) { ... }
-async fn api_handler(Extension(csrf): Extension<CsrfToken>) { ... }
+async fn h1(Extension(csrf): Extension<CsrfToken>) { ... }
+async fn h2(Extension(user): Extension<AuthUser>) { ... }
 ```
 &nbsp;
 | Variant | Unauthenticated | DB Query | Handler Extension |
 |---------|-----------------|----------|------------------|
 | `is_authenticated_401` | 401 | No | `CsrfToken` |
-| `is_authenticated_redirect` | Redirect to login | No | `CsrfToken` |
 | `is_authenticated_user_401` | 401 | Yes | `AuthUser` |
+| `is_authenticated_redirect` | Redirect to login | No | `CsrfToken` |
 | `is_authenticated_user_redirect` | Redirect to login | Yes | `AuthUser` |
 
 ---
@@ -426,25 +428,36 @@ static GENERIC_DATA_STORE: LazyLock<Mutex<Box<dyn DataStore>>>
 </div>
 <div>
 
-**2. Callers dispatch via trait:**
+**2. Trait + impl per backend:**
 ```rust
-pub(crate) trait DataStore: Send + Sync {
-    fn as_sqlite(&self) -> Option<&Pool<Sqlite>>;
-    fn as_postgres(&self) -> Option<&Pool<Postgres>>;
-    fn as_mysql(&self) -> Option<&Pool<MySql>>;
-}
+// DataStore: Send + Sync — safe to hold in a global LazyLock
 
-let store = GENERIC_DATA_STORE.lock().await;
-match (store.as_sqlite(), store.as_postgres(), store.as_mysql()) {
-    (Some(pool), _, _) => do_sqlite(pool).await?,
-    (_, Some(pool), _) => do_postgres(pool).await?,
-    (_, _, Some(pool)) => do_mysql(pool).await?,
-    _ => panic!("No database configured"),
+impl DataStore for SqliteDataStore {
+    fn as_sqlite(&self) -> Option<&Pool<Sqlite>> { Some(&self.pool) }
+    fn as_postgres(&self) -> Option<&Pool<Postgres>> { None }
+    fn as_mysql(&self) -> Option<&Pool<MySql>> { None }
 }
 ```
 
+**3. Callers dispatch via trait:**
+```rust
+let store = GENERIC_DATA_STORE.lock().await;
+match (store.as_sqlite(), store.as_postgres(), store.as_mysql()) {
+    (Some(pool), _, _) => get_all_users_sqlite(pool).await,
+    (_, Some(pool), _) => get_all_users_postgres(pool).await,
+    (_, _, Some(pool)) => get_all_users_mysql(pool).await,
+    _ => Err(UserError::Storage("Unsupported db".into())),
+}
+```
+
+
 </div>
 </div>
+&nbsp;
+
+- `GENERIC_DATA_STORE_TYPE=sqlite` → `LazyLock` holds `SqliteDataStore`
+- `SqliteDataStore` returns `(Some, None, None)` for `(as_sqlite, as_postgres, as_mysql)`
+- match selects `(Some(pool), _, _)` → `get_all_users_sqlite(pool)` runs
 
 ---
 
@@ -496,49 +509,74 @@ LazyLock: simpler for both library users and library internals.
 
 ---
 
-## Extending User Data in Your App
-
-The library manages `users` table. Your app adds its own tables, linked by `AuthUser.id`:
-
-```
-Library manages:          Your app adds:
-┌──────────┐              ┌──────────────┐  ┌──────────┐
-│  users   │─────────────>│user_profiles │  │  todos   │
-│  id (PK) │  AuthUser.id │  user_id(FK) │  │ user_id  │
-│  account │              │  bio         │  │ title    │
-│  label   │              │  avatar_url  │  │ done     │
-└──────────┘              └──────────────┘  └──────────┘
-                            1:1 profile       1:N todos
-```
-
----
-
-## Using AuthUser.id in Your Handlers
+## Integrating Your App: 1:N Schema (demo-todo)
 
 <div class="columns">
 <div>
 
-**Setup: two databases, one app**
+```sql
+CREATE TABLE todos (
+    id        SERIAL PRIMARY KEY,
+    user_id   TEXT NOT NULL,        -- FK to users.id
+    title     TEXT NOT NULL,
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE INDEX idx_todos_user_id ON todos(user_id);
+```
+
+- `user_id` is a FK to `users.id` managed by oauth2-passkey
+- Index on `user_id` for efficient per-user queries
+- Library DB and app DB can be same or separate
+
+</div>
+<div>
+
+```
+Your app:       Library:
+┌──────────┐    ┌──────────┐
+│  todos   │    │  users   │
+│ user_id ─┼────┼► id (PK) │
+│  title   │    └──────────┘
+│ completed│    AuthUser.id
+└──────────┘
+  1:N todos
+```
+
+- One user → many todos
+- Filter by `user_id` to get only the user's records
+- Delete/update always include `user_id` check for isolation
+
+</div>
+</div>
+
+---
+
+## Integrating Your App: 1:N Handler (demo-todo)
+
+<div class="columns">
+<div>
+
 ```rust
-// 1. oauth2-passkey init
+// Setup: oauth2-passkey + your own DB
 oauth2_passkey_axum::init().await?;
-
-// 2. App's own DB
-let pool = db::init_db().await?;
-let state = AppState { pool };
-
-// 3. Combine routes
+let pool = db::init_db().await?;　// user's own DB
 let app = Router::new()
-    .route("/", get(index))
     .merge(handlers::router())
-    .with_state(state)
+    .with_state(AppState { pool })　// user's own state
     .merge(oauth2_passkey_full_router());
+```
+
+```rust
+// Route protection
+Router::new()
+    .route("/todos", get(list_todos).post(create_todo))
+    .route_layer(from_fn(is_authenticated_redirect))
 ```
 
 </div>
 <div>
 
-**Handler: use user.id as FK**
 ```rust
 async fn create_todo(
     State(state): State<AppState>,
@@ -547,17 +585,107 @@ async fn create_todo(
 ) -> Result<Response, ...> {
     db::create_todo(
         &state.pool,
-        &user.id,  // link to auth user
+        &user.id,     // ──> saved as todos.user_id
         &form.title,
     ).await?;
     Ok(Redirect::to("/").into_response())
 }
 ```
+
 </div>
 </div>
 
-&nbsp;
-See `demo-profile` (1:1) and `demo-todo` (1:N).
+---
+
+## Integrating Your App: 1:1 Schema (demo-profile)
+
+<div class="columns">
+<div>
+
+```sql
+CREATE TABLE user_profiles (
+    user_id      TEXT PRIMARY KEY,  -- PK = FK: enforces 1:1
+    display_name TEXT,
+    bio          TEXT,
+    avatar_url   TEXT,
+    theme        TEXT DEFAULT 'light',
+    created_at   TIMESTAMPTZ DEFAULT NOW(),
+    updated_at   TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+- `user_id TEXT PRIMARY KEY` — both PK and FK, enforces 1:1
+- No separate `id` column needed
+
+</div>
+<div>
+
+```
+Your app:            Library:
+┌──────────────┐    ┌──────────┐
+│ user_profiles│    │  users   │
+│ user_id(PK) ─┼────┼► id (PK) │
+│  display_name│    └──────────┘
+│  bio         │    AuthUser.id
+│  avatar_url  │
+└──────────────┘
+  1:1 profile
+```
+
+- One user → exactly one profile
+- Profile auto-created on first login
+- Can pre-populate `avatar_url` from Google OAuth2 account
+
+</div>
+</div>
+
+---
+
+## Integrating Your App: 1:1 Handler (demo-profile)
+
+<div class="columns">
+<div>
+
+```rust
+// Setup: oauth2-passkey + your own DB
+oauth2_passkey_axum::init().await?;
+let pool = db::init_db().await?; // user's own DB
+let app = Router::new()
+    .merge(handlers::router())
+    .with_state(AppState { pool }) // user's own state
+    .merge(oauth2_passkey_full_router());
+```
+
+```rust
+// Route protection
+Router::new()
+    .route("/profile", get(show_profile).post(update_profile))
+    .route_layer(from_fn(is_authenticated_redirect))
+```
+
+</div>
+<div>
+
+```rust
+async fn update_profile(
+    State(state): State<AppState>,
+    user: AuthUser,
+    Form(form): Form<ProfileForm>,
+) -> Result<Response, ...> {
+    db::upsert_profile(
+        &state.pool,
+        &UserProfile {
+            user_id: user.id.clone(), // ──> user_profiles.user_id
+            bio: form.bio,
+            ..Default::default()
+        },
+    ).await?;
+    Ok(Redirect::to("/").into_response())
+}
+```
+
+</div>
+</div>
 
 ---
 
@@ -569,14 +697,9 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 
 ## Summary
 
-| | |
-|------|---------|
-| **What** | OAuth2 + Passkey auth library for Axum |
-| **Highlights** | Passkey Promotion, Built-in UI, Account Linking |
-| **Usage** | `init()` + `merge(router)` + `AuthUser` extractor |
-| **Protection** | Extractor or Middleware (401/redirect, with/without DB) |
-| **Storage** | SQLite/PostgreSQL/MySQL + Memory/Redis, switch via `.env` |
-| **Your app** | Link your data to `AuthUser.id` |
+- **Easy**: Add passwordless auth to your Axum app in minutes — Built-in UI included
+- **Secure**: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies
+- **Flexible**: Switch between SQLite, PostgreSQL, MySQL, and Redis with a single `.env` change
 
 ---
 
@@ -585,12 +708,10 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 <div class="with-qr">
 <div>
 
-- **Kimitoshi Takahashi (@ktaka)**
-- Self-employed, reskilling in Rust
-- Building web authentication libraries
-- Third year writing Rust
-- **GitHub**: github.com/ktaka-ccmp/oauth2-passkey
-- **Contact**: ktaka.blog.ccmp.jp/p/p.html
+### About me:
+- **Kimitoshi Takahashi**
+- Self-employed, reskilling in Rust (3rd year)
+- Let's start a startup together!
 
 </div>
 <div>

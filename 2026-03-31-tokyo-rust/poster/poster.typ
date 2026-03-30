@@ -358,13 +358,13 @@
         [
           #code-block[
             ```
-            Library:        Your app:           
+            Your app:       Library:
             ┌──────────┐    ┌──────────┐
-            │  users   │    │  todos   │
-            │ id (PK) ─┼────┼► user_id │
-            └──────────┘    │  title   │
-            AuthUser.id     └──────────┘
-                             1:N todos
+            │  todos   │    │  users   │
+            │ user_id ─┼────┼► id (PK) │
+            │  title   │    └──────────┘
+            └──────────┘    AuthUser.id
+              1:N todos
             ```
           ]
         ],
