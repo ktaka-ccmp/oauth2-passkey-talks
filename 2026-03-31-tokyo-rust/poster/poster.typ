@@ -12,14 +12,14 @@
 #set page(
   width: 841mm,
   height: 1189mm,
-  margin: (x: 35mm, y: 25mm),
+  margin: (x: 35mm, y: 40mm),
 )
 
 #set text(font: "Noto Sans", size: 22pt)
 #show heading.where(level: 1): set text(size: 45pt, weight: "bold")
 #show heading.where(level: 2): set text(size: 33pt, weight: "bold")
 #show heading.where(level: 3): set text(size: 27pt, weight: "semibold")
-#show raw: set text(font: "Noto Sans Mono", size: 18pt)
+#show raw: set text(font: "Noto Sans Mono", size: 19pt)
 
 #let section-box(title, body) = {
   block(
@@ -45,7 +45,7 @@
     stroke: 1pt + code-stroke,
     {
       set par(leading: 0.8em)
-      text(font: "Noto Sans Mono", size: 18pt)[#code]
+      text(font: "Noto Sans Mono", size: 19pt)[#code]
     },
   )
 }
@@ -74,11 +74,11 @@
       gutter: 8pt,
       align: center,
       [
-        #image("../../shared/qr-github.svg", width: 55mm)
+        #image("../../shared/qr-github.svg", width: 65mm)
         #text(size: 16pt)[GitHub]
       ],
       [
-        #image("../../shared/qr-contact.svg", width: 55mm)
+        #image("../../shared/qr-contact.svg", width: 65mm)
         #text(size: 16pt)[Author]
       ],
     )
@@ -132,26 +132,10 @@
 
     // Motivation
     #section-box("Motivation")[
-      #grid(
-        columns: (1fr, 1fr),
-        gutter: 10pt,
-        [
-          *OAuth2/OIDC*
-          #set list(spacing: 0.4em)
-          - Delegate auth to trusted providers
-          - No passwords to manage or leak
-          - SSO across services
-        ],
-        [
-          *Passkey/WebAuthn*
-          #set list(spacing: 0.4em)
-          - Phishing-resistant by design
-          - Biometrics or hardware key
-          - No server-side password storage
-        ],
-      )
-      #v(6pt)
-      _Studied how to implement both in Rust/Axum — no integrated library existed → built one → published to crates.io._
+      #set list(spacing: 1em)
+      - *OAuth2/OIDC*: delegate auth to trusted providers — no passwords to manage
+      - *Passkey*: phishing-resistant, biometrics/hardware key — no server-side secrets
+      - No integrated Rust/Axum library existed → built one → published to crates.io
     ]
 
     #v(10pt)
@@ -192,7 +176,7 @@
     // p8: How OAuth2/OIDC Works
     #section-box("How OAuth2/OIDC Works")[
       #align(center)[
-        #image("../diagrams/oauth2-flow.svg", width: 88%)
+        #image("../diagrams/oauth2-flow.svg", width: 92%)
       ]
       _Page-redirect: Google → code → id\_token → session_
     ]
@@ -202,7 +186,7 @@
     // p9: How Passkey/WebAuthn Works
     #section-box("How Passkey/WebAuthn Works")[
       #align(center)[
-        #image("../diagrams/passkey-flow.svg", width: 88%)
+        #image("../diagrams/passkey-flow.svg", width: 92%)
       ]
       _JavaScript-driven: challenge → sign → verify → session_
     ]
@@ -297,7 +281,7 @@
     #section-box("Storage & LazyLock Pattern")[
       *Switch DB by changing `.env` only — no code changes:*
       #grid(
-        columns: (11fr, 7fr),
+        columns: (12fr, 7fr),
         gutter: 10pt,
         [
           #code-block[
@@ -321,7 +305,7 @@
             GENERIC_CACHE_STORE_TYPE=memory
 
             # GENERIC_CACHE_STORE_TYPE=redis
-            # GENERIC_CACHE_STORE_URL='redis://host:6379'
+            # GENERIC_CACHE_STORE_URL= 'redis://host:6379'
             ```
           ]
         ],
@@ -336,6 +320,7 @@
       ]
 
       *Why LazyLock instead of Axum State?*
+      #set list(spacing: 1em)
       - *Axum State*: user composes `AppState`; 80+ internal fns all need `&State`
       - *LazyLock*: just `init()` — globals accessed directly; fail-fast at startup
       - *Trade-off*: one instance per process; use `#[serial]` in tests
@@ -347,7 +332,7 @@
     #section-box("Integrating with Your App's Database")[
       Your app adds its own tables linked by `AuthUser.id`:
       #grid(
-        columns: (3fr, 2fr),
+        columns: (6fr, 5fr),
         gutter: 10pt,
         align: top,
         [
@@ -388,15 +373,11 @@
 
     // Summary
     #section-box("Summary")[
-      #set list(spacing: 0.6em)
-      - *Library*: OAuth2 + Passkey/WebAuthn auth for Axum; Passkey Promotion, Built-in UI, Account Linking
-      - *Setup*: `init().await?` + `merge(oauth2_passkey_full_router())` — 3 lines to add auth
-      - *Protect*: `AuthUser` extractor or `is_authenticated_*` middleware (401/redirect, ±DB query)
-      - *Storage*: SQLite/PostgreSQL/MySQL + Memory/Redis — switch via `.env`, no code changes
-      #v(6pt)
-      - *crates.io:* `oauth2-passkey`, `oauth2-passkey-axum`
-      - *GitHub:* github.com/ktaka-ccmp/oauth2-passkey
-      - *Demo:* passkey-demo.ccmp.jp
+      #set list(spacing: 1em)
+      - *Easy*: Add passwordless auth to your Axum app in minutes — Built-in UI included
+      - *Secure*: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies
+      - *Flexible*: Switch between SQLite, PostgreSQL, MySQL, and Redis with a single `.env` change
+    #v(16pt)
     ]
 
   ],
