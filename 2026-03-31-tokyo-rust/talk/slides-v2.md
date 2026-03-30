@@ -25,9 +25,10 @@ style: |
     font-size: 19px;
   }
   pre {
-    font-size: 17px;
+    font-size: 18px;
     margin: 0.2em 0;
     padding: 0.4em;
+    line-height: 1.4;
   }
   h1 {
     font-size: 40px;
@@ -72,13 +73,23 @@ style: |
   }
   .with-qr {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 3fr 2fr;
     gap: 2em;
     align-items: center;
     flex: 1;
   }
   .with-qr img {
     display: block;
+  }
+  section .with-qr > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  section .with-qr > div:last-child p {
+    text-align: center;
   }
   .columns-40-60 {
     display: grid;
@@ -92,12 +103,15 @@ style: |
 
 # oauth2-passkey
 
+&nbsp;
+
 ### Passwordless Authentication Library for Rust
 
-**Kimitoshi Takahashi** | Tokyo Rust Show & Tell | 2026/03/31
+### Kimitoshi Takahashi
 
-`crates.io/crates/oauth2-passkey`
-`crates.io/crates/oauth2-passkey-axum`
+&nbsp;
+
+<small>Tokyo Rust Show & Tell | 2026/03/31</small>
 
 ---
 
@@ -118,10 +132,10 @@ style: |
 4. **Account Linking** - Both methods, same user
 
 </div>
-<div style="text-align: center;">
+<div>
 
-![w:220](../../shared/qr-demo.svg)
-passkey-demo.ccmp.jp
+![w:220](../../shared/qr-demo.svg) passkey-demo.ccmp.jp
+
 
 </div>
 </div>
@@ -210,6 +224,52 @@ Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
 </div>
 
 ---
+
+## Flow: Google Login → Passkey Setup
+
+<div class="columns-60-40">
+<div>
+
+### Step-by-step
+
+&nbsp;
+1. **OAuth2 Login**
+   ➔ Create a user in db linked with Google account
+2. **Passkey Promotion**
+   ➔ Register Passkey ➔ link to the user
+3. **Next Login**
+   ➔ Login with either Passkey or Google OAuth2
+
+</div>
+
+<div>
+
+### Internal Result (Linking)
+
+&nbsp;
+
+```text
+
+ 👤 [User] id: 1
+  │
+  ├── 🌐 [oauth2_accounts]
+  │   ├── (Google ID)
+  │   └── (GitHub ID)
+  │
+  └── 🔑 [passkey_credentials]
+      ├── (Google Password Manager)
+      ├── (Apple Password Manager)
+      └── (YubiKey)
+
+```
+One user can have multiple OAuth2 accounts and multiple passkey credentials.
+
+</div>
+</div>
+
+---
+
+
 
 ## Account Linking: How It Works
 
@@ -315,38 +375,25 @@ Limitation: always redirects, always hits DB. What about APIs that need 401?
 
 Middleware solves both: **choose 401 vs redirect, and skip DB when you don't need user info.**
 
-<div class="columns">
-<div>
-
 ```rust
 let app = Router::new()
-    // Web page -> redirect to login
-    .route("/secret", get(handler)
-        .route_layer(from_fn(is_authenticated_redirect)))
-
-    // API -> return 401 JSON
-    .nest("/api", api_router()
-        .route_layer(from_fn(is_authenticated_401)));
+    .route("/page", get(page_handler)
+        .route_layer(from_fn(is_authenticated_redirect)))   // <-- Web: protect + error redirect
+    .route("/api/data", get(api_handler)
+        .route_layer(from_fn(is_authenticated_401)));       // <-- API: protect + error 401
 ```
-
 ```rust
-// In handler: extract Attributes from Extension
-fn h(Extension(user): Extension<AuthUser>)
-fn h(Extension(csrf): Extension<CsrfToken>)
+// In handler: access user or CSRF token via Extension
+async fn page_handler(Extension(user): Extension<AuthUser>) { ... }
+async fn api_handler(Extension(csrf): Extension<CsrfToken>) { ... }
 ```
-
-</div>
-<div>
-
-| Variant | Unauth | DB? | Extension |
-|---------|--------|-----|-----------|
-| `_401` | 401 | No | `CsrfToken` |
-| `_redirect` | Login | No | `CsrfToken` |
-| `_user_401` | 401 | Yes | `AuthUser` |
-| `_user_redirect` | Login | Yes | `AuthUser` |
-
-</div>
-</div>
+&nbsp;
+| Variant | Unauthenticated | DB Query | Handler Extension |
+|---------|-----------------|----------|------------------|
+| `is_authenticated_401` | 401 | No | `CsrfToken` |
+| `is_authenticated_redirect` | Redirect to login | No | `CsrfToken` |
+| `is_authenticated_user_401` | 401 | Yes | `AuthUser` |
+| `is_authenticated_user_redirect` | Redirect to login | Yes | `AuthUser` |
 
 ---
 
@@ -387,20 +434,15 @@ No code changes. Just swap the env vars and restart.
 
 **1. LazyLock reads env at startup:**
 ```rust
-static GENERIC_DATA_STORE:
-    LazyLock<Mutex<Box<dyn DataStore>>>
+static GENERIC_DATA_STORE: LazyLock<Mutex<Box<dyn DataStore>>>
     = LazyLock::new(|| {
-        let db_type = env::var(
-            "GENERIC_DATA_STORE_TYPE");
-        let db_url = env::var(
-            "GENERIC_DATA_STORE_URL");
+        let db_type = env::var("GENERIC_DATA_STORE_TYPE");
+        let db_url = env::var("GENERIC_DATA_STORE_URL");
+
         match db_type {
-            "sqlite"   => Box::new(
-                SqliteDataStore { pool }),
-            "postgres" => Box::new(
-                PostgresDataStore { pool }),
-            "mysql"    => Box::new(
-                MySqlDataStore { pool }),
+            "sqlite"   => Box::new(SqliteDataStore { pool }),
+            "postgres" => Box::new(PostgresDataStore { pool }),
+            "mysql"    => Box::new(MySqlDataStore { pool }),
         }
     });
 ```
@@ -411,24 +453,17 @@ static GENERIC_DATA_STORE:
 **2. Callers dispatch via trait:**
 ```rust
 pub(crate) trait DataStore: Send + Sync {
-    fn as_sqlite(&self)
-        -> Option<&Pool<Sqlite>>;
-    fn as_postgres(&self)
-        -> Option<&Pool<Postgres>>;
-    fn as_mysql(&self)
-        -> Option<&Pool<MySql>>;
+    fn as_sqlite(&self) -> Option<&Pool<Sqlite>>;
+    fn as_postgres(&self) -> Option<&Pool<Postgres>>;
+    fn as_mysql(&self) -> Option<&Pool<MySql>>;
 }
 
-let store = GENERIC_DATA_STORE
-    .lock().await;
-match (store.as_sqlite(),
-       store.as_postgres(),
-       store.as_mysql()) {
-    (Some(pool), _, _) =>
-        do_sqlite(pool).await?,
-    (_, Some(pool), _) =>
-        do_postgres(pool).await?,
-    ...
+let store = GENERIC_DATA_STORE.lock().await;
+match (store.as_sqlite(), store.as_postgres(), store.as_mysql()) {
+    (Some(pool), _, _) => do_sqlite(pool).await?,
+    (_, Some(pool), _) => do_postgres(pool).await?,
+    (_, _, Some(pool)) => do_mysql(pool).await?,
+    _ => panic!("No database configured"),
 }
 ```
 
@@ -472,6 +507,8 @@ Library: any function accesses storage directly
 
 </div>
 </div>
+
+&nbsp;
 
 LazyLock: simpler for both library users and library internals.
 
@@ -540,11 +577,11 @@ async fn create_todo(
     Ok(Redirect::to("/").into_response())
 }
 ```
+</div>
+</div>
 
+&nbsp;
 See `demo-profile` (1:1) and `demo-todo` (1:N).
-
-</div>
-</div>
 
 ---
 
@@ -556,58 +593,35 @@ See `demo-profile` (1:1) and `demo-todo` (1:N).
 
 ## Summary
 
-<div class="with-qr">
-<div>
-
-| What | Details |
+| | |
 |------|---------|
-| **Library** | `oauth2-passkey` + `oauth2-passkey-axum` |
-| **What it does** | Passkey + OAuth2 auth for Axum apps |
-| **DB support** | SQLite, PostgreSQL, MySQL (via sqlx) |
-| **Key design** | LazyLock globals, DataStore trait dispatch |
-| **Integration** | `AuthUser.id` links your app data to auth |
-
-### Links
-- **crates.io**: `oauth2-passkey`, `oauth2-passkey-axum`
-- **GitHub**: github.com/ktaka-ccmp/oauth2-passkey
-- **X**: @ktaka
-
-</div>
-<div style="text-align: center;">
-
-![w:220](../../shared/qr-github.svg)
-GitHub
-
-</div>
-</div>
+| **What** | OAuth2 + Passkey auth library for Axum |
+| **Highlights** | Passkey Promotion, Built-in UI, Account Linking |
+| **Usage** | `init()` + `merge(router)` + `AuthUser` extractor |
+| **Protection** | Extractor or Middleware (401/redirect, with/without DB) |
+| **Storage** | SQLite/PostgreSQL/MySQL + Memory/Redis, switch via `.env` |
+| **Your app** | Link your data to `AuthUser.id` |
 
 ---
 
-<!-- _class: lead -->
-
-# Thank You!
-
-### Questions?
-
-**Kimitoshi Takahashi (@ktaka)** on X / GitHub
-
----
-
-## About Me
+## Thank You! / Questions?
 
 <div class="with-qr">
 <div>
 
-- **@ktaka** (X / GitHub)
+- **Kimitoshi Takahashi (@ktaka)**
 - Self-employed, reskilling in Rust
 - Building web authentication libraries
 - Third year writing Rust
+- **GitHub**: github.com/ktaka-ccmp/oauth2-passkey
+- **Contact**: ktaka.blog.ccmp.jp/p/p.html
 
 </div>
-<div style="text-align: center;">
+<div>
 
-![w:220](../../shared/qr-contact.svg)
-ktaka.blog.ccmp.jp/p/p.html
+![w:200](../../shared/qr-github.svg) GitHub
+
+![w:200](../../shared/qr-contact.svg) Contact
 
 </div>
 </div>
