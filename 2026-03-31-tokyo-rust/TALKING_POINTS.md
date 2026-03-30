@@ -1,128 +1,99 @@
 # Talking Points: oauth2-passkey
 
-Tokyo Rust Show & Tell (2026/03/31) 15分発表用の話題整理。
+Tokyo Rust Show & Tell (2026/03/31) 15分発表用。
 
-## ライブラリの特徴（聴衆向け）
+## 発表の流れ
 
-- Rust (Axum) で OAuth2/OIDC + Passkey/WebAuthn 認証を統合した唯一のライブラリ
-- crates.io 公開済み（`oauth2-passkey`, `oauth2-passkey-axum`）
-- SQLite / PostgreSQL / MySQL の3バックエンド対応（sqlx）
-- `init()` + `merge(router)` + `AuthUser` の3行でAxumアプリに認証追加
-- パスワードレス認証はホットトピック（Google/Apple/Microsoft対応）
-- Cloud Run 上のライブデモあり
+### 1. デモ (4分)
+- passkey-demo.ccmp.jp でライブデモ
+- **ストーリー**: 初めてのユーザーとして体験させる
+  1. Google OAuth2 で初回ログイン
+  2. Passkey Promotion → 指紋/顔を登録
+  3. ログアウト → Passkey だけで再ログイン（リダイレクトなし、一瞬）
+  4. アカウント管理画面で OAuth2 + Passkey の紐付けを確認
+- 対応 authenticator: Google Password Manager, Apple, Windows Hello, bitwarden, Proton Pass, YubiKey
+- FedCM も見せられたら見せる（ブラウザネイティブUI）
+- **失敗時**: スクリーンショット or ブログ記事のデモ動画を見せる
 
-## Rust的な話題
+### 2. モチベーション (30秒)
+- 「今見たものを自分で作りたかった。Rust で。」
+- 既存エコシステム: webauthn-rs (WebAuthn only), OAuth2 crates (OAuth2 only)
+- **統合ソリューション + セッション管理** が無かった → 作った → crates.io 公開済み
 
-### 1. LazyLock vs Axum State パターン
-- Axum State はユーザーに `AppState` 構造体の管理を強いる
-- LazyLock で DB 接続プールや設定を global に保持、state threading 不要
-- 80+ の内部関数に state を渡す必要がなくなる
-- `init().await?` で起動時に全 LazyLock を強制評価（fail-fast）
-- トレードオフ: プロセスあたり1インスタンス、テスト時は `#[serial]` 必要
-- **ファイル**: `oauth2_passkey/src/storage/data_store/config.rs`
+### 3. アジェンダ (15秒)
+- 残りの時間でこれを話します、と見せるだけ
 
-### 2. DataStore trait によるマルチDB dispatch
-- `trait DataStore: Send + Sync` に `as_sqlite()`, `as_postgres()`, `as_mysql()` を定義
-- 各バックエンドが trait を実装（1つだけ `Some` を返す）
-- `match (store.as_sqlite(), store.as_postgres(), store.as_mysql())` でディスパッチ
-- ランタイムダウンキャスト不要、型安全
-- **ファイル**: `oauth2_passkey/src/storage/data_store/types.rs`, `.../store_type.rs`
+### 4. OAuth2 / Passkey の仕組み (2分)
+- **OAuth2/OIDC**: ページリダイレクト型。Google にリダイレクト → authorization code → id_token (JWT) → セッション
+- **Passkey/WebAuthn**: JavaScript 制御。サーバがチャレンジ発行 → Authenticator が秘密鍵で署名 → サーバが公開鍵で検証
+- Mermaid シーケンス図で説明
+- 対比ポイント: OAuth2 は外部サービス依存、Passkey は自前完結
 
-### 3. Newtype wrappers + コンストラクタ検証
-- `UserId(String)`, `SessionId(String)`, `CsrfToken(String)`, `SessionCookie(String)` 等
-- `CsrfHeaderVerified(pub bool)`, `AuthenticationStatus(pub bool)` — bool にも型をつける
-- `new()` でバリデーション（空文字、長さ、不正文字、危険なシーケンス）
-- 「UserId を持っていれば、それは必ず有効」— 再検証不要
-- **ファイル**: `oauth2_passkey/src/session/types.rs`, `.../passkey/types.rs`
+### 5. ライブラリの使い方 (3分)
+- **init + merge**: 3行で認証追加
+- **Built-in UI**: ログインページ、アカウント管理、管理パネルが組み込み（ユーザーが作る必要なし）
+- **AuthUser extractor**: ハンドラ引数に書くだけで認証チェック
+  - `AuthUser` → 未認証ならリダイレクト
+  - `Option<AuthUser>` → 匿名アクセス許可
+- **Middleware 4種**: 401/redirect × with/without AuthUser
+- ここは Axum ユーザーに直接役立つ話
 
-### 4. thiserror エラー階層 + From impl での自動ログ
-- 各モジュール固有のエラー型: `OAuth2Error`, `PasskeyError`, `SessionError`, `UserError`
-- `CoordinationError` が全モジュールエラーをラップ
-- `From` impl 内で `tracing::error!()` を呼ぶ → `?` でモジュール境界を越えると自動ログ
-- 手動の `tracing::error!()` を散在させる必要なし
-- **ファイル**: `oauth2_passkey/src/coordination/errors.rs`
+### 6. ストレージ & LazyLock (3分)
+- **DataStore trait**: SQLite/PostgreSQL/MySQL を1つの trait で抽象化
+  - `as_sqlite()` / `as_postgres()` / `as_mysql()` → match でディスパッチ
+  - ランタイムダウンキャスト不要
+- **LazyLock vs Axum State**: なぜ State パターンを使わないか
+  - ライブラリ内部に 80+ の関数 → 全部に State を渡すのは非現実的
+  - LazyLock で global に保持 → ユーザーは `AppState` を作る必要なし
+  - `init().await?` で起動時に強制評価（fail-fast）
+  - トレードオフ: プロセスあたり1インスタンス、テスト時は `#[serial]`
+- **ここが一番議論を呼びやすい** — 「State 使うべきでは？」への回答を用意
 
-### 5. Axum AuthUser extractor（FromRequestParts 実装）
-- `AuthUser` をハンドラ引数に書くだけで認証チェック + リダイレクト
-- `Option<AuthUser>` で匿名アクセス許可
-- FromRequestParts 内で CSRF 検証も自動実行（POST/PUT/DELETE/PATCH）
-- ミドルウェア4種: `is_authenticated_{401,redirect}`, `is_authenticated_user_{401,redirect}`
-- **ファイル**: `oauth2_passkey_axum/src/session.rs`, `.../middleware.rs`
+### 7. アプリ DB との連携 (2分)
+- oauth2-passkey が管理: users, oauth2_accounts, passkey_credentials, sessions
+- アプリは `AuthUser.id` を FK にして自分のテーブルを持つ
+- **demo-profile** (1:1): ユーザープロフィール拡張、Google avatar 自動取得
+- **demo-todo** (1:N): TODO リスト、ユーザー隔離
+- DB は別でも同じでも OK
 
-### 6. subtle crate での constant-time 比較
-- CSRF トークン検証に `ct_eq` を使用
-- 通常の `==` はタイミング攻撃に脆弱（短い方が早く reject）
-- `ct_eq` は一致位置に関係なく常に同じ時間
-- **ファイル**: `oauth2_passkey_axum/src/session.rs` (line 201)
+### 8. まとめ・自己紹介 (30秒)
+- Summary テーブル + QR
+- Thank you + Questions
 
-### 7. Atomic SQL（トランザクションなしでビジネスロジック）
-- 「最後の admin でなければ削除」を1つの SQL 文で実現
-- `DELETE ... WHERE id = $1 AND (SELECT COUNT(*) ... WHERE is_admin = true) > 1`
-- 明示的トランザクション不要 = race condition なし
-- **ファイル**: `oauth2_passkey/src/userdb/storage/postgres.rs`
+## ライブラリの差別化ポイント
 
-### 8. SQL dialect 差異の吸収
-- PostgreSQL: `RETURNING *` で INSERT 結果を1クエリで取得
-- SQLite: RETURNING 非対応 → 2クエリ必要（INSERT + SELECT）
-- MySQL: placeholder が `?`（PostgreSQL は `$1`）
-- 3DB対応 = これらの quirks をバックエンドごとに実装
-- **ファイル**: `oauth2_passkey/src/userdb/storage/{sqlite,postgres,mysql}.rs`
+- Rust (Axum) で OAuth2 + Passkey を**統合**した唯一のライブラリ
+- **Passkey Promotion**: OAuth2 ログイン後に Passkey 登録を自動的に促す
+- **Built-in UI**: ログイン、アカウント管理、管理パネル組み込み
+- **3 DB 対応**: SQLite / PostgreSQL / MySQL (sqlx)
+- **Login History**: デバイス・認証器の記録
+- **テーマ**: 9 built-in + カスタム CSS
+- crates.io 公開済み、ドキュメントサイトあり
 
-### 9. From/Into によるレイヤー間の型変換
-- `DbUser` → `SessionUser` → `AuthUser` の3層
-- 各レイヤーが独自の型を持ち、`From` impl で変換
-- Axum 層で `csrf_token`, `session_id` 等のフレームワーク固有フィールドを追加
-- **ファイル**: `oauth2_passkey/src/session/types.rs`, `oauth2_passkey_axum/src/session.rs`
+## Rust 的な話題（メインスライドに入れたもの）
 
-### 10. Generic cache operations（trait bounds）
-- `CacheErrorConversion<E>` trait で型安全なキャッシュ操作
-- `get_data<T, E>` — `T: TryFrom<CacheData>`, `E: CacheErrorConversion<E>`
-- モジュール横断で同じコードを再利用（セッション、チャレンジ、JWKS等）
-- **ファイル**: `oauth2_passkey/src/storage/cache_operations.rs`
+| 話題 | スライド | 議論を呼ぶ度 |
+|------|---------|-----------|
+| LazyLock vs Axum State | p15-16 | 高 — 設計判断の是非 |
+| DataStore trait + マルチDB dispatch | p14 | 高 — Rust的で実用的 |
+| AuthUser extractor (FromRequestParts) | p11 | 中 — Axumユーザーに役立つ |
+| Middleware 4種 | p12 | 中 |
 
-## 優先度の目安
+## Rust 的な話題（Extra Slides / 質疑用）
 
-| 優先度 | 話題 | 理由 |
-|-------|------|------|
-| **高** | LazyLock vs State | 設計判断として議論を呼びやすい |
-| **高** | DataStore trait + マルチDB | Rust的に面白い、実用的 |
-| **高** | AuthUser extractor | Axum ユーザーに直接役立つ |
-| **中** | Newtype wrappers | Rust らしいパターン |
-| **中** | thiserror + 自動ログ | 実践的なエラーハンドリング |
-| **中** | Atomic SQL | DB設計の工夫 |
-| **低** | subtle ct_eq | 短い話題、セキュリティに興味ある人向け |
-| **低** | SQL dialect 差異 | sqlx ユーザー向けニッチ |
-| **低** | From/Into レイヤー | 基本的すぎるかも |
-| **低** | Generic cache ops | 内部実装寄り |
+| 話題 | 一言 |
+|------|------|
+| Newtype wrappers | UserId, CsrfToken 等で型安全、コンストラクタで検証 |
+| thiserror エラー階層 | モジュール別エラー + From impl で自動ログ |
+| subtle ct_eq | CSRF トークンの constant-time 比較 |
+| Atomic SQL | トランザクションなしで「最後の admin でなければ削除」 |
+| SQL dialect 差異 | PostgreSQL RETURNING vs SQLite 2クエリ |
+| From/Into レイヤー | DbUser → SessionUser → AuthUser |
 
+## 想定質問
 
-- passkey.demo.ccmp.jpでデモ
-
-- モチベーションん
-  - 提案のやつ
-  - +DIY目的
-
-- Oauth2でユーザー作成、Passkeyで認証
-  - アカウントリンク
-  - Google OAuth2/OIDC, FedCM
-  - Passkey(Google PWM, Apple, MS, bitwarden, Proton Pass), Yubikey
-
-- OAuth2/OIDCとPasskeyの説明
-
-- ライブラリをどう使用するか
-  - 初期化と、ルートのマウント
-  - パスの保護Extractor
-  - パスの保護middleware
-
-- ストレージアクセス方法
-  - sqlite, postgres, MySQL
-  - in-memory, Redis
-
-- LazyLock Pattern
-  - ライブラリユーザーがStateを引き回すのが大変の解決
-
-- アプリユーザーのデータベースとの連携
-  - アカウントリンク/DBの内部構造
-  - demo-profile, -todoでやってること
-
-- まとめ、感謝、自己紹介
+- **「なぜ State を使わないの？」** → ライブラリとして使いやすさ優先。80+ 関数に State 渡すのは非現実的。
+- **「セキュリティ監査は？」** → subtle crate で constant-time 比較、CSRF 自動検証、セッション cookie は `__Host-` prefix
+- **「他のフレームワーク対応は？」** → core crate はフレームワーク非依存。Axum 以外の integration crate を作れば対応可能。
+- **「テストどうしてる？」** → `#[serial]` + 各 DB バックエンドでの統合テスト
+- **「FedCM って何？」** → ブラウザネイティブの ID 選択 UI。experimental。

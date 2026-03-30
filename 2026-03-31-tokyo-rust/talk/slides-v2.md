@@ -94,7 +94,7 @@ style: |
 
 ### Passwordless Authentication Library for Rust
 
-**Kimitoshi Takahashi (@ktaka)** | Tokyo Rust Show & Tell | 2026/03/31
+**Kimitoshi Takahashi** | Tokyo Rust Show & Tell | 2026/03/31
 
 `crates.io/crates/oauth2-passkey`
 `crates.io/crates/oauth2-passkey-axum`
@@ -112,10 +112,10 @@ style: |
 <div class="with-qr">
 <div>
 
-- **Passkey Registration** - Create account with fingerprint/face
-- **Passkey Login** - Authenticate without password
-- **Google OAuth2 Login** - Sign in with Google
-- **Account Linking** - Connect OAuth2 + Passkey to same user
+1. **Google OAuth2** - First-time login with Google
+2. **Passkey Promotion** - Library prompts to register fingerprint/face
+3. **Passkey-only Login** - Next time, just biometrics. No redirect.
+4. **Account Linking** - Both methods, same user
 
 </div>
 <div style="text-align: center;">
@@ -133,8 +133,10 @@ passkey-demo.ccmp.jp
 | Feature | Details |
 |---------|---------|
 | **OAuth2/OIDC** | Google login (also works with FedCM) |
+| **Passkey Promotion** | After OAuth2 login, prompts user to register Passkey |
 | **Passkey** | Google Password Manager, Apple, Windows Hello, bitwarden, Proton Pass, YubiKey |
 | **Account Linking** | OAuth2 + Passkey mapped to same user |
+| **Built-in UI** | Login page, account management, admin panel included |
 | **Session** | Cookie-based session with CSRF protection |
 
 All handled by a single library: `oauth2-passkey`
@@ -215,6 +217,26 @@ Authenticators: Google Password Manager, YubiKey, Touch ID, Windows Hello
 
 ---
 
+## Environment Variables (.env)
+
+```env
+ORIGIN='http://localhost:3001'
+
+# Google OAuth2 credentials
+OAUTH2_GOOGLE_CLIENT_ID='xxx.apps.googleusercontent.com'
+OAUTH2_GOOGLE_CLIENT_SECRET='xxx'
+
+# SQLite + in-memory cache (no DB setup required)
+GENERIC_DATA_STORE_TYPE=sqlite
+GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
+GENERIC_CACHE_STORE_TYPE=memory
+GENERIC_CACHE_STORE_URL='memory'
+```
+
+Swap to PostgreSQL/MySQL by changing `DATA_STORE_TYPE` and `URL`.
+
+---
+
 ## Setup: init + merge
 
 ```rust
@@ -237,6 +259,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
+Built-in login UI, account management, and admin panel included.
+
 ---
 
 ## Page Protection: AuthUser Extractor
@@ -257,39 +281,46 @@ async fn public(user: Option<AuthUser>) -> impl IntoResponse {
 ```
 
 Implemented via Axum's `FromRequestParts` trait:
-- `AuthUser` -> auto-redirect on failure
+- `AuthUser` -> auto-redirect on failure + DB query every time
 - `Option<AuthUser>` -> no redirect, `None` for anonymous
+
+Limitation: always redirects, always hits DB. What about APIs that need 401?
 
 ---
 
 ## Page Protection: Middleware
+
+Middleware solves both: **choose 401 vs redirect, and skip DB when you don't need user info.**
 
 <div class="columns">
 <div>
 
 ```rust
 let app = Router::new()
-    // Protect single route
+    // Web page -> redirect to login
     .route("/secret", get(handler)
-        .route_layer(from_fn(
-            is_authenticated_redirect)))
-    // Protect entire group
+        .route_layer(from_fn(is_authenticated_redirect)))
+
+    // API -> return 401 JSON
     .nest("/api", api_router()
-        .route_layer(from_fn(
-            is_authenticated_user_redirect)));
+        .route_layer(from_fn(is_authenticated_401)));
+```
+
+```rust
+// In handler: extract Attributes from Extension
+fn h(Extension(user): Extension<AuthUser>)
+fn h(Extension(csrf): Extension<CsrfToken>)
 ```
 
 </div>
 <div>
 
-| Middleware | Unauth | User? |
-|-----------|--------|-------|
-| `_401` | 401 | No |
-| `_redirect` | Login | No |
-| `_user_401` | 401 | Yes |
-| `_user_redirect` | Login | Yes |
-
-All prefixed with `is_authenticated`
+| Variant | Unauth | DB? | Extension |
+|---------|--------|-----|-----------|
+| `_401` | 401 | No | `CsrfToken` |
+| `_redirect` | Login | No | `CsrfToken` |
+| `_user_401` | 401 | Yes | `AuthUser` |
+| `_user_redirect` | Login | Yes | `AuthUser` |
 
 </div>
 </div>
@@ -302,12 +333,59 @@ All prefixed with `is_authenticated`
 
 ---
 
-## Multi-DB Support with sqlx
+## Switch DB by Changing .env
+
+```env
+# SQLite (dev/demo - no setup required)
+GENERIC_DATA_STORE_TYPE=sqlite
+GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
+
+# PostgreSQL
+GENERIC_DATA_STORE_TYPE=postgres
+GENERIC_DATA_STORE_URL='postgres://user:pass@localhost:5432/mydb'
+
+# MySQL / MariaDB
+GENERIC_DATA_STORE_TYPE=mysql
+GENERIC_DATA_STORE_URL='mysql://user:pass@localhost:3306/mydb'
+
+# Cache: in-memory or Redis
+GENERIC_CACHE_STORE_TYPE=memory       # or: redis
+GENERIC_CACHE_STORE_URL='memory'      # or: redis://localhost:6379
+```
+
+No code changes. Just swap the env vars and restart.
+
+---
+
+## How It Works: env → LazyLock → DataStore trait
 
 <div class="columns">
 <div>
 
-**DataStore trait:**
+**1. LazyLock reads env at startup:**
+```rust
+static GENERIC_DATA_STORE:
+    LazyLock<Mutex<Box<dyn DataStore>>>
+    = LazyLock::new(|| {
+        let db_type = env::var(
+            "GENERIC_DATA_STORE_TYPE");
+        let db_url = env::var(
+            "GENERIC_DATA_STORE_URL");
+        match db_type {
+            "sqlite"   => Box::new(
+                SqliteDataStore { pool }),
+            "postgres" => Box::new(
+                PostgresDataStore { pool }),
+            "mysql"    => Box::new(
+                MySqlDataStore { pool }),
+        }
+    });
+```
+
+</div>
+<div>
+
+**2. Callers dispatch via trait:**
 ```rust
 pub(crate) trait DataStore: Send + Sync {
     fn as_sqlite(&self)
@@ -317,19 +395,9 @@ pub(crate) trait DataStore: Send + Sync {
     fn as_mysql(&self)
         -> Option<&Pool<MySql>>;
 }
-```
 
-One trait, three implementations.
-No runtime downcasting needed.
-
-</div>
-<div>
-
-**Dispatch pattern:**
-```rust
 let store = GENERIC_DATA_STORE
     .lock().await;
-
 match (store.as_sqlite(),
        store.as_postgres(),
        store.as_mysql()) {
@@ -337,9 +405,7 @@ match (store.as_sqlite(),
         do_sqlite(pool).await?,
     (_, Some(pool), _) =>
         do_postgres(pool).await?,
-    (_, _, Some(pool)) =>
-        do_mysql(pool).await?,
-    _ => return Err(...),
+    ...
 }
 ```
 
@@ -353,62 +419,38 @@ match (store.as_sqlite(),
 <div class="columns">
 <div>
 
-**Typical Axum State pattern:**
+**If the library used State:**
 ```rust
-struct AppState { db: PgPool, cache: Redis }
+// User must compose AuthState into AppState
+struct AppState {
+    auth: AuthState,  // library's state
+    pool: PgPool,     // user's own state
+}
 let app = Router::new().with_state(state);
-
-// EVERY handler needs State
-async fn handler(
-    State(s): State<AppState>
-) { ... }
-
-// 80+ internal functions need &AppState
-async fn internal_fn(
-    state: &AppState
-) { ... }
 ```
+User: manage state composition
+Library: thread state through 80+ internal functions
 
 </div>
 <div>
 
 **oauth2-passkey: LazyLock globals**
 ```rust
-static GENERIC_DATA_STORE:
-    LazyLock<Mutex<Box<dyn DataStore>>>
-    = LazyLock::new(|| {
-        match store_type {
-            "sqlite"   => Box::new(...),
-            "postgres" => Box::new(...),
-            "mysql"    => Box::new(...),
-        }
-    });
+// User just calls init()
+oauth2_passkey_axum::init().await?;
 
-// Any function can access directly
+// Library internally:
 let store = GENERIC_DATA_STORE
     .lock().await;
+// No state parameter needed
 ```
+User: just call `init()`, done
+Library: any function accesses storage directly
 
 </div>
 </div>
 
----
-
-## LazyLock: Benefits & Trade-offs
-
-### Benefits
-- **Zero boilerplate for users** - no `AppState` struct to create
-- **No state threading** - internal functions access storage directly
-- **Env-only config** - set `GENERIC_DATA_STORE_TYPE=postgres` in `.env`
-- **Fail-fast init** - `init().await?` forces evaluation at startup
-
-### Trade-offs
-- Single instance per process (fine for auth library)
-- Implicit dependencies (function signatures don't show DB access)
-- Test isolation needs `#[serial]` (shared global state)
-
-A library that requires users to manage `AppState` is harder to adopt.
-LazyLock keeps complexity **inside** the library.
+LazyLock: simpler for both library users and library internals.
 
 ---
 
@@ -559,6 +601,86 @@ ktaka.blog.ccmp.jp/p/p.html
 <!-- _class: lead -->
 
 # Extra Slides
+
+---
+
+## What is LazyLock?
+
+`std::sync::LazyLock` — a value initialized **once**, on first access, then shared immutably. Thread-safe. Stable since Rust 1.80.
+
+```rust
+use std::sync::LazyLock;
+
+// Evaluated once, on first access. Never again.
+static CONFIG: LazyLock<String> = LazyLock::new(|| {
+    std::env::var("MY_CONFIG").expect("MY_CONFIG must be set")
+});
+
+fn anywhere() {
+    println!("{}", *CONFIG);  // Just use it. No parameter needed.
+}
+```
+
+Like `lazy_static!` but in std. No macro, no extra crate.
+
+---
+
+## LazyLock: Benefits & Trade-offs
+
+### Benefits
+- **Zero boilerplate for users** - no `AppState` struct to create
+- **No state threading** - 80+ internal functions access storage directly
+- **Env-only config** - switch DB by changing `.env`, no code changes
+- **Fail-fast init** - `init().await?` panics on invalid env at startup
+
+### Trade-offs
+- Single instance per process (fine for auth library)
+- Implicit dependencies (function signatures don't show DB access)
+- Test isolation needs `#[serial]` (shared global state)
+
+An intentional design trade-off: Rust purists would use State, but LazyLock keeps complexity inside the library.
+
+---
+
+## Middleware: Why Not Just Use the Extractor?
+
+<div class="columns">
+<div>
+
+**AuthUser extractor:**
+- Always redirects on auth failure
+- Always fetches user from DB
+- Great for web pages that need user info
+
+**Problem:** APIs should return 401 JSON, not redirect HTML. And sometimes you just need to check "is this user logged in?" without a DB query.
+
+</div>
+<div>
+
+**Middleware gives 2 axes of control:**
+
+*Response type:*
+- `_redirect` → Web pages (GET redirects to login)
+- `_401` → APIs (always returns 401)
+
+*Extension injected:*
+- `_user` → DB query, `Extension<AuthUser>`
+- Non-`_user` → No DB query, `Extension<CsrfToken>` only
+
+```rust
+// Handler with _user middleware
+async fn page(
+    Extension(user): Extension<AuthUser>,
+) -> impl IntoResponse { ... }
+
+// Handler with non-_user middleware
+async fn api(
+    Extension(csrf): Extension<CsrfToken>,
+) -> impl IntoResponse { ... }
+```
+
+</div>
+</div>
 
 ---
 
