@@ -130,6 +130,32 @@
 
     #v(10pt)
 
+    // Motivation
+    #section-box("Motivation")[
+      #grid(
+        columns: (1fr, 1fr),
+        gutter: 10pt,
+        [
+          *OAuth2/OIDC*
+          #set list(spacing: 0.4em)
+          - Delegate auth to trusted providers
+          - No passwords to manage or leak
+          - SSO across services
+        ],
+        [
+          *Passkey/WebAuthn*
+          #set list(spacing: 0.4em)
+          - Phishing-resistant by design
+          - Biometrics or hardware key
+          - No server-side password storage
+        ],
+      )
+      #v(6pt)
+      _Studied how to implement both in Rust/Axum — no integrated library existed → built one → published to crates.io._
+    ]
+
+    #v(10pt)
+
     // p7: Flow: Google Login → Passkey Setup
     #section-box("Flow: Google Login → Passkey Setup")[
       #grid(
@@ -166,7 +192,7 @@
     // p8: How OAuth2/OIDC Works
     #section-box("How OAuth2/OIDC Works")[
       #align(center)[
-        #image("../diagrams/oauth2-flow.svg", width: 96%)
+        #image("../diagrams/oauth2-flow.svg", width: 88%)
       ]
       _Page-redirect: Google → code → id\_token → session_
     ]
@@ -176,7 +202,7 @@
     // p9: How Passkey/WebAuthn Works
     #section-box("How Passkey/WebAuthn Works")[
       #align(center)[
-        #image("../diagrams/passkey-flow.svg", width: 96%)
+        #image("../diagrams/passkey-flow.svg", width: 88%)
       ]
       _JavaScript-driven: challenge → sign → verify → session_
     ]
@@ -306,21 +332,13 @@
         ```rust
         static GENERIC_DATA_STORE: LazyLock<Mutex<Box<dyn DataStore>>>
             = LazyLock::new(|| { /* reads env, builds pool */ });
-
-        // Dispatch — no runtime downcasting needed
-        let store = GENERIC_DATA_STORE.lock().await;
-        match (store.as_sqlite(), store.as_postgres(), store.as_mysql()) {
-            (Some(pool), _, _) => do_sqlite(pool).await?,
-            (_, Some(pool), _) => do_postgres(pool).await?,
-            (_, _, Some(pool)) => do_mysql(pool).await?,
-            _ => return Err(...),
-        }
         ```
       ]
 
       *Why LazyLock instead of Axum State?*
       - *Axum State*: user composes `AppState`; 80+ internal fns all need `&State`
       - *LazyLock*: just `init()` — globals accessed directly; fail-fast at startup
+      - *Trade-off*: one instance per process; use `#[serial]` in tests
     ]
 
     #v(8pt)
@@ -366,30 +384,20 @@
       )
     ]
 
-  ],
-)
+    #v(8pt)
 
-// ============================================================
-// FOOTER - Full width Summary
-// ============================================================
-
-#v(12pt)
-#section-box("Summary")[
-  #grid(
-    columns: (3fr, 2fr),
-    gutter: 20pt,
-    [
-      #set list(spacing: 0.8em)
+    // Summary
+    #section-box("Summary")[
+      #set list(spacing: 0.6em)
       - *Library*: OAuth2 + Passkey/WebAuthn auth for Axum; Passkey Promotion, Built-in UI, Account Linking
       - *Setup*: `init().await?` + `merge(oauth2_passkey_full_router())` — 3 lines to add auth
       - *Protect*: `AuthUser` extractor or `is_authenticated_*` middleware (401/redirect, ±DB query)
       - *Storage*: SQLite/PostgreSQL/MySQL + Memory/Redis — switch via `.env`, no code changes
-      #v(18pt)
-    ],
-    [
+      #v(6pt)
       - *crates.io:* `oauth2-passkey`, `oauth2-passkey-axum`
       - *GitHub:* github.com/ktaka-ccmp/oauth2-passkey
       - *Demo:* passkey-demo.ccmp.jp
-    ],
-  )
-]
+    ]
+
+  ],
+)
