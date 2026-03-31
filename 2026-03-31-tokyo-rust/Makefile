@@ -29,6 +29,9 @@ talk: $(TALK_PDF) $(TALK_HTML)
 
 talk-short: $(TALK_SHORT_PDF) $(TALK_SHORT_HTML)
 
+$(TALK_SHORT_SRC): $(TALK_SRC) talk/gen-short.py
+	python3 talk/gen-short.py
+
 talk-typst: $(TALK_TYPST_PDF)
 
 poster: $(POSTER_PDF)

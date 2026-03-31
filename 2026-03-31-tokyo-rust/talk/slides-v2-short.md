@@ -140,6 +140,7 @@ style: |
 3. Login with either Passkey or Google OAuth2
 
 <div class="center-content">
+&nbsp;
 
 ![w:220](../../shared/qr-demo.svg)
 
@@ -168,9 +169,13 @@ Try it out & give me feedback!
 </div>
 </div>
 </div>
+</div>
 
 ---
+
 ## Motivation
+
+&nbsp;
 
 I wanted to build **exactly what you just saw** — in Rust.
 
@@ -181,11 +186,11 @@ I wanted to build **exactly what you just saw** — in Rust.
 ---
 
 ## Agenda
+&nbsp;
 
 1. **Using the Library**
 2. **Multi-DB Storage Support**
 3. **Wrap-up**
-
 ---
 
 <!-- _class: lead -->
@@ -195,6 +200,7 @@ I wanted to build **exactly what you just saw** — in Rust.
 ---
 
 ## .env Setup (Minimal)
+&nbsp;
 
 ```env
 ORIGIN='http://localhost:3001'
@@ -269,6 +275,7 @@ Limitation: always hits DB, GET always redirects. Middleware gives more control:
 ---
 
 ## Page Protection: Middleware
+&nbsp;
 
 Middleware gives more control: **skip DB, or return 401 even on GET.**
 
@@ -294,6 +301,7 @@ async fn h2(Extension(user): Extension<AuthUser>) { ... }
 ---
 
 ## Switch DB by Changing .env
+&nbsp;
 
 ```env
 # SQLite (dev/demo - no setup required)
@@ -324,6 +332,7 @@ No code changes. Just swap the env vars and restart.
 ---
 
 ## Summary
+&nbsp;
 
 - **Easy**: Add passwordless auth to your Axum app in minutes — Built-in UI included
 - **Secure**: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies
@@ -350,5 +359,3 @@ No code changes. Just swap the env vars and restart.
 
 </div>
 </div>
-
----

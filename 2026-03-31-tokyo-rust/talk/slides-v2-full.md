@@ -140,6 +140,7 @@ style: |
 3. Login with either Passkey or Google OAuth2
 
 <div class="center-content">
+&nbsp;
 
 ![w:220](../../shared/qr-demo.svg)
 
@@ -171,7 +172,10 @@ Try it out & give me feedback!
 </div>
 
 ---
+
 ## Motivation
+
+&nbsp;
 
 I wanted to build **exactly what you just saw** — in Rust.
 
@@ -182,6 +186,7 @@ I wanted to build **exactly what you just saw** — in Rust.
 ---
 
 ## Agenda
+&nbsp;
 
 1. **How OAuth2 & Passkey Work**
 2. **Using the Library**
@@ -192,11 +197,12 @@ I wanted to build **exactly what you just saw** — in Rust.
 ---
 
 ## How OAuth2/OIDC Works
+&nbsp;
 
 <div class="columns-60-40">
 <div>
 
-![w:650](../diagrams/oauth2-flow.svg)
+![w:700](../diagrams/oauth2-flow.svg)
 
 </div>
 <div>
@@ -209,11 +215,12 @@ _Page-redirect: Google → code → id\_token → session_
 ---
 
 ## How Passkey/WebAuthn Works
+&nbsp;
 
 <div class="columns-60-40">
 <div>
 
-![w:650](../diagrams/passkey-flow.svg)
+![w:700](../diagrams/passkey-flow.svg)
 
 </div>
 <div>
@@ -235,6 +242,7 @@ _Authenticators: Google Password Manager, Apple, Windows Hello, YubiKey, ..._
 ---
 
 ## .env Setup (Minimal)
+&nbsp;
 
 ```env
 ORIGIN='http://localhost:3001'
@@ -309,6 +317,7 @@ Limitation: always hits DB, GET always redirects. Middleware gives more control:
 ---
 
 ## Page Protection: Middleware
+&nbsp;
 
 Middleware gives more control: **skip DB, or return 401 even on GET.**
 
@@ -328,6 +337,7 @@ async fn h2(Extension(user): Extension<AuthUser>) { ... }
 ---
 
 ## Page Protection: Middleware Variants
+&nbsp;
 
 | Variant | Unauthenticated | DB Query | Handler Extension |
 |---------|-----------------|----------|------------------|
@@ -345,6 +355,7 @@ async fn h2(Extension(user): Extension<AuthUser>) { ... }
 ---
 
 ## Switch DB by Changing .env
+&nbsp;
 
 ```env
 # SQLite (dev/demo - no setup required)
@@ -425,6 +436,7 @@ match (store.as_sqlite(), store.as_postgres(), store.as_mysql()) {
 ---
 
 ## Why LazyLock Instead of Axum State?
+&nbsp;
 
 <div class="columns">
 <div>
@@ -468,6 +480,7 @@ let store = GENERIC_DATA_STORE
 ---
 
 ## Integrating Your App: 1:N Schema (demo-todo)
+&nbsp;
 
 <div class="columns">
 <div>
@@ -507,6 +520,7 @@ Your app:       Library:
 ---
 
 ## Integrating Your App: 1:N Handler (demo-todo)
+&nbsp;
 
 <div class="columns">
 <div>
@@ -558,6 +572,7 @@ async fn create_todo(
 ---
 
 ## Integrating Your App: 1:1 Schema (demo-profile)
+&nbsp;
 
 <div class="columns">
 <div>
@@ -599,6 +614,7 @@ Your app:            Library:
 ---
 
 ## Integrating Your App: 1:1 Handler (demo-profile)
+&nbsp;
 
 <div class="columns">
 <div>
@@ -659,6 +675,7 @@ async fn update_profile(
 ---
 
 ## Summary
+&nbsp;
 
 - **Easy**: Add passwordless auth to your Axum app in minutes — Built-in UI included
 - **Secure**: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies

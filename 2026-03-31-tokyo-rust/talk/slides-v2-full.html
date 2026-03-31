@@ -636,6 +636,7 @@ section .with-qr &gt; div:last-child p {
 <li>Login with either Passkey or Google OAuth2</li>
 </ol>
 <div class="center-content">
+&nbsp;
 <p><img src="../../shared/qr-demo.svg" alt="" style="width:220px;" /></p>
 <p>Try it out &amp; give me feedback!</p>
 </div>
@@ -863,6 +864,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="motivation">Motivation</h2>
+<p> </p>
 <p>I wanted to build <strong>exactly what you just saw</strong> — in Rust.</p>
 <ul>
 <li><strong>OAuth2/OIDC</strong>: delegate auth to trusted providers — no passwords to manage</li>
@@ -1074,6 +1076,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="agenda">Agenda</h2>
+<p> </p>
 <ol>
 <li><strong>How OAuth2 &amp; Passkey Work</strong></li>
 <li><strong>Using the Library</strong></li>
@@ -1286,9 +1289,10 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="how-oauth2oidc-works">How OAuth2/OIDC Works</h2>
+<p> </p>
 <div class="columns-60-40">
 <div>
-<p><img src="../diagrams/oauth2-flow.svg" alt="" style="width:650px;" /></p>
+<p><img src="../diagrams/oauth2-flow.svg" alt="" style="width:700px;" /></p>
 </div>
 <div>
 <p><em>Page-redirect: Google → code → id_token → session</em></p>
@@ -1499,9 +1503,10 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="how-passkeywebauthn-works">How Passkey/WebAuthn Works</h2>
+<p> </p>
 <div class="columns-60-40">
 <div>
-<p><img src="../diagrams/passkey-flow.svg" alt="" style="width:650px;" /></p>
+<p><img src="../diagrams/passkey-flow.svg" alt="" style="width:700px;" /></p>
 </div>
 <div>
 <p><em>JavaScript-driven: challenge → sign → verify → session</em></p>
@@ -1918,6 +1923,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="env-setup-minimal">.env Setup (Minimal)</h2>
+<p> </p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-env">ORIGIN='http://localhost:3001'
 
 # Google OAuth2 credentials
@@ -2591,6 +2597,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="page-protection-middleware">Page Protection: Middleware</h2>
+<p> </p>
 <p>Middleware gives more control: <strong>skip DB, or return 401 even on GET.</strong></p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">app</span> = Router::<span class="hljs-title function_ invoke__">new</span>()
     .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/api/1&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(h1)
@@ -2807,6 +2814,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="page-protection-middleware-variants">Page Protection: Middleware Variants</h2>
+<p> </p>
 <table>
 <thead>
 <tr>
@@ -3253,6 +3261,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="switch-db-by-changing-env">Switch DB by Changing .env</h2>
+<p> </p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-env"># SQLite (dev/demo - no setup required)
 GENERIC_DATA_STORE_TYPE=sqlite
 GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
@@ -3723,6 +3732,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="why-lazylock-instead-of-axum-state">Why LazyLock Instead of Axum State?</h2>
+<p> </p>
 <div class="columns">
 <div>
 <p><strong>If the library used State:</strong></p>
@@ -4158,6 +4168,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="integrating-your-app-1n-schema-demo-todo">Integrating Your App: 1:N Schema (demo-todo)</h2>
+<p> </p>
 <div class="columns">
 <div>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-sql"><span class="hljs-keyword">CREATE TABLE</span> todos (
@@ -4392,6 +4403,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="integrating-your-app-1n-handler-demo-todo">Integrating Your App: 1:N Handler (demo-todo)</h2>
+<p> </p>
 <div class="columns">
 <div>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// main.rs</span>
@@ -4636,6 +4648,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="integrating-your-app-11-schema-demo-profile">Integrating Your App: 1:1 Schema (demo-profile)</h2>
+<p> </p>
 <div class="columns">
 <div>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-sql"><span class="hljs-keyword">CREATE TABLE</span> user_profiles (
@@ -4872,6 +4885,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="integrating-your-app-11-handler-demo-profile">Integrating Your App: 1:1 Handler (demo-profile)</h2>
+<p> </p>
 <div class="columns">
 <div>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// main.rs</span>
@@ -5324,6 +5338,7 @@ section .with-qr &gt; div:last-child p {
 }
 ;" data-marpit-pagination-total="42" data-size="16:9">
 <h2 id="summary">Summary</h2>
+<p> </p>
 <ul>
 <li><strong>Easy</strong>: Add passwordless auth to your Axum app in minutes — Built-in UI included</li>
 <li><strong>Secure</strong>: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies</li>
