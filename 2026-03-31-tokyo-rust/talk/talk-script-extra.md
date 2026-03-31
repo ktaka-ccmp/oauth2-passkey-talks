@@ -1,49 +1,6 @@
 # Talk Script: Extra Slides (Q&A Backup)
 
-These slides are available in both versions. Use them when questions arise.
-Slides marked **(short only)** appear only in slides-v2-short.md's extra section.
-
----
-
-## What the Demo Showed *(short only)*
-
-"Let me go through what the demo covered in more detail. Google OAuth2 login — the library handles the full redirect flow and creates a user in the DB. After login, it automatically prompts Passkey registration — that's the Passkey Promotion feature. Passkey authenticators can be Google Password Manager, Apple, Windows Hello, bitwarden, Proton Pass, or a hardware key like YubiKey. Both methods get linked to the same user account. The login page, account management, and admin panel are all built into the library — you don't build them from scratch."
-
----
-
-## Flow: Google Login → Passkey Setup *(short only)*
-
-"Here's the full picture of how account linking works. When a user first logs in with Google, the library creates a user record in the DB. Then Passkey Promotion kicks in — the user registers a Passkey, and it gets linked to the same user. From then on, either method works. On the right, you can see the DB structure: one user can have multiple OAuth2 accounts — say, Google and GitHub — and multiple Passkey credentials — a laptop, a phone, a YubiKey. They all resolve to the same user ID."
-
----
-
-## How OAuth2/OIDC Works *(short only)*
-
-"For those unfamiliar with OAuth2: it's a page-redirect flow. The user clicks 'Login with Google', gets redirected to Google, authenticates there, and Google redirects back with an authorization code. The server exchanges that code for an ID token, extracts the user identity, and creates a session. The key point is that the user's password never touches your server — Google handles it."
-
----
-
-## How Passkey/WebAuthn Works *(short only)*
-
-"Passkey is different — it's JavaScript-driven, no page redirect. The server generates a random challenge, the browser passes it to the WebAuthn API, and the Authenticator signs it with the user's private key. The server verifies the signature with the previously-registered public key and creates a session. The private key never leaves the device. Authenticators include Google Password Manager, Apple Passwords, Windows Hello, and hardware keys like YubiKey."
-
----
-
-## Page Protection: Middleware Variants *(short only)*
-
-"Here's the full comparison table. There are four variants. The _redirect variants redirect to the login page on auth failure — suited for web pages. The _401 variants always return HTTP 401 — suited for APIs. The _user variants query the DB and inject AuthUser into the handler via Extension. Without _user, there's no DB query and only CsrfToken is available. So you have two independent axes: response type and whether to fetch the user."
-
----
-
-## How Multi-DB Support Works Internally *(short only)*
-
-"Three steps to understand this. First, a LazyLock static reads the GENERIC_DATA_STORE_TYPE env var at startup and creates the appropriate DataStore — SqliteDataStore, PostgresDataStore, or MySqlDataStore — wrapped in a Box<dyn DataStore>. Second, the DataStore trait has three methods: as_sqlite, as_postgres, as_mysql. Each concrete type returns Some for its own pool and None for the others. SqliteDataStore returns Some only from as_sqlite. Third, callers match on the tuple of all three. If GENERIC_DATA_STORE_TYPE=sqlite, the match arm (Some(pool), _, _) fires and get_all_users_sqlite runs. Change the env var to postgres, and a different match arm fires — same calling code, different backend."
-
----
-
-## Why LazyLock Instead of Axum State? *(short only)*
-
-"If the library used Axum State, users would need to embed the library's AuthState into their own AppState struct. Every time you add a new library with its own State, you have to update your AppState definition. With LazyLock globals, users just call init(). The library holds everything internally. There's no struct to compose, no state to pass around. The trade-off: the library's DB access is implicit — you can't see it from function signatures. And tests need serial execution because of shared global state. For an auth library used as infrastructure, this trade-off is worth it."
+These slides are in the Extra Slides section of slides-v2-full.md. Use them when questions arise during Q&A.
 
 ---
 
@@ -140,27 +97,3 @@ Slides marked **(short only)** appear only in slides-v2-short.md's extra section
 ## Future Plans
 
 "A few things on the roadmap. DPoP — Demonstration of Proof-of-Possession — binds tokens to a cryptographic key, preventing stolen tokens from being replayed. Bearer Token support for API authentication beyond session cookies. FedCM — Federated Credential Management — is a browser-native identity API that avoids the page redirect entirely; there's a partial implementation already. And more OAuth2 providers — GitHub, Apple, Microsoft are the obvious next ones."
-
----
-
-## Integrating Your App: 1:N Schema *(short only)*
-
-"For a 1:N relationship like a todo app, add a user_id TEXT NOT NULL column to your table and create an index on it. user_id references oauth2-passkey's users.id — you get that value from AuthUser.id in your handler. The index is essential: most queries will be 'give me all todos for this user', and without the index that's a full table scan. Your app's DB and the library's DB can be the same SQLite file or separate databases — your choice."
-
----
-
-## Integrating Your App: 1:N Handler *(short only)*
-
-"Wrap your routes in a function — todos_router() here — and apply the middleware with route_layer. This is cleaner than applying middleware inline in main, and it makes the protected routes explicit. In the create_todo handler, you receive AppState, AuthUser, and the form data. You pass user.id as the foreign key when writing to your DB. Your AppState only holds your DB pool — you never touch the library's storage directly. The middleware already verified the session, so no extra DB query happens at the route level."
-
----
-
-## Integrating Your App: 1:1 Schema *(short only)*
-
-"For a 1:1 relationship like a user profile, make user_id the PRIMARY KEY. Since user_id is also a FK to users.id, making it the PK enforces the one-to-one constraint at the database level — you literally cannot have two profiles for the same user. No separate id column is needed. This is simpler than having a separate UNIQUE constraint. The profile doesn't exist until the user's first login, so the handler creates it on first write using upsert."
-
----
-
-## Integrating Your App: 1:1 Handler *(short only)*
-
-"Same structure as the todo handler — extract routes into profile_router(), apply middleware. The key difference in the handler is db::upsert_profile. Upsert is INSERT ... ON CONFLICT DO UPDATE — it creates the record if it doesn't exist, or updates it if it does. This is atomic: no race condition between a check-then-insert sequence. For a profile, this means the first POST creates the profile, subsequent POSTs update it — handled in one query without the handler needing to know which case it is."

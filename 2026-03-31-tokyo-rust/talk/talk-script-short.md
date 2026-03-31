@@ -18,9 +18,9 @@ Estimated time: ~10 min (including 2 min pre-recorded demo)
 
 ---
 
-## Slide 3: Demo (QR code)
+## Slide 3: Demo
 
-"What you saw: log in with Google, the library automatically prompts Passkey registration, and from then on biometric login only — no redirect to Google. Both methods link to the same account. Scan this QR if you want to try it."
+"What you saw: log in with Google, the library automatically prompts Passkey registration, and from then on biometric login only — no redirect to Google. Both methods link to the same account — you can see the structure in the diagram on the right. Scan this QR if you want to try it, and please give me feedback!"
 
 ---
 
@@ -74,7 +74,7 @@ Estimated time: ~10 min (including 2 min pre-recorded demo)
 
 ## Slide 12: Switch DB by Changing .env
 
-"Switching DBs is just env vars — SQLite, PostgreSQL, MySQL, Redis. No code changes at all. Internally, a LazyLock reads the env at startup, builds the right DataStore implementation, and callers dispatch through the trait. Details are in the backup slides."
+"Switching DBs is just env vars — SQLite, PostgreSQL, MySQL, Redis. No code changes at all. Internally, a LazyLock reads the env at startup, builds the right DataStore implementation, and callers dispatch through the trait. Details are in slides-v2-full.md."
 
 ---
 
@@ -96,14 +96,13 @@ Estimated time: ~10 min (including 2 min pre-recorded demo)
 
 ---
 
-## Extra Slides (for Q&A)
+## For Q&A
 
-The backup slides cover:
+Switch to slides-v2-full.md for backup slides covering:
+- How OAuth2 & Passkey work (flow diagrams)
+- Multi-DB internals (LazyLock → DataStore → dispatch)
+- Why LazyLock vs Axum State
+- Integration patterns (1:N todo, 1:1 profile)
+- AuthUser implementation, Newtype wrappers, Error hierarchy, etc.
 
-- **What the Demo Showed** — detailed feature table from the demo
-- **Flow / OAuth2 / Passkey** — how each auth flow works
-- **Middleware Variants** — comparison table of all 4 variants
-- **How Multi-DB Works Internally** — LazyLock → DataStore trait → dispatch in 3 steps
-- **Why LazyLock vs Axum State** — state threading problem and trade-offs
-- **Integrating: 1:N / 1:1 Schema & Handler** — todo and profile integration patterns
-- Others: AuthUser implementation, Newtype wrappers, Error hierarchy, Atomic SQL, etc.
+See `talk-script-extra.md` for scripts for each backup slide.
