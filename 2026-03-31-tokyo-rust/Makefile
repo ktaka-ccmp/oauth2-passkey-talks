@@ -3,10 +3,15 @@ SHARED := $(ROOT)/shared
 DIAGRAMS := diagrams
 SVG_DEPS := $(wildcard $(DIAGRAMS)/*.svg) $(wildcard $(SHARED)/*.svg)
 
-# Marp slides
+# Marp slides (full)
 TALK_SRC := talk/slides-v2.md
 TALK_PDF := talk/slides-v2.pdf
 TALK_HTML := talk/slides-v2.html
+
+# Marp slides (short)
+TALK_SHORT_SRC := talk/slides-v2-short.md
+TALK_SHORT_PDF := talk/slides-v2-short.pdf
+TALK_SHORT_HTML := talk/slides-v2-short.html
 
 # Typst slides
 TALK_TYPST_SRC := talk-typst/slides.typ
@@ -16,11 +21,13 @@ TALK_TYPST_PDF := talk-typst/slides.pdf
 POSTER_SRC := poster/poster.typ
 POSTER_PDF := poster/poster.pdf
 
-.PHONY: all talk talk-typst poster clean
+.PHONY: all talk talk-short talk-typst poster clean
 
-all: talk talk-typst poster
+all: talk talk-short talk-typst poster
 
 talk: $(TALK_PDF) $(TALK_HTML)
+
+talk-short: $(TALK_SHORT_PDF) $(TALK_SHORT_HTML)
 
 talk-typst: $(TALK_TYPST_PDF)
 
@@ -32,6 +39,12 @@ $(TALK_PDF): $(TALK_SRC) $(SVG_DEPS)
 $(TALK_HTML): $(TALK_SRC) $(SVG_DEPS)
 	npx @marp-team/marp-cli $< --allow-local-files -o $@
 
+$(TALK_SHORT_PDF): $(TALK_SHORT_SRC) $(SVG_DEPS)
+	npx @marp-team/marp-cli $< --pdf --allow-local-files -o $@
+
+$(TALK_SHORT_HTML): $(TALK_SHORT_SRC) $(SVG_DEPS)
+	npx @marp-team/marp-cli $< --allow-local-files -o $@
+
 $(TALK_TYPST_PDF): $(TALK_TYPST_SRC) $(SVG_DEPS)
 	typst compile $< $@ --root $(ROOT)
 
@@ -39,4 +52,4 @@ $(POSTER_PDF): $(POSTER_SRC) $(SVG_DEPS)
 	typst compile $< $@ --root $(ROOT)
 
 clean:
-	rm -f $(TALK_PDF) $(TALK_HTML) $(TALK_TYPST_PDF) $(POSTER_PDF)
+	rm -f $(TALK_PDF) $(TALK_HTML) $(TALK_SHORT_PDF) $(TALK_SHORT_HTML) $(TALK_TYPST_PDF) $(POSTER_PDF)

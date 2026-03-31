@@ -99,12 +99,6 @@ style: |
     gap: 0.8em;
     align-content: start;
   }
-  .center-content p {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
 ---
 
 <!-- _class: lead -->
@@ -149,64 +143,6 @@ style: |
 </div>
 
 ---
-
-## Demo: Flow & Account Linking
-
-&nbsp;
-<div class="columns-60-40">
-<div>
-
-1. Google OAuth2/OIDC Login to create a user
-2. Passkey Promotion -> register
-3. Login with either Passkey or Google OAuth2
-
-<div class="center-content">
-
-![w:220](../../shared/qr-demo.svg)
-
-Try it out & give me feedback!
-
-</div>
-
-</div>
-<div>
-
-```text
-
- 👤 [User] id: 1
-  │
-  ├── 🌐 [oauth2_accounts]
-  │   ├── (Google ID)
-  │   └── (GitHub ID)
-  │
-  └── 🔑 [passkey_credentials]
-      ├── (Google Password Manager)
-      ├── (Apple Password Manager)
-      └── (YubiKey)
-
-```
-
-</div>
-</div>
-</div>
-</div>
-
----
-
-## What the Demo Showed
-
-| Feature | Details |
-|---------|---------|
-| **OAuth2/OIDC** | Google login (also works with FedCM) |
-| **Passkey Promotion** | After OAuth2 login, prompts user to register Passkey |
-| **Passkey** | Google Password Manager, Apple, Windows Hello, bitwarden, Proton Pass, YubiKey |
-| **Account Linking** | OAuth2 + Passkey mapped to same user |
-| **Built-in UI** | Login page, account management, admin panel included |
-| **Session** | Cookie-based session with CSRF protection |
-
-All handled by a single library: `oauth2-passkey`
-
----
 ## Motivation
 
 I wanted to build **exactly what you just saw** — in Rust.
@@ -219,93 +155,9 @@ I wanted to build **exactly what you just saw** — in Rust.
 
 ## Agenda
 
-1. **How OAuth2 & Passkey Work**
-2. **Using the Library**
-3. **Internals of Multi Storage Support**
-4. **Integrating with Your App**
-5. **Wrap-up**
-
----
-
-## Flow: Google Login → Passkey Setup
-
-<div class="columns-60-40">
-<div>
-
-### Step-by-step
-
-&nbsp;
-1. **OAuth2 Login**
-   ➔ Create a user in db linked with Google account
-2. **Passkey Promotion**
-   ➔ Register Passkey ➔ link to the user
-3. **Next Login**
-   ➔ Login with either Passkey or Google OAuth2
-
-&nbsp;
-
-One user can have multiple OAuth2 accounts and multiple passkey credentials.
-</div>
-
-<div>
-
-### Internal Result (Linking)
-
-&nbsp;
-
-```text
-
- 👤 [User] id: 1
-  │
-  ├── 🌐 [oauth2_accounts]
-  │   ├── (Google ID)
-  │   └── (GitHub ID)
-  │
-  └── 🔑 [passkey_credentials]
-      ├── (Google Password Manager)
-      ├── (Apple Password Manager)
-      └── (YubiKey)
-
-```
-</div>
-</div>
-
----
-
-## How OAuth2/OIDC Works
-
-<div class="columns-60-40">
-<div>
-
-![w:650](../diagrams/oauth2-flow.svg)
-
-</div>
-<div>
-
-_Page-redirect: Google → code → id\_token → session_
-
-</div>
-</div>
-
----
-
-## How Passkey/WebAuthn Works
-
-<div class="columns-60-40">
-<div>
-
-![w:650](../diagrams/passkey-flow.svg)
-
-</div>
-<div>
-
-_JavaScript-driven: challenge → sign → verify → session_
-
-_Authenticators: Google Password Manager, Apple, Windows Hello, YubiKey, ..._
-
-</div>
-</div>
-
+1. **Using the Library**
+2. **Multi-DB Storage Support**
+3. **Wrap-up**
 
 ---
 
@@ -408,17 +260,6 @@ async fn h2(Extension(user): Extension<AuthUser>) { ... }
 
 ---
 
-## Page Protection: Middleware Variants
-
-| Variant | Unauthenticated | DB Query | Handler Extension |
-|---------|-----------------|----------|------------------|
-| `is_authenticated_401` | 401 | No | `CsrfToken` |
-| `is_authenticated_user_401` | 401 | Yes | `AuthUser` |
-| `is_authenticated_redirect` | Redirect to login | No | `CsrfToken` |
-| `is_authenticated_user_redirect` | Redirect to login | Yes | `AuthUser` |
-
----
-
 <!-- _class: lead -->
 
 # Storage & LazyLock Pattern
@@ -446,6 +287,155 @@ GENERIC_CACHE_STORE_URL='memory'      # or: redis://localhost:6379
 ```
 
 No code changes. Just swap the env vars and restart.
+
+---
+
+<!-- _class: lead -->
+
+# Wrap-up
+
+---
+
+## Summary
+
+- **Easy**: Add passwordless auth to your Axum app in minutes — Built-in UI included
+- **Secure**: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies
+- **Flexible**: Switch between SQLite, PostgreSQL, MySQL, and Redis with a single `.env` change
+
+---
+
+## Thank You! / Questions?
+
+<div class="with-qr">
+<div>
+
+### About me:
+- **Kimitoshi Takahashi**
+- Self-employed, reskilling in Rust (3rd year)
+- Let's start a startup together!
+
+</div>
+<div>
+
+![w:200](../../shared/qr-github.svg) GitHub
+
+![w:200](../../shared/qr-contact.svg) Contact
+
+</div>
+</div>
+
+---
+
+<!-- _class: lead -->
+
+# Extra Slides
+
+---
+
+## What the Demo Showed
+
+| Feature | Details |
+|---------|---------|
+| **OAuth2/OIDC** | Google login (also works with FedCM) |
+| **Passkey Promotion** | After OAuth2 login, prompts user to register Passkey |
+| **Passkey** | Google Password Manager, Apple, Windows Hello, bitwarden, Proton Pass, YubiKey |
+| **Account Linking** | OAuth2 + Passkey mapped to same user |
+| **Built-in UI** | Login page, account management, admin panel included |
+| **Session** | Cookie-based session with CSRF protection |
+
+All handled by a single library: `oauth2-passkey`
+
+---
+
+## Flow: Google Login → Passkey Setup
+
+<div class="columns-60-40">
+<div>
+
+### Step-by-step
+
+&nbsp;
+1. **OAuth2 Login**
+   ➔ Create a user in db linked with Google account
+2. **Passkey Promotion**
+   ➔ Register Passkey ➔ link to the user
+3. **Next Login**
+   ➔ Login with either Passkey or Google OAuth2
+
+&nbsp;
+
+One user can have multiple OAuth2 accounts and multiple passkey credentials.
+</div>
+
+<div>
+
+### Internal Result (Linking)
+
+&nbsp;
+
+```text
+
+ 👤 [User] id: 1
+  │
+  ├── 🌐 [oauth2_accounts]
+  │   ├── (Google ID)
+  │   └── (GitHub ID)
+  │
+  └── 🔑 [passkey_credentials]
+      ├── (Google Password Manager)
+      ├── (Apple Password Manager)
+      └── (YubiKey)
+
+```
+</div>
+</div>
+
+---
+
+## How OAuth2/OIDC Works
+
+<div class="columns-60-40">
+<div>
+
+![w:650](../diagrams/oauth2-flow.svg)
+
+</div>
+<div>
+
+_Page-redirect: Google → code → id\_token → session_
+
+</div>
+</div>
+
+---
+
+## How Passkey/WebAuthn Works
+
+<div class="columns-60-40">
+<div>
+
+![w:650](../diagrams/passkey-flow.svg)
+
+</div>
+<div>
+
+_JavaScript-driven: challenge → sign → verify → session_
+
+_Authenticators: Google Password Manager, Apple, Windows Hello, YubiKey, ..._
+
+</div>
+</div>
+
+---
+
+## Page Protection: Middleware Variants
+
+| Variant | Unauthenticated | DB Query | Handler Extension |
+|---------|-----------------|----------|------------------|
+| `is_authenticated_401` | 401 | No | `CsrfToken` |
+| `is_authenticated_user_401` | 401 | Yes | `AuthUser` |
+| `is_authenticated_redirect` | Redirect to login | No | `CsrfToken` |
+| `is_authenticated_user_redirect` | Redirect to login | Yes | `AuthUser` |
 
 ---
 
@@ -493,7 +483,6 @@ match (store.as_sqlite(), store.as_postgres(), store.as_mysql()) {
     _ => Err(UserError::Storage("Unsupported db".into())),
 }
 ```
-
 
 </div>
 </div>
@@ -730,48 +719,6 @@ async fn update_profile(
 - Your `AppState` holds your own DB pool — independent from oauth2-passkey's storage
 - Protect routes with middleware injecting `AuthUser` — no extra DB query at route level
 - Pass `user.id` as FK when writing to your DB
-
----
-
-<!-- _class: lead -->
-
-# Wrap-up
-
----
-
-## Summary
-
-- **Easy**: Add passwordless auth to your Axum app in minutes — Built-in UI included
-- **Secure**: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies
-- **Flexible**: Switch between SQLite, PostgreSQL, MySQL, and Redis with a single `.env` change
-
----
-
-## Thank You! / Questions?
-
-<div class="with-qr">
-<div>
-
-### About me:
-- **Kimitoshi Takahashi**
-- Self-employed, reskilling in Rust (3rd year)
-- Let's start a startup together!
-
-</div>
-<div>
-
-![w:200](../../shared/qr-github.svg) GitHub
-
-![w:200](../../shared/qr-contact.svg) Contact
-
-</div>
-</div>
-
----
-
-<!-- _class: lead -->
-
-# Extra Slides
 
 ---
 
