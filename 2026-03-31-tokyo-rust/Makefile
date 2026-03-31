@@ -4,9 +4,9 @@ DIAGRAMS := diagrams
 SVG_DEPS := $(wildcard $(DIAGRAMS)/*.svg) $(wildcard $(SHARED)/*.svg)
 
 # Marp slides (full)
-TALK_SRC := talk/slides-v2.md
-TALK_PDF := talk/slides-v2.pdf
-TALK_HTML := talk/slides-v2.html
+TALK_SRC := talk/slides-v2-full.md
+TALK_PDF := talk/slides-v2-full.pdf
+TALK_HTML := talk/slides-v2-full.html
 
 # Marp slides (short)
 TALK_SHORT_SRC := talk/slides-v2-short.md

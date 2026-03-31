@@ -131,27 +131,6 @@ style: |
 
 ## Demo
 
-<div class="with-qr">
-<div>
-
-1. **Google OAuth2** - First-time login with Google
-2. **Passkey Promotion** - Library prompts to register fingerprint/face
-3. **Passkey-only Login** - Next time, just biometrics. No redirect.
-4. **Account Linking** - Both methods, same user
-
-</div>
-<div>
-
-![w:220](../../shared/qr-demo.svg) passkey-demo.ccmp.jp
-
-
-</div>
-</div>
-
----
-
-## Demo: Flow & Account Linking
-
 &nbsp;
 <div class="columns-60-40">
 <div>
@@ -192,21 +171,6 @@ Try it out & give me feedback!
 </div>
 
 ---
-
-## What the Demo Showed
-
-| Feature | Details |
-|---------|---------|
-| **OAuth2/OIDC** | Google login (also works with FedCM) |
-| **Passkey Promotion** | After OAuth2 login, prompts user to register Passkey |
-| **Passkey** | Google Password Manager, Apple, Windows Hello, bitwarden, Proton Pass, YubiKey |
-| **Account Linking** | OAuth2 + Passkey mapped to same user |
-| **Built-in UI** | Login page, account management, admin panel included |
-| **Session** | Cookie-based session with CSRF protection |
-
-All handled by a single library: `oauth2-passkey`
-
----
 ## Motivation
 
 I wanted to build **exactly what you just saw** — in Rust.
@@ -224,51 +188,6 @@ I wanted to build **exactly what you just saw** — in Rust.
 3. **Internals of Multi Storage Support**
 4. **Integrating with Your App**
 5. **Wrap-up**
-
----
-
-## Flow: Google Login → Passkey Setup
-
-<div class="columns-60-40">
-<div>
-
-### Step-by-step
-
-&nbsp;
-1. **OAuth2 Login**
-   ➔ Create a user in db linked with Google account
-2. **Passkey Promotion**
-   ➔ Register Passkey ➔ link to the user
-3. **Next Login**
-   ➔ Login with either Passkey or Google OAuth2
-
-&nbsp;
-
-One user can have multiple OAuth2 accounts and multiple passkey credentials.
-</div>
-
-<div>
-
-### Internal Result (Linking)
-
-&nbsp;
-
-```text
-
- 👤 [User] id: 1
-  │
-  ├── 🌐 [oauth2_accounts]
-  │   ├── (Google ID)
-  │   └── (GitHub ID)
-  │
-  └── 🔑 [passkey_credentials]
-      ├── (Google Password Manager)
-      ├── (Apple Password Manager)
-      └── (YubiKey)
-
-```
-</div>
-</div>
 
 ---
 
