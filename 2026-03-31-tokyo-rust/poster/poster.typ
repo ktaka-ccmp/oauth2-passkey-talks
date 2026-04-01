@@ -176,7 +176,7 @@
     // p8: How OAuth2/OIDC Works
     #section-box("How OAuth2/OIDC Works")[
       #align(center)[
-        #image("../diagrams/oauth2-flow.svg", width: 92%)
+        #image("../diagrams/oauth2-flow.svg", width: 90%)
       ]
       _Page-redirect: Google → code → id\_token → session_
     ]
@@ -186,7 +186,7 @@
     // p9: How Passkey/WebAuthn Works
     #section-box("How Passkey/WebAuthn Works")[
       #align(center)[
-        #image("../diagrams/passkey-flow.svg", width: 92%)
+        #image("../diagrams/passkey-flow.svg", width: 90%)
       ]
       _JavaScript-driven: challenge → sign → verify → session_
     ]

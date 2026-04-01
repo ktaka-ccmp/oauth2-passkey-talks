@@ -214,7 +214,27 @@ _Page-redirect: Google → code → id\_token → session_
 
 ---
 
-## How Passkey/WebAuthn Works
+## How Passkey/WebAuthn Registration Works
+&nbsp;
+
+<div class="columns-60-40">
+<div>
+
+![w:700](../diagrams/passkey-register-flow.svg)
+
+</div>
+<div>
+
+_One-time setup: generate key pair → store public key on server_
+
+_Private key stays on device, never leaves the authenticator_
+
+</div>
+</div>
+
+---
+
+## How Passkey/WebAuthn Authentication Works
 &nbsp;
 
 <div class="columns-60-40">
