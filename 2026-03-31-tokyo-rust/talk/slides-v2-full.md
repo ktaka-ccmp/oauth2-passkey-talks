@@ -240,7 +240,7 @@ _Private key stays on device, never leaves the authenticator_
 <div class="columns-60-40">
 <div>
 
-![w:700](../diagrams/passkey-flow.svg)
+![w:650](../diagrams/passkey-flow.svg)
 
 </div>
 <div>
@@ -1086,6 +1086,86 @@ if header_csrf_token
 - `ct_eq` always takes the same time
 
 Used for CSRF tokens, session validation, and other security-sensitive comparisons.
+
+</div>
+</div>
+
+---
+
+## CSRF Protection: Batteries Included
+&nbsp;
+
+- **Auto-generated**: 32-byte random token created on every session creation
+- **Auto-verified**: `X-CSRF-Token` header checked automatically in middleware & `AuthUser` extractor
+- **Auto-delivered**: Token included in every authenticated response header (`X-CSRF-Token`)
+- **Dedicated endpoint**: `GET /o2p/user/csrf_token` → JSON `{ "csrf_token": "..." }`
+- **No separate CSRF library needed** — integrated into the auth flow
+
+&nbsp;
+
+Constant-time comparison (`subtle::ct_eq`) prevents timing attacks on token verification.
+
+---
+
+## CSRF: Verification Logic
+
+| Request | Result |
+|---------|--------|
+| GET / HEAD / OPTIONS | Skipped (safe methods) |
+| POST + `X-CSRF-Token` header ✅ | Auto-verified via `ct_eq` — mismatch → reject |
+| POST + no header + form Content-Type | Passed to handler (`csrf_via_header_verified = false`) |
+| POST + no header + other Content-Type | Rejected (403) |
+
+&nbsp;
+
+Same logic applies to both `AuthUser` extractor and `is_authenticated_*` middleware.
+
+---
+
+## CSRF: Usage Patterns
+
+<div class="columns">
+<div>
+
+**AJAX — fully automatic**
+```javascript
+// 1. Get token from response header
+const csrf = response.headers.get('X-CSRF-Token');
+
+// 2. Include in subsequent requests
+fetch('/api/action', {
+  method: 'POST',
+  headers: { 'X-CSRF-Token': csrf },
+  credentials: 'include',
+  body: JSON.stringify(data),
+});
+// Middleware verifies automatically ✅
+```
+
+</div>
+<div>
+
+**HTML Form — manual check in handler**
+```html
+<input type="hidden" name="csrf_token"
+       value="{{ csrf_token }}">
+```
+```rust
+async fn handler(
+    user: AuthUser,
+    Form(form): Form<MyForm>,
+) -> impl IntoResponse {
+    // Skip if already verified via header
+    if !user.csrf_via_header_verified {
+        if !form.csrf_token.as_bytes()
+            .ct_eq(user.csrf_token.as_bytes()).into()
+        {
+            return StatusCode::FORBIDDEN.into_response();
+        }
+    }
+    // ...
+}
+```
 
 </div>
 </div>

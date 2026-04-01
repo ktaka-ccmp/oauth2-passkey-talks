@@ -64,6 +64,24 @@ These slides are in the Extra Slides section of slides-v2-full.md. Use them when
 
 ---
 
+## CSRF Protection: Batteries Included
+
+"CSRF protection is fully integrated — you don't need to add a separate crate or wire anything up. When a session is created, a 32-byte random CSRF token is generated and stored alongside it in the cache. Every authenticated response automatically includes an X-CSRF-Token header — so the client always has the current token. There's also a dedicated endpoint at /o2p/user/csrf_token if you need it explicitly. The verification uses constant-time comparison, so timing attacks on the token are not possible. This all happens inside the library — zero setup for the user."
+
+---
+
+## CSRF: Verification Logic
+
+"Here's how verification works, case by case. GET and other safe methods skip CSRF entirely — no token needed. For state-changing methods like POST, if the X-CSRF-Token header is present, the library verifies it with ct_eq. A mismatch is immediately rejected. If the header is absent but the Content-Type is a form type — application/x-www-form-urlencoded or multipart/form-data — the request is allowed through, and the handler is expected to verify the token from the form body. If the header is absent and it's not a form request, the library rejects it immediately. This logic is the same in both the AuthUser extractor and the is_authenticated_* middleware variants."
+
+---
+
+## CSRF: Usage Patterns
+
+"There are two patterns depending on how you submit data. For AJAX requests, fetch the token from the X-CSRF-Token response header and include it in subsequent requests as a header. The library verifies it automatically — no handler code needed. For HTML forms, embed the token in a hidden field and do a manual constant-time comparison in the handler. The key check is csrf_via_header_verified — if the header was already verified upstream, you can skip the form check. Both patterns are documented with working examples in the demo-both application."
+
+---
+
 ## Atomic SQL: No Explicit Transactions
 
 "This query deletes a user, but only if they're not the last admin — that check is embedded in the WHERE clause as a subquery. The entire operation is a single SQL statement, which means it's atomic by default. No explicit BEGIN/COMMIT transaction, no risk of a race condition where two concurrent requests both see 'there's one admin left' and both try to delete. Business logic expressed in SQL is atomic at the statement level. We use this pattern throughout the library wherever the logic can be expressed in one query."

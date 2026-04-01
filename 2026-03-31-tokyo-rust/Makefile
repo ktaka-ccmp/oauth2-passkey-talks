@@ -1,7 +1,12 @@
+.DEFAULT_GOAL := all
+
 ROOT := ..
 SHARED := $(ROOT)/shared
 DIAGRAMS := diagrams
-SVG_DEPS := $(wildcard $(DIAGRAMS)/*.svg) $(wildcard $(SHARED)/*.svg)
+MMD_SRCS := $(wildcard $(DIAGRAMS)/*.mmd)
+MMD_SVGS := $(MMD_SRCS:.mmd=.svg)
+SVG_DEPS := $(MMD_SVGS) $(wildcard $(SHARED)/*.svg)
+MERMAID_CSS := $(DIAGRAMS)/mermaid.css
 
 # Marp slides (full)
 TALK_SRC := talk/slides-v2-full.md
@@ -21,7 +26,12 @@ TALK_TYPST_PDF := talk-typst/slides.pdf
 POSTER_SRC := poster/poster.typ
 POSTER_PDF := poster/poster.pdf
 
-.PHONY: all talk talk-short talk-typst poster clean
+$(DIAGRAMS)/%.svg: $(DIAGRAMS)/%.mmd $(MERMAID_CSS)
+	mmdc -i $< -o $@ -b transparent -C $(MERMAID_CSS)
+
+.PHONY: all talk talk-short talk-typst poster clean diagrams
+
+diagrams: $(MMD_SVGS)
 
 all: talk talk-short talk-typst poster
 

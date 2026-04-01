@@ -5,16 +5,13 @@ sequenceDiagram
     participant S as Server
 
     C->>S: 1. POST /register/start (username)
-    Note over S: Generate & store challenge
+    S->>S: Generate & store challenge
     S-->>C: 2. Return options (challenge, rpId, user info)
 
     C->>A: 3. navigator.credentials.create()
-    Note over A: Generate key pair
-    Note over A: Create attestation object
+    A->>A: Generate key pair<br/>Create attestation object
     A-->>C: 4. Return attestation object + client data
 
     C->>S: 5. POST /register/finish
-    Note over S: Verify client data
-    Note over S: Verify attestation
-    Note over S: Extract & store public key
+    S->>S: Verify client data<br/>Verify attestation<br/>Extract & store public key
     S-->>C: 6. Registration success

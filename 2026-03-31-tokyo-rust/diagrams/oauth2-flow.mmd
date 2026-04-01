@@ -11,6 +11,5 @@ sequenceDiagram
     B->>S: 5. POST authorization code
     S->>G: 6. Exchange code for tokens
     G-->>S: 7. Return id_token (JWT)
-    Note over S: Verify JWT, extract user info
-    Note over S: Create session
+    S->>S: Verify JWT, extract user info<br/>Create session
     S-->>B: 8. Set session cookie

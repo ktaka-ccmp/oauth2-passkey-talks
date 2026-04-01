@@ -138,7 +138,7 @@
       - No integrated Rust/Axum library existed → built one → published to crates.io
     ]
 
-    #v(10pt)
+    #v(5pt)
 
     // p7: Flow: Google Login → Passkey Setup
     #section-box("Flow: Google Login → Passkey Setup")[
@@ -171,7 +171,7 @@
       One user can have multiple OAuth2 accounts and multiple Passkey credentials.
     ]
 
-    #v(10pt)
+    #v(5pt)
 
     // p8: How OAuth2/OIDC Works
     #section-box("How OAuth2/OIDC Works")[
@@ -181,7 +181,7 @@
       _Page-redirect: Google → code → id\_token → session_
     ]
 
-    #v(10pt)
+    #v(5pt)
 
     // p9: How Passkey/WebAuthn Works
     #section-box("How Passkey/WebAuthn Works")[

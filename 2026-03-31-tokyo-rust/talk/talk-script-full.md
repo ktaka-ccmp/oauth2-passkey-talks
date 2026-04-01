@@ -40,115 +40,121 @@ Estimated time: ~20–25 min (including 3–5 min live demo)
 
 ---
 
-## Slide 7: How Passkey/WebAuthn Works
+## Slide 7: How Passkey/WebAuthn Registration Works
 
-"Passkey is JavaScript-driven — no page redirect. The server generates a random challenge, the browser passes it to the WebAuthn API, and the Authenticator signs it with the user's private key. The server verifies with the public key and creates a session. Authenticators include Google Password Manager, Apple, Windows Hello, and YubiKey."
+"Before authentication, the user has to register a Passkey once. The server generates a challenge and sends it with options — including the relying party ID and user info. The browser calls navigator.credentials.create(), which asks the Authenticator to generate a key pair and create an attestation object. The attestation object and client data are sent back to the server, which verifies them and stores the public key. The private key never leaves the device."
 
 ---
 
-## Slide 8: Using the Library (section lead)
+## Slide 8: How Passkey/WebAuthn Authentication Works
+
+"Authentication is similar but uses the stored key pair. The server sends a challenge with the list of allowed credentials. The Authenticator verifies the user — fingerprint or face — then signs the challenge with the private key. The server verifies the signature using the stored public key and creates a session. Authenticators include Google Password Manager, Apple, Windows Hello, and YubiKey."
+
+---
+
+## Slide 9: Using the Library (section lead)
 
 "Now let's look at how to actually use the library."
 
 ---
 
-## Slide 9: .env Setup (Minimal)
+## Slide 10: .env Setup (Minimal)
 
 "The minimal config is just these env vars: your origin, Google client ID and secret, and the data store settings. For development, SQLite and in-memory cache — no DB setup required. To switch to PostgreSQL in production, just change the env vars and restart. No code changes. Data store supports SQLite, PostgreSQL, and MySQL. Cache supports in-memory and Redis."
 
 ---
 
-## Slide 10: How to Use
+## Slide 11: How to Use
 
 "Using the library is three steps. Import AuthUser and oauth2_passkey_full_router. Call init() — this sets up the internal DB and state. Merge oauth2_passkey_full_router() into your router. That's it. Under /o2p/*, you now have OAuth2 endpoints, Passkey endpoints, login UI, account management, and admin panel — all included."
 
 ---
 
-## Slide 11: Page Protection: AuthUser Extractor
+## Slide 12: Page Protection: AuthUser Extractor
 
 "To protect a route, just add AuthUser as a handler argument. If authenticated, you get the user. If not, the library automatically redirects to login or returns 401. Use Option<AuthUser> for optional auth — unauthenticated requests get None instead of a redirect. Under the hood, this is Axum's FromRequestParts trait. AuthUser's rejection type is AuthRedirect: GET requests redirect to login, everything else returns 401. Option<AuthUser> implements OptionalFromRequestParts, which maps errors to None — so no redirect happens. The limitation: it always hits the DB, and GET always redirects. If you need more control, use Middleware."
 
 ---
 
-## Slide 12: Page Protection: Middleware
+## Slide 13: Page Protection: Middleware
 
 "Middleware gives you finer control — skip the DB query, or return 401 even on GET. Just pass a function to route_layer with from_fn. In your handler, access CsrfToken or AuthUser via Extension."
 
 ---
 
-## Slide 13: Page Protection: Middleware Variants
+## Slide 14: Page Protection: Middleware Variants
 
 "There are four middleware variants. The _redirect vs _401 suffix controls the response for unauthenticated requests. The _user suffix means the middleware queries the DB and injects AuthUser into the handler. Without _user, no DB query — you just get CsrfToken. Pick the one that fits your use case."
 
 ---
 
-## Slide 14: Storage & LazyLock Pattern (section lead)
+## Slide 15: Storage & LazyLock Pattern (section lead)
 
 "Now let's look at how multi-DB support works internally."
 
 ---
 
-## Slide 15: Switch DB by Changing .env
+## Slide 16: Switch DB by Changing .env
 
 "Switching DBs is just env vars. SQLite, PostgreSQL, MySQL/MariaDB, in-memory or Redis cache. No code changes."
 
 ---
 
-## Slide 16: How Multi-DB Support Works Internally
+## Slide 17: How Multi-DB Support Works Internally
 
 "Three steps to understand this. First, a LazyLock static reads the GENERIC_DATA_STORE_TYPE env var at startup and creates the appropriate DataStore — SqliteDataStore, PostgresDataStore, or MySqlDataStore — wrapped in a Box<dyn DataStore>. Second, the DataStore trait has three methods: as_sqlite, as_postgres, as_mysql. Each concrete type returns Some for its own pool and None for the others. Third, callers match on the tuple of all three. If GENERIC_DATA_STORE_TYPE=sqlite, the match arm (Some(pool), _, _) fires and get_all_users_sqlite runs. Change the env var to postgres, and a different match arm fires — same calling code, different backend."
 
 ---
 
-## Slide 17: Why LazyLock Instead of Axum State?
+## Slide 18: Why LazyLock Instead of Axum State?
 
 "If the library used Axum State, users would need to embed the library's AuthState into their own AppState struct. With LazyLock globals, users just call init(). The library holds everything internally. For users: no need to know about library internals. For library development: any internal function can access the DB directly, without threading State through 80+ functions. It's a deliberate trade-off."
 
 ---
 
-## Slide 18: Integrating with Your App (section lead)
+## Slide 19: Integrating with Your App (section lead)
 
 "Now let's look at integration patterns."
 
 ---
 
-## Slide 19: Integrating Your App: 1:N Schema (demo-todo)
+## Slide 20: Integrating Your App: 1:N Schema (demo-todo)
 
 "First, a 1:N example — a todo app. The schema is simple: a todos table with a user_id column that references oauth2-passkey's users.id. An index on user_id is essential for per-user queries. Your app DB and the library's DB can be the same or separate."
 
 ---
 
-## Slide 20: Integrating Your App: 1:N Handler (demo-todo)
+## Slide 21: Integrating Your App: 1:N Handler (demo-todo)
 
 "Here's the handler. We extract the routes into a todos_router() function and apply is_authenticated_redirect with route_layer. In the create_todo handler, we take State, AuthUser, and Form, and save user.id as todos.user_id. Three key points: your AppState holds your own DB pool independent of the library; the middleware protects routes without a DB query at the route level; and you pass user.id as the FK."
 
 ---
 
-## Slide 21: Integrating Your App: 1:1 Schema (demo-profile)
+## Slide 22: Integrating Your App: 1:1 Schema (demo-profile)
 
 "For a 1:1 relationship — a user profile — the key is user_id TEXT PRIMARY KEY. Making it both the PK and FK enforces the 1:1 constraint at the DB level. No separate id column needed. The profile is auto-created on first login."
 
 ---
 
-## Slide 22: Integrating Your App: 1:1 Handler (demo-profile)
+## Slide 23: Integrating Your App: 1:1 Handler (demo-profile)
 
 "The structure is the same as the todo handler. profile_router() groups the protected routes. In update_profile, we call db::upsert_profile with user_id as the key. Upsert handles both create and update atomically — first visit creates, subsequent visits update."
 
 ---
 
-## Slide 23: Wrap-up (section lead)
+## Slide 24: Wrap-up (section lead)
 
 "To wrap up."
 
 ---
 
-## Slide 24: Summary
+## Slide 25: Summary
 
 "Three takeaways. Easy: init() and merge — that's all you need, UI included. Secure: Passkey is phishing-resistant, combined with OAuth2, plus CSRF protection and secure session cookies. Flexible: swap SQLite / PostgreSQL / MySQL / Redis by changing env vars only."
 
 ---
 
-## Slide 25: Thank You / Questions?
+## Slide 26: Thank You / Questions?
 
 "That's it. The GitHub repo is here. Feedback and questions are very welcome. Thank you."
 
