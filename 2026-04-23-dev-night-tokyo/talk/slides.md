@@ -127,7 +127,7 @@ style: |
 
 &nbsp;
 
-### 高橋 公利 (Kimitoshi Takahashi)
+### 高橋 公俊 (Kimitoshi Takahashi)
 
 &nbsp;
 
@@ -143,9 +143,13 @@ style: |
 
 &nbsp;
 
-今夜のイベントに合わせて
-**Auth0 / Okta / Entra / Zitadel / Authentik**
-対応を追加しました
+Rust 修行のため
+oauth2-passkey というライブラリを作ってます
+
+&nbsp;
+
+→ 今週 **Auth0 / Okta / Entra / Zitadel / Authentik**
+使えるようにしました
 
 </div>
 
@@ -157,28 +161,6 @@ style: |
 
 ---
 
-## oauth2-passkey とは
-
-&nbsp;
-
-- **Rust / Axum** 向け Passkey + OAuth2 統合ライブラリ
-- crates.io 公開済み: `oauth2-passkey`, `oauth2-passkey-axum`
-- ライブデモ: **passkey-demo.ccmp.jp**
-
-&nbsp;
-
-### 特徴: 複数の IdP + 複数の Passkey を **同一ユーザー** に紐付け
-
-```text
- 👤 User (id: 1)
-  │
-  ├── 🌐 oauth2_accounts         ← Auth0 / Okta / Google / GitHub ...
-  │
-  └── 🔑 passkey_credentials     ← iCloud / 1Password / YubiKey ...
-```
-
----
-
 <!-- _class: lead -->
 
 # Live Demo
@@ -187,7 +169,7 @@ style: |
 
 ---
 
-## デモ
+## oauth2-passkeyとは
 
 &nbsp;
 
@@ -220,11 +202,13 @@ passkey-demo.ccmp.jp
   │   └── (Google)
   │
   └── 🔑 passkey_credentials
-      ├── (iCloud Keychain)
+      ├── (1Password)
       ├── (Google Password)
       └── (YubiKey)
 
 ```
+
+複数のIdP/Passkey を一ユーザーに紐付け
 
 </div>
 </div>
@@ -261,9 +245,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 <div class="providers">
 <div>Google</div>
-<div>GitHub</div>
 <div><strong>Auth0</strong></div>
 <div><strong>Okta</strong></div>
+<div>Keycloak</div>
 <div>Microsoft Entra</div>
 <div>Zitadel</div>
 <div>Authentik</div>
@@ -317,7 +301,7 @@ GENERIC_CACHE_STORE_TYPE=memory         # or redis
 
 &nbsp;
 
-### 高橋 公利
+### 高橋 公俊
 
 - フリーランス、Rust 3 年目
 - 一緒にスタートアップしませんか
@@ -333,3 +317,31 @@ GENERIC_CACHE_STORE_TYPE=memory         # or redis
 
 </div>
 </div>
+
+---
+
+<!-- _class: lead -->
+
+# Backup Slides
+
+---
+
+## oauth2-passkey とは
+
+&nbsp;
+
+- **Rust / Axum** 向け Passkey + OAuth2 統合ライブラリ
+- crates.io 公開済み: `oauth2-passkey`, `oauth2-passkey-axum`
+- ライブデモ: **passkey-demo.ccmp.jp**
+
+&nbsp;
+
+### 特徴: 複数の IdP + 複数の Passkey を **同一ユーザー** に紐付け
+
+```text
+ 👤 User (id: 1)
+  │
+  ├── 🌐 oauth2_accounts         ← Auth0 / Okta / Google / Keycloak ...
+  │
+  └── 🔑 passkey_credentials     ← Google Password / 1Password / YubiKey ...
+```
