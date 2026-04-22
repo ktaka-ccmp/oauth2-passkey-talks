@@ -31,7 +31,7 @@ style: |
     line-height: 1.4;
   }
   h1 {
-    font-size: 40px;
+    font-size: 48px;
     margin-bottom: 0.2em;
   }
   h2 {
@@ -56,9 +56,9 @@ style: |
   p {
     margin: 0.2em 0;
   }
-  .columns-60-40 {
+  .columns-50-50 {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 3fr 3fr;
     gap: 0.8em;
     align-content: start;
   }
@@ -115,23 +115,48 @@ style: |
     margin-top: 1em;
     color: #666;
   }
+  .video-row {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .video-row > div {
+    text-align: center;
+  }
+  .video-row .caption {
+    font-size: 20px;
+    color: #555;
+    margin-top: 0.3em;
+  }
+  .qr-video {
+    display: flex;
+    gap: 1.2em;
+    justify-content: center;
+    align-items: center;
+  }
+  .qr-video > div {
+    text-align: center;
+  }
+  video.thumb {
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+  }
 ---
 
 <!-- _class: lead -->
 
-# oauth2-passkey
+# RustでOAuth2+Passkeyのライブラリを作ってます
 
 &nbsp;
 
-### Passkey + OAuth2 認証ライブラリ for Rust / Axum
+## 高橋 公俊 (Kimitoshi Takahashi)
 
 &nbsp;
 
-### 高橋 公俊 (Kimitoshi Takahashi)
-
-&nbsp;
-
-<small>dev_night Tokyo #5 | 2026/04/23</small>
+### dev_night Tokyo #5 | 2026/04/23
 
 ---
 
@@ -139,33 +164,21 @@ style: |
 
 <div class="hook">
 
-宣伝枠 📣
-
-&nbsp;
-
-Rust 修行のため
+修行のためRustで
 oauth2-passkey というライブラリを作ってます
 
 &nbsp;
 
-→ 今週 **Auth0 / Okta / Entra / Zitadel / Authentik**
+→ 今日のLTのために **Auth0 / Okta** 
 使えるようにしました
 
 </div>
 
 <div class="hook-sub">
 
-...今日動かしました
+...今日動きました
 
 </div>
-
----
-
-<!-- _class: lead -->
-
-# Live Demo
-
-### passkey-demo.ccmp.jp
 
 ---
 
@@ -173,27 +186,14 @@ oauth2-passkey というライブラリを作ってます
 
 &nbsp;
 
-<div class="columns-60-40">
+<div class="columns-50-50">
 <div>
 
-1. **Auth0 / Okta** でログイン (= ユーザー作成)
-2. **Passkey** を登録
-3. 次回から Passkey だけでログイン
-
-<div class="center-content">
+OAuth2 / Passkey で認証 → Session Cookie 発行
+crates.io 公開済み: `oauth2-passkey{,-axum}`
 &nbsp;
 
-![w:220](../../shared/qr-demo.svg)
-
-passkey-demo.ccmp.jp
-
-</div>
-
-</div>
-<div>
-
 ```text
-
  👤 User
   │
   ├── 🌐 oauth2_accounts
@@ -205,10 +205,44 @@ passkey-demo.ccmp.jp
       ├── (1Password)
       ├── (Google Password)
       └── (YubiKey)
-
 ```
 
 複数のIdP/Passkey を一ユーザーに紐付け
+
+</div>
+
+<div>
+
+1. **Auth0 / Okta** でユーザー作成
+2. **Passkey** を登録
+3. 次回から Passkey だけでログイン
+&nbsp;
+
+<div class="qr-video">
+
+<div>
+
+![w:180](../../shared/qr-demo.svg)
+デモサイト
+</div>
+
+<div>
+<a href="https://cdn.jsdelivr.net/gh/ktaka-ccmp/oauth2-passkey-talks@master/2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" target="_blank" rel="noopener">
+<video src="../../2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" width="120" muted controls class="thumb"></video>
+</a>
+
+デモ動画
+</div>
+
+<div>
+<a href="https://cdn.jsdelivr.net/gh/ktaka-ccmp/oauth2-passkey-talks@master/2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" target="_blank" rel="noopener">
+<video src="../../2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" width="120" muted controls class="thumb"></video>
+</a>
+
+デモ動画
+</div>
+
+</div>
 
 </div>
 </div>
@@ -217,24 +251,26 @@ passkey-demo.ccmp.jp
 
 ## 3 行で組み込める
 
+&nbsp;
+
 ```rust
-use oauth2_passkey_axum::{AuthUser, oauth2_passkey_full_router};
+use oauth2_passkey_axum::{AuthUser, oauth2_passkey_full_router}; // 1. インポート
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
-    oauth2_passkey_axum::init().await?;        // 1. 初期化
+    oauth2_passkey_axum::init().await?;                // 2. 初期化
 
     let app = Router::new()
         .route("/", get(index))
-        .merge(oauth2_passkey_full_router());  // 2. ルータ合流
+        .merge(oauth2_passkey_full_router());          // 3. ルータ合流
 
-    spawn_http_server(3001, app).await?;       // 3. サーバ起動
+    spawn_http_server(3001, app).await?;
     Ok(())
 }
 ```
 
-- `/o2p/*` 配下に **ログイン UI / アカウント管理 / 管理画面** が全部生える
+- OAuth2(OIDC)/Passkey のエンドポイント、ログインUI、管理画面 が自動作成される
 - ページ保護は `AuthUser` extractor または middleware で
 
 ---
@@ -244,11 +280,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 &nbsp;
 
 <div class="providers">
-<div>Google</div>
 <div><strong>Auth0</strong></div>
 <div><strong>Okta</strong></div>
-<div>Keycloak</div>
+<div>Google</div>
 <div>Microsoft Entra</div>
+<div>Keycloak</div>
 <div>Zitadel</div>
 <div>Authentik</div>
 <div>Custom (OIDC)</div>
@@ -259,9 +295,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### .env を書き換えるだけ。コード変更なし
 
 ```env
-OAUTH2_AUTH0_CLIENT_ID='xxx'
-OAUTH2_AUTH0_CLIENT_SECRET='xxx'
-OAUTH2_AUTH0_ISSUER_URL='https://your-tenant.auth0.com'
+OAUTH2_CUSTOM1_NAME='auth0'
+OAUTH2_CUSTOM1_CLIENT_ID='xxx'
+OAUTH2_CUSTOM1_CLIENT_SECRET='xxx'
+OAUTH2_CUSTOM1_ISSUER_URL='https://your-tenant.auth0.com'
 ```
 
 ---
@@ -284,7 +321,6 @@ GENERIC_CACHE_STORE_TYPE=memory         # or redis
 ```
 
 - コード変更不要
-- 同一ユーザーの複数 IdP / 複数 Passkey の紐付けが DB で正規化される
 
 ---
 
@@ -295,53 +331,28 @@ GENERIC_CACHE_STORE_TYPE=memory         # or redis
 
 ### oauth2-passkey
 
-- **Auth0 / Okta / Entra / Zitadel / Authentik** 対応（今週追加）
+- Rust / Axum 向け認証ライブラリ
+- crates.io 公開済み
 - 複数 IdP + 複数 Passkey を **account linking**
-- Rust / Axum、crates.io 公開済み
+- **Auth0 / Okta** などのOIDC IDP 対応
 
 &nbsp;
 
 ### 高橋 公俊
 
-- フリーランス、Rust 3 年目
+- フリーランス
+- Rust 3 年目
 - 一緒にスタートアップしませんか
 
 </div>
+
 <div>
 
-![w:150](../../shared/qr-github.svg) GitHub
+![w:200](../../shared/qr-github.svg) GitHub
 
-![w:150](../../shared/qr-demo.svg) Demo
+<!-- ![w:150](../../shared/qr-demo.svg) Demo -->
 
-![w:150](../../shared/qr-contact.svg) Contact
+![w:200](../../shared/qr-contact.svg) Contact
 
 </div>
 </div>
-
----
-
-<!-- _class: lead -->
-
-# Backup Slides
-
----
-
-## oauth2-passkey とは
-
-&nbsp;
-
-- **Rust / Axum** 向け Passkey + OAuth2 統合ライブラリ
-- crates.io 公開済み: `oauth2-passkey`, `oauth2-passkey-axum`
-- ライブデモ: **passkey-demo.ccmp.jp**
-
-&nbsp;
-
-### 特徴: 複数の IdP + 複数の Passkey を **同一ユーザー** に紐付け
-
-```text
- 👤 User (id: 1)
-  │
-  ├── 🌐 oauth2_accounts         ← Auth0 / Okta / Google / Keycloak ...
-  │
-  └── 🔑 passkey_credentials     ← Google Password / 1Password / YubiKey ...
-```
