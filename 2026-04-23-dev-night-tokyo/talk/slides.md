@@ -164,7 +164,7 @@ style: |
 
 <div class="hook">
 
-修行のためRustで
+Rustと、認証認可の修行のために
 oauth2-passkey というライブラリを作ってます
 
 &nbsp;
@@ -176,7 +176,7 @@ oauth2-passkey というライブラリを作ってます
 
 <div class="hook-sub">
 
-...今日動きました
+...やっと今日動きました
 
 </div>
 
@@ -193,6 +193,8 @@ OAuth2 / Passkey で認証 → Session Cookie 発行
 crates.io 公開済み: `oauth2-passkey{,-axum}`
 &nbsp;
 
+複数のIdP/Passkey を一ユーザーに紐付け
+
 ```text
  👤 User
   │
@@ -206,8 +208,6 @@ crates.io 公開済み: `oauth2-passkey{,-axum}`
       ├── (Google Password)
       └── (YubiKey)
 ```
-
-複数のIdP/Passkey を一ユーザーに紐付け
 
 </div>
 
@@ -227,16 +227,16 @@ crates.io 公開済み: `oauth2-passkey{,-axum}`
 </div>
 
 <div>
-<a href="https://cdn.jsdelivr.net/gh/ktaka-ccmp/oauth2-passkey-talks@master/2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" target="_blank" rel="noopener">
-<video src="../../2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" width="120" muted controls class="thumb"></video>
+<a href="https://cdn.jsdelivr.net/gh/ktaka-ccmp/oauth2-passkey-talks@master/2026-04-23-dev-night-tokyo/video/video01.mp4" target="_blank" rel="noopener">
+<video src="../../2026-04-23-dev-night-tokyo/video/video01.mp4" width="120" muted controls class="thumb"></video>
 </a>
 
 デモ動画
 </div>
 
 <div>
-<a href="https://cdn.jsdelivr.net/gh/ktaka-ccmp/oauth2-passkey-talks@master/2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" target="_blank" rel="noopener">
-<video src="../../2026-03-31-tokyo-rust/video/oauth2-passkey-promotion.mp4" width="120" muted controls class="thumb"></video>
+<a href="https://cdn.jsdelivr.net/gh/ktaka-ccmp/oauth2-passkey-talks@master/2026-04-23-dev-night-tokyo/video/video02.mp4" target="_blank" rel="noopener">
+<video src="../../2026-04-23-dev-night-tokyo/video/video02.mp4" width="120" muted controls class="thumb"></video>
 </a>
 
 デモ動画
