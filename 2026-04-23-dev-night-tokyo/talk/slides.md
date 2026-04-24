@@ -222,7 +222,7 @@ crates.io 公開済み: `oauth2-passkey{,-axum}`
 
 <div>
 
-![w:180](../../shared/qr-demo.svg)
+![w:320](../../shared/qr-demo.svg)
 デモサイト
 </div>
 
