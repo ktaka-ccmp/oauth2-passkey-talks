@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant App
+    participant Init as init()
+    participant LL as LazyLock
+    participant Env
+    participant DB
+
+    App->>Init: call
+    Init->>LL: trigger eval
+    LL->>Env: read configs
+    LL->>DB: create pool
+    LL-->>Init: ready
+    Note over Init: Panic on<br>invalid config
+    Init-->>App: Ok(())

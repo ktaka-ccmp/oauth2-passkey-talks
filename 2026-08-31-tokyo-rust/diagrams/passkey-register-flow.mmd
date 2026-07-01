@@ -1,0 +1,17 @@
+%%{init: {'sequence': {'width': 220}}}%%
+sequenceDiagram
+    participant C as Client (Browser)
+    participant A as Authenticator
+    participant S as Server
+
+    C->>S: 1. POST /register/start (username)
+    S->>S: Generate & store challenge
+    S-->>C: 2. Return options (challenge, rpId, user info)
+
+    C->>A: 3. navigator.credentials.create()
+    A->>A: Generate key pair<br/>Create attestation object
+    A-->>C: 4. Return attestation object + client data
+
+    C->>S: 5. POST /register/finish
+    S->>S: Verify client data<br/>Verify attestation<br/>Extract & store public key
+    S-->>C: 6. Registration success

@@ -1,0 +1,15 @@
+%%{init: {'sequence': {'width': 220}}}%%
+sequenceDiagram
+    participant B as Browser
+    participant S as Server
+    participant G as Google
+
+    B->>S: 1. Click "Login with Google"
+    S-->>B: 2. Redirect to Google (with state, nonce)
+    B->>G: 3. User logs in & consents
+    G-->>B: 4. Return authorization code
+    B->>S: 5. POST authorization code
+    S->>G: 6. Exchange code for tokens
+    G-->>S: 7. Return id_token (JWT)
+    S->>S: Verify JWT, extract user info<br/>Create session
+    S-->>B: 8. Set session cookie
