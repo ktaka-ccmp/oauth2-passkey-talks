@@ -224,7 +224,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h1 id="oauth2-passkey">oauth2-passkey</h1>
 <p> </p>
 <h3 id="passwordless-authentication-library-for-rust">Passwordless Authentication Library for Rust</h3>
@@ -448,7 +448,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h1 id="live-demo">Live Demo</h1>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="3" data-paginate="true" data-theme="default" data-style="section {
@@ -667,7 +667,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="demo">Demo</h2>
 <p> </p>
 <div class="columns-60-40">
@@ -919,7 +919,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="what-the-demo-just-showed">What the Demo Just Showed</h2>
 <p> </p>
 <table>
@@ -1170,7 +1170,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="motivation">Motivation</h2>
 <p> </p>
 <p>I wanted to build <strong>exactly what you just saw</strong> — in Rust.</p>
@@ -1397,15 +1397,16 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="agenda">Agenda</h2>
 <p> </p>
 <ol>
 <li><strong>How OAuth2 &amp; Passkey Work</strong></li>
-<li><strong>Live Coding: Zero to Auth</strong></li>
+<li><strong>Using the Library</strong></li>
 <li><strong>Storage &amp; the LazyLock Design Decision</strong></li>
 <li><strong>Rust Design Patterns Under the Hood</strong></li>
 <li><strong>Integrating with Your App</strong></li>
+<li><strong>Live Coding: Putting It All Together</strong></li>
 <li><strong>Wrap-up</strong></li>
 </ol>
 </section>
@@ -1625,7 +1626,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="how-oauth2oidc-works">How OAuth2/OIDC Works</h2>
 <p> </p>
 <div class="columns-60-40">
@@ -1853,7 +1854,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="how-passkeywebauthn-registration-works">How Passkey/WebAuthn Registration Works</h2>
 <p> </p>
 <div class="columns-60-40">
@@ -2082,7 +2083,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="how-passkeywebauthn-authentication-works">How Passkey/WebAuthn Authentication Works</h2>
 <p> </p>
 <div class="columns-60-40">
@@ -2311,7 +2312,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="oauth2-vs-passkey-trust-model">OAuth2 vs Passkey: Trust Model</h2>
 <div class="columns">
 <div>
@@ -2550,8 +2551,8 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h1 id="live-coding-zero-to-auth">Live Coding: Zero to Auth</h1>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h1 id="using-the-library">Using the Library</h1>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -2769,22 +2770,25 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="what-well-build">What We'll Build</h2>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="env-setup-minimal">.env Setup (Minimal)</h2>
 <p> </p>
-<p>A brand-new Axum app, wired up with <code>oauth2-passkey</code>, live — from <code>cargo new</code> to a working login with a protected page.</p>
-<div class="checkpoint-list">
-<ol>
-<li><code>step-01</code> — <code>cargo new</code> + add dependencies</li>
-<li><code>step-02</code> — <code>.env</code> for SQLite (zero setup)</li>
-<li><code>step-03</code> — <code>init()</code> + merge router → <strong>built-in login UI works</strong></li>
-<li><code>step-04</code> — protect a route with the <code>AuthUser</code> extractor</li>
-<li><code>step-05</code> — same route, but anonymous access allowed (<code>Option&lt;AuthUser&gt;</code>)</li>
-<li><code>step-06</code> — swap the extractor for middleware — 401 vs redirect</li>
-</ol>
-</div>
-<p> </p>
-<p>Each step is a tagged git commit. If I fall behind, I jump straight to the tag instead of typing it out — same code either way.</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-env">ORIGIN='http://localhost:3001'
+
+# Google OAuth2 credentials
+OAUTH2_GOOGLE_CLIENT_ID='xxx.apps.googleusercontent.com'
+OAUTH2_GOOGLE_CLIENT_SECRET='xxx'
+
+# SQLite + in-memory cache (no DB setup required)
+GENERIC_DATA_STORE_TYPE=sqlite
+GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
+GENERIC_CACHE_STORE_TYPE=memory
+GENERIC_CACHE_STORE_URL='memory'
+</code></pre>
+<ul>
+<li>Data store: SQLite, PostgreSQL, MySQL</li>
+<li>Cache store: memory, Redis</li>
+</ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -3002,35 +3006,31 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="checkpoint-1-2-dependencies--env">Checkpoint 1-2: Dependencies &amp; <code>.env</code></h2>
-<div class="columns">
-<div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-toml"><span class="hljs-comment"># Cargo.toml</span>
-<span class="hljs-section">[dependencies]</span>
-<span class="hljs-attr">oauth2-passkey</span> = <span class="hljs-string">&quot;0.1&quot;</span>
-<span class="hljs-attr">oauth2-passkey-axum</span> = <span class="hljs-string">&quot;0.1&quot;</span>
-<span class="hljs-attr">axum</span> = <span class="hljs-string">&quot;0.7&quot;</span>
-<span class="hljs-attr">tokio</span> = { version = <span class="hljs-string">&quot;1&quot;</span>, features = [<span class="hljs-string">&quot;full&quot;</span>] }
-<span class="hljs-attr">dotenvy</span> = <span class="hljs-string">&quot;0.15&quot;</span>
-</code></pre>
-</div>
-<div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-env"># .env
-ORIGIN='http://localhost:3001'
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="how-to-use">How to Use</h2>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">use</span> oauth2_passkey_axum::{
+    AuthUser, oauth2_passkey_full_router, <span class="hljs-comment">// 1, Import</span>
+};
 
-OAUTH2_GOOGLE_CLIENT_ID='xxx.apps.googleusercontent.com'
-OAUTH2_GOOGLE_CLIENT_SECRET='xxx'
+<span class="hljs-meta">#[tokio::main]</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;(), <span class="hljs-type">Box</span>&lt;<span class="hljs-keyword">dyn</span> std::error::Error&gt;&gt; {
+    <span class="hljs-title function_ invoke__">dotenv</span>().<span class="hljs-title function_ invoke__">ok</span>();
+    oauth2_passkey_axum::<span class="hljs-title function_ invoke__">init</span>().<span class="hljs-keyword">await</span>?;       <span class="hljs-comment">// 2. Initialize</span>
 
-# SQLite + in-memory cache — no DB setup required
-GENERIC_DATA_STORE_TYPE=sqlite
-GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
-GENERIC_CACHE_STORE_TYPE=memory
-GENERIC_CACHE_STORE_URL='memory'
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">app</span> = Router::<span class="hljs-title function_ invoke__">new</span>()
+        .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(index))
+        .<span class="hljs-title function_ invoke__">merge</span>(<span class="hljs-title function_ invoke__">oauth2_passkey_full_router</span>()); <span class="hljs-comment">// 3. Merge router</span>
+
+    <span class="hljs-comment">// Auth endpoints are now at /o2p/*</span>
+    <span class="hljs-title function_ invoke__">spawn_http_server</span>(<span class="hljs-number">3001</span>, app).<span class="hljs-keyword">await</span>?;
+    <span class="hljs-title function_ invoke__">Ok</span>(())
+}
 </code></pre>
-</div>
-</div>
-<p>No database to install. <code>cargo run</code> from a clean checkout works immediately.</p>
+<p>Under <code>/o2p/*</code>, we have:</p>
+<ul>
+<li>OAuth2 endpoints and Passkey endpoints</li>
+<li>Built-in login UI, account management, and admin panel</li>
+</ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -3248,27 +3248,27 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="checkpoint-3-mainrs--3-lines-to-auth">Checkpoint 3: <code>main.rs</code> — 3 Lines to Auth</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">use</span> oauth2_passkey_axum::{
-    AuthUser, oauth2_passkey_full_router, <span class="hljs-comment">// 1. Import</span>
-};
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="page-protection-authuser-extractor">Page Protection: AuthUser Extractor</h2>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// Required auth - redirects to login if not authenticated</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">protected</span>(user: AuthUser) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Hello, {}!&quot;</span>, user.label)
+}
 
-<span class="hljs-meta">#[tokio::main]</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;(), <span class="hljs-type">Box</span>&lt;<span class="hljs-keyword">dyn</span> std::error::Error&gt;&gt; {
-    dotenvy::<span class="hljs-title function_ invoke__">dotenv</span>().<span class="hljs-title function_ invoke__">ok</span>();
-    oauth2_passkey_axum::<span class="hljs-title function_ invoke__">init</span>().<span class="hljs-keyword">await</span>?;        <span class="hljs-comment">// 2. Initialize</span>
-
-    <span class="hljs-keyword">let</span> <span class="hljs-variable">app</span> = Router::<span class="hljs-title function_ invoke__">new</span>()
-        .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(index))
-        .<span class="hljs-title function_ invoke__">merge</span>(<span class="hljs-title function_ invoke__">oauth2_passkey_full_router</span>());  <span class="hljs-comment">// 3. Merge router</span>
-
-    <span class="hljs-comment">// Auth endpoints are now live at /o2p/*</span>
-    axum::<span class="hljs-title function_ invoke__">serve</span>(listener, app).<span class="hljs-keyword">await</span>?;
-    <span class="hljs-title function_ invoke__">Ok</span>(())
+<span class="hljs-comment">// Optional auth - allows anonymous access</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">public</span>(user: <span class="hljs-type">Option</span>&lt;AuthUser&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-keyword">match</span> user {
+        <span class="hljs-title function_ invoke__">Some</span>(u) =&gt; <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Hello, {}!&quot;</span>, u.label),
+        <span class="hljs-literal">None</span>    =&gt; <span class="hljs-string">&quot;Hello, anonymous!&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>(),
+    }
 }
 </code></pre>
-<p>Run it, open <code>/o2p/login</code> — full login UI, account management, admin panel. Nothing else written yet.</p>
+<p>Implemented via Axum's <code>FromRequestParts</code> trait:</p>
+<ul>
+<li><code>AuthUser</code> → GET: redirect to login, others: 401</li>
+<li><code>Option&lt;AuthUser&gt;</code> → <code>OptionalFromRequestParts</code> impl returns <code>None</code> on failure — no redirect</li>
+</ul>
+<p>Limitation: always hits DB, GET always redirects. Middleware gives more control: skip DB, or return 401 even on GET.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -3486,22 +3486,20 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="checkpoint-4-5-protecting-a-route">Checkpoint 4-5: Protecting a Route</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// Required auth - redirects to login if not authenticated</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">protected</span>(user: AuthUser) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Hello, {}!&quot;</span>, user.label)
-}
-
-<span class="hljs-comment">// Optional auth - allows anonymous access</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">public</span>(user: <span class="hljs-type">Option</span>&lt;AuthUser&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-keyword">match</span> user {
-        <span class="hljs-title function_ invoke__">Some</span>(u) =&gt; <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Hello, {}!&quot;</span>, u.label),
-        <span class="hljs-literal">None</span>    =&gt; <span class="hljs-string">&quot;Hello, anonymous!&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>(),
-    }
-}
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="page-protection-middleware">Page Protection: Middleware</h2>
+<p> </p>
+<p>Middleware gives more control: <strong>skip DB, or return 401 even on GET.</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">app</span> = Router::<span class="hljs-title function_ invoke__">new</span>()
+    .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/api/1&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(h1)
+        .<span class="hljs-title function_ invoke__">route_layer</span>(<span class="hljs-title function_ invoke__">from_fn</span>(is_authenticated_401)))        <span class="hljs-comment">// &lt;-- No DB query</span>
+    .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/api/2&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(h2)
+        .<span class="hljs-title function_ invoke__">route_layer</span>(<span class="hljs-title function_ invoke__">from_fn</span>(is_authenticated_user_401)));  <span class="hljs-comment">// &lt;-- DB query, user info available</span>
 </code></pre>
-<p>One extractor argument. No middleware, no state, no manual session lookup.</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// In handler: access user or CSRF token via Extension</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">h1</span>(<span class="hljs-title function_ invoke__">Extension</span>(csrf): Extension&lt;CsrfToken&gt;) { ... }
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">h2</span>(<span class="hljs-title function_ invoke__">Extension</span>(user): Extension&lt;AuthUser&gt;) { ... }
+</code></pre>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -3719,277 +3717,47 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="checkpoint-6-swapping-in-middleware">Checkpoint 6: Swapping in Middleware</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">app</span> = Router::<span class="hljs-title function_ invoke__">new</span>()
-    .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/api/1&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(h1)
-        .<span class="hljs-title function_ invoke__">route_layer</span>(<span class="hljs-title function_ invoke__">from_fn</span>(is_authenticated_401)))        <span class="hljs-comment">// &lt;-- No DB query</span>
-    .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/api/2&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(h2)
-        .<span class="hljs-title function_ invoke__">route_layer</span>(<span class="hljs-title function_ invoke__">from_fn</span>(is_authenticated_user_401)));  <span class="hljs-comment">// &lt;-- DB query, user info available</span>
-</code></pre>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// In handler: access user or CSRF token via Extension</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">h1</span>(<span class="hljs-title function_ invoke__">Extension</span>(csrf): Extension&lt;CsrfToken&gt;) { ... }
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">h2</span>(<span class="hljs-title function_ invoke__">Extension</span>(user): Extension&lt;AuthUser&gt;) { ... }
-</code></pre>
-<p>Why you'd reach for this instead of the extractor — next section.</p>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-paginate="true" data-theme="default" data-style="section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-" lang="C" data-marpit-pagination="17" style="--paginate:true;--theme:default;--style:section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="live-coding-recap">Live Coding Recap</h2>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="page-protection-middleware-variants">Page Protection: Middleware Variants</h2>
 <p> </p>
 <table>
 <thead>
 <tr>
-<th>Tag</th>
-<th>What it adds</th>
+<th>Variant</th>
+<th>Unauthenticated</th>
+<th>DB Query</th>
+<th>Handler Extension</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>step-01</code></td>
-<td>Empty Axum project + deps</td>
+<td><code>is_authenticated_401</code></td>
+<td>401</td>
+<td>No</td>
+<td><code>CsrfToken</code></td>
 </tr>
 <tr>
-<td><code>step-02</code></td>
-<td><code>.env</code> — SQLite, no external DB</td>
+<td><code>is_authenticated_user_401</code></td>
+<td>401</td>
+<td>Yes</td>
+<td><code>AuthUser</code></td>
 </tr>
 <tr>
-<td><code>step-03</code></td>
-<td><code>init()</code> + merged router → working login UI</td>
+<td><code>is_authenticated_redirect</code></td>
+<td>Redirect to login</td>
+<td>No</td>
+<td><code>CsrfToken</code></td>
 </tr>
 <tr>
-<td><code>step-04</code></td>
-<td><code>AuthUser</code> extractor on a protected route</td>
-</tr>
-<tr>
-<td><code>step-05</code></td>
-<td><code>Option&lt;AuthUser&gt;</code> — same route, anonymous allowed</td>
-</tr>
-<tr>
-<td><code>step-06</code></td>
-<td>Middleware variant — 401 without a redirect</td>
+<td><code>is_authenticated_user_redirect</code></td>
+<td>Redirect to login</td>
+<td>Yes</td>
+<td><code>AuthUser</code></td>
 </tr>
 </tbody>
 </table>
-<p> </p>
-<p>From an empty directory to session-backed auth with account management: <strong>~6 commits.</strong></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -4097,7 +3865,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-" lang="C" class="lead" data-marpit-pagination="18" style="--paginate:true;--class:lead;--theme:default;--style:section {
+" lang="C" class="lead" data-marpit-pagination="17" style="--paginate:true;--class:lead;--theme:default;--style:section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -4205,8 +3973,245 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h1 id="storage--the-lazylock-design-decision">Storage &amp; the LazyLock Design Decision</h1>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-theme="default" data-style="section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+" lang="C" data-marpit-pagination="18" style="--paginate:true;--theme:default;--style:section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="switch-db-by-changing-env">Switch DB by Changing <code>.env</code></h2>
+<p> </p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-env"># SQLite (dev/demo - no setup required)
+GENERIC_DATA_STORE_TYPE=sqlite
+GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
+
+# PostgreSQL
+GENERIC_DATA_STORE_TYPE=postgres
+GENERIC_DATA_STORE_URL='postgres://user:pass@localhost:5432/mydb'
+
+# MySQL / MariaDB
+GENERIC_DATA_STORE_TYPE=mysql
+GENERIC_DATA_STORE_URL='mysql://user:pass@localhost:3306/mydb'
+
+# Cache: in-memory or Redis
+GENERIC_CACHE_STORE_TYPE=memory       # or: redis
+GENERIC_CACHE_STORE_URL='memory'      # or: redis://localhost:6379
+</code></pre>
+<p>No code changes. Just swap the env vars and restart.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -4424,26 +4429,45 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="switch-db-by-changing-env">Switch DB by Changing <code>.env</code></h2>
-<p> </p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-env"># SQLite (dev/demo - no setup required)
-GENERIC_DATA_STORE_TYPE=sqlite
-GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="how-multi-db-support-works-internally">How Multi-DB Support Works Internally</h2>
+<div class="columns">
+<div>
+<p><strong>1. LazyLock reads env at startup:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">static</span> GENERIC_DATA_STORE: LazyLock&lt;Mutex&lt;<span class="hljs-type">Box</span>&lt;<span class="hljs-keyword">dyn</span> DataStore&gt;&gt;&gt;
+    = LazyLock::<span class="hljs-title function_ invoke__">new</span>(|| {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">db_type</span> = env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;GENERIC_DATA_STORE_TYPE&quot;</span>);
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">db_url</span> = env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;GENERIC_DATA_STORE_URL&quot;</span>);
 
-# PostgreSQL
-GENERIC_DATA_STORE_TYPE=postgres
-GENERIC_DATA_STORE_URL='postgres://user:pass@localhost:5432/mydb'
-
-# MySQL / MariaDB
-GENERIC_DATA_STORE_TYPE=mysql
-GENERIC_DATA_STORE_URL='mysql://user:pass@localhost:3306/mydb'
-
-# Cache: in-memory or Redis
-GENERIC_CACHE_STORE_TYPE=memory       # or: redis
-GENERIC_CACHE_STORE_URL='memory'      # or: redis://localhost:6379
+        <span class="hljs-keyword">match</span> db_type {
+            <span class="hljs-string">&quot;sqlite&quot;</span>   =&gt; <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(SqliteDataStore { pool }),
+            <span class="hljs-string">&quot;postgres&quot;</span> =&gt; <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(PostgresDataStore { pool }),
+            <span class="hljs-string">&quot;mysql&quot;</span>    =&gt; <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(MySqlDataStore { pool }),
+        }
+    });
 </code></pre>
-<p>No code changes. Just swap the env vars and restart.</p>
+</div>
+<div>
+<p><strong>2. Trait + impl per backend:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// DataStore: Send + Sync — safe to hold in a global LazyLock</span>
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">DataStore</span> <span class="hljs-keyword">for</span> <span class="hljs-title class_">SqliteDataStore</span> {
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">as_sqlite</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;&amp;Pool&lt;Sqlite&gt;&gt; { <span class="hljs-title function_ invoke__">Some</span>(&amp;<span class="hljs-keyword">self</span>.pool) }
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">as_postgres</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;&amp;Pool&lt;Postgres&gt;&gt; { <span class="hljs-literal">None</span> }
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">as_mysql</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;&amp;Pool&lt;MySql&gt;&gt; { <span class="hljs-literal">None</span> }
+}
+</code></pre>
+<p><strong>3. Callers dispatch via trait:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">store</span> = GENERIC_DATA_STORE.<span class="hljs-title function_ invoke__">lock</span>().<span class="hljs-keyword">await</span>;
+<span class="hljs-keyword">match</span> (store.<span class="hljs-title function_ invoke__">as_sqlite</span>(), store.<span class="hljs-title function_ invoke__">as_postgres</span>(), store.<span class="hljs-title function_ invoke__">as_mysql</span>()) {
+    (<span class="hljs-title function_ invoke__">Some</span>(pool), _, _) =&gt; <span class="hljs-title function_ invoke__">get_all_users_sqlite</span>(pool).<span class="hljs-keyword">await</span>,
+    (_, <span class="hljs-title function_ invoke__">Some</span>(pool), _) =&gt; <span class="hljs-title function_ invoke__">get_all_users_postgres</span>(pool).<span class="hljs-keyword">await</span>,
+    (_, _, <span class="hljs-title function_ invoke__">Some</span>(pool)) =&gt; <span class="hljs-title function_ invoke__">get_all_users_mysql</span>(pool).<span class="hljs-keyword">await</span>,
+    _ =&gt; <span class="hljs-title function_ invoke__">Err</span>(UserError::<span class="hljs-title function_ invoke__">Storage</span>(<span class="hljs-string">&quot;Unsupported db&quot;</span>.<span class="hljs-title function_ invoke__">into</span>())),
+}
+</code></pre>
+</div>
+</div>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -4661,45 +4685,50 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="how-multi-db-support-works-internally">How Multi-DB Support Works Internally</h2>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="why-not-axum-state-the-state-threading-problem">Why Not Axum State? The State Threading Problem</h2>
 <div class="columns">
 <div>
-<p><strong>1. LazyLock reads env at startup:</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">static</span> GENERIC_DATA_STORE: LazyLock&lt;Mutex&lt;<span class="hljs-type">Box</span>&lt;<span class="hljs-keyword">dyn</span> DataStore&gt;&gt;&gt;
-    = LazyLock::<span class="hljs-title function_ invoke__">new</span>(|| {
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">db_type</span> = env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;GENERIC_DATA_STORE_TYPE&quot;</span>);
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">db_url</span> = env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;GENERIC_DATA_STORE_URL&quot;</span>);
+<p><strong>With Axum State — state must flow through every layer:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// parent doesn&#x27;t use DB, but must accept State</span>
+<span class="hljs-comment">// just to pass it down to grandchild</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">parent</span>(
+    <span class="hljs-title function_ invoke__">State</span>(state): State&lt;AppState&gt;,
+) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-title function_ invoke__">child</span>(state).<span class="hljs-keyword">await</span>
+}
 
-        <span class="hljs-keyword">match</span> db_type {
-            <span class="hljs-string">&quot;sqlite&quot;</span>   =&gt; <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(SqliteDataStore { pool }),
-            <span class="hljs-string">&quot;postgres&quot;</span> =&gt; <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(PostgresDataStore { pool }),
-            <span class="hljs-string">&quot;mysql&quot;</span>    =&gt; <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(MySqlDataStore { pool }),
-        }
-    });
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">child</span>(state: AppState) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-title function_ invoke__">grandchild</span>(&amp;state).<span class="hljs-keyword">await</span>
+}
+
+<span class="hljs-comment">// Only grandchild actually needs DB</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">grandchild</span>(state: &amp;AppState) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">users</span> = db::<span class="hljs-title function_ invoke__">get_users</span>(&amp;state.auth_pool).<span class="hljs-keyword">await</span>;
+    <span class="hljs-comment">// ...</span>
+}
 </code></pre>
 </div>
 <div>
-<p><strong>2. Trait + impl per backend:</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// DataStore: Send + Sync — safe to hold in a global LazyLock</span>
+<p><strong>With LazyLock — no threading needed:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// parent and child have no idea DB exists</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">parent</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-title function_ invoke__">child</span>().<span class="hljs-keyword">await</span>
+}
 
-<span class="hljs-keyword">impl</span> <span class="hljs-title class_">DataStore</span> <span class="hljs-keyword">for</span> <span class="hljs-title class_">SqliteDataStore</span> {
-    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">as_sqlite</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;&amp;Pool&lt;Sqlite&gt;&gt; { <span class="hljs-title function_ invoke__">Some</span>(&amp;<span class="hljs-keyword">self</span>.pool) }
-    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">as_postgres</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;&amp;Pool&lt;Postgres&gt;&gt; { <span class="hljs-literal">None</span> }
-    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">as_mysql</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;&amp;Pool&lt;MySql&gt;&gt; { <span class="hljs-literal">None</span> }
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">child</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-title function_ invoke__">grandchild</span>().<span class="hljs-keyword">await</span>
 }
-</code></pre>
-<p><strong>3. Callers dispatch via trait:</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">store</span> = GENERIC_DATA_STORE.<span class="hljs-title function_ invoke__">lock</span>().<span class="hljs-keyword">await</span>;
-<span class="hljs-keyword">match</span> (store.<span class="hljs-title function_ invoke__">as_sqlite</span>(), store.<span class="hljs-title function_ invoke__">as_postgres</span>(), store.<span class="hljs-title function_ invoke__">as_mysql</span>()) {
-    (<span class="hljs-title function_ invoke__">Some</span>(pool), _, _) =&gt; <span class="hljs-title function_ invoke__">get_all_users_sqlite</span>(pool).<span class="hljs-keyword">await</span>,
-    (_, <span class="hljs-title function_ invoke__">Some</span>(pool), _) =&gt; <span class="hljs-title function_ invoke__">get_all_users_postgres</span>(pool).<span class="hljs-keyword">await</span>,
-    (_, _, <span class="hljs-title function_ invoke__">Some</span>(pool)) =&gt; <span class="hljs-title function_ invoke__">get_all_users_mysql</span>(pool).<span class="hljs-keyword">await</span>,
-    _ =&gt; <span class="hljs-title function_ invoke__">Err</span>(UserError::<span class="hljs-title function_ invoke__">Storage</span>(<span class="hljs-string">&quot;Unsupported db&quot;</span>.<span class="hljs-title function_ invoke__">into</span>())),
+
+<span class="hljs-comment">// grandchild accesses DB directly</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">grandchild</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">store</span> = GENERIC_DATA_STORE.<span class="hljs-title function_ invoke__">lock</span>().<span class="hljs-keyword">await</span>;
+    <span class="hljs-comment">// ...</span>
 }
 </code></pre>
 </div>
 </div>
+<p>The library has 80+ internal functions. With State, all of them would need <code>&amp;State</code> — even those that just call something else.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -4917,50 +4946,21 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="why-not-axum-state-the-state-threading-problem">Why Not Axum State? The State Threading Problem</h2>
-<div class="columns">
-<div>
-<p><strong>With Axum State — state must flow through every layer:</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// parent doesn&#x27;t use DB, but must accept State</span>
-<span class="hljs-comment">// just to pass it down to grandchild</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">parent</span>(
-    <span class="hljs-title function_ invoke__">State</span>(state): State&lt;AppState&gt;,
-) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-title function_ invoke__">child</span>(state).<span class="hljs-keyword">await</span>
-}
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="what-is-lazylock">What is <code>LazyLock</code>?</h2>
+<p><code>std::sync::LazyLock</code> — a value initialized <strong>once</strong>, on first access, then shared immutably. Thread-safe. Stable since Rust 1.80.</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">use</span> std::sync::LazyLock;
 
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">child</span>(state: AppState) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-title function_ invoke__">grandchild</span>(&amp;state).<span class="hljs-keyword">await</span>
-}
+<span class="hljs-comment">// Evaluated once, on first access. Never again.</span>
+<span class="hljs-keyword">static</span> CONFIG: LazyLock&lt;<span class="hljs-type">String</span>&gt; = LazyLock::<span class="hljs-title function_ invoke__">new</span>(|| {
+    std::env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;MY_CONFIG&quot;</span>).<span class="hljs-title function_ invoke__">expect</span>(<span class="hljs-string">&quot;MY_CONFIG must be set&quot;</span>)
+});
 
-<span class="hljs-comment">// Only grandchild actually needs DB</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">grandchild</span>(state: &amp;AppState) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-keyword">let</span> <span class="hljs-variable">users</span> = db::<span class="hljs-title function_ invoke__">get_users</span>(&amp;state.auth_pool).<span class="hljs-keyword">await</span>;
-    <span class="hljs-comment">// ...</span>
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">anywhere</span>() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, *CONFIG);  <span class="hljs-comment">// Just use it. No parameter needed.</span>
 }
 </code></pre>
-</div>
-<div>
-<p><strong>With LazyLock — no threading needed:</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// parent and child have no idea DB exists</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">parent</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-title function_ invoke__">child</span>().<span class="hljs-keyword">await</span>
-}
-
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">child</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-title function_ invoke__">grandchild</span>().<span class="hljs-keyword">await</span>
-}
-
-<span class="hljs-comment">// grandchild accesses DB directly</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">grandchild</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-keyword">let</span> <span class="hljs-variable">store</span> = GENERIC_DATA_STORE.<span class="hljs-title function_ invoke__">lock</span>().<span class="hljs-keyword">await</span>;
-    <span class="hljs-comment">// ...</span>
-}
-</code></pre>
-</div>
-</div>
-<p>The library has 80+ internal functions. With State, all of them would need <code>&amp;State</code> — even those that just call something else.</p>
+<p>Like <code>lazy_static!</code> but in std. No macro, no extra crate.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -5178,21 +5178,22 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="what-is-lazylock">What is <code>LazyLock</code>?</h2>
-<p><code>std::sync::LazyLock</code> — a value initialized <strong>once</strong>, on first access, then shared immutably. Thread-safe. Stable since Rust 1.80.</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">use</span> std::sync::LazyLock;
-
-<span class="hljs-comment">// Evaluated once, on first access. Never again.</span>
-<span class="hljs-keyword">static</span> CONFIG: LazyLock&lt;<span class="hljs-type">String</span>&gt; = LazyLock::<span class="hljs-title function_ invoke__">new</span>(|| {
-    std::env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;MY_CONFIG&quot;</span>).<span class="hljs-title function_ invoke__">expect</span>(<span class="hljs-string">&quot;MY_CONFIG must be set&quot;</span>)
-});
-
-<span class="hljs-keyword">fn</span> <span class="hljs-title function_">anywhere</span>() {
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, *CONFIG);  <span class="hljs-comment">// Just use it. No parameter needed.</span>
-}
-</code></pre>
-<p>Like <code>lazy_static!</code> but in std. No macro, no extra crate.</p>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="lazylock-benefits--trade-offs">LazyLock: Benefits &amp; Trade-offs</h2>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li><strong>Zero boilerplate for users</strong> - no <code>AppState</code> struct to create</li>
+<li><strong>No state threading</strong> - 80+ internal functions access storage directly</li>
+<li><strong>Env-only config</strong> - switch DB by changing <code>.env</code>, no code changes</li>
+<li><strong>Fail-fast init</strong> - <code>init().await?</code> panics on invalid env at startup</li>
+</ul>
+<h3 id="trade-offs">Trade-offs</h3>
+<ul>
+<li>Single instance per process (fine for auth library)</li>
+<li>Implicit dependencies (function signatures don't show DB access)</li>
+<li>Test isolation needs <code>#[serial]</code> (shared global state)</li>
+</ul>
+<p>An intentional design trade-off: Rust purists would use State, but LazyLock keeps complexity inside the library.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -5410,240 +5411,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="lazylock-benefits--trade-offs">LazyLock: Benefits &amp; Trade-offs</h2>
-<h3 id="benefits">Benefits</h3>
-<ul>
-<li><strong>Zero boilerplate for users</strong> - no <code>AppState</code> struct to create</li>
-<li><strong>No state threading</strong> - 80+ internal functions access storage directly</li>
-<li><strong>Env-only config</strong> - switch DB by changing <code>.env</code>, no code changes</li>
-<li><strong>Fail-fast init</strong> - <code>init().await?</code> panics on invalid env at startup</li>
-</ul>
-<h3 id="trade-offs">Trade-offs</h3>
-<ul>
-<li>Single instance per process (fine for auth library)</li>
-<li>Implicit dependencies (function signatures don't show DB access)</li>
-<li>Test isolation needs <code>#[serial]</code> (shared global state)</li>
-</ul>
-<p>An intentional design trade-off: Rust purists would use State, but LazyLock keeps complexity inside the library.</p>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-theme="default" data-style="section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-" lang="C" data-marpit-pagination="24" style="--paginate:true;--theme:default;--style:section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="lazylock-initialization-flow">LazyLock Initialization Flow</h2>
 <p><strong>Fail-fast at Startup:</strong> Evaluates all configs/DB immediately.<br />
 <strong>No Axum State:</strong> Any handler can safely access <code>GENERIC_DATA_STORE</code> globally.</p>
@@ -5651,7 +5419,7 @@ section .with-qr &gt; div:last-child p {
 <p><img src="../diagrams/lazylock-flow.svg" alt="center" style="width:900px;" /></p>
 </div>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -5759,7 +5527,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-" lang="C" class="lead" data-marpit-pagination="25" style="--paginate:true;--class:lead;--theme:default;--style:section {
+" lang="C" class="lead" data-marpit-pagination="24" style="--paginate:true;--class:lead;--theme:default;--style:section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -5867,8 +5635,288 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h1 id="rust-design-patterns-under-the-hood">Rust Design Patterns Under the Hood</h1>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-theme="default" data-style="section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+" lang="C" data-marpit-pagination="25" style="--paginate:true;--theme:default;--style:section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="authuser-fromrequestparts-implementation"><code>AuthUser</code>: <code>FromRequestParts</code> Implementation</h2>
+<div class="columns">
+<div>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">impl</span>&lt;B&gt; FromRequestParts&lt;B&gt; <span class="hljs-keyword">for</span> <span class="hljs-title class_">AuthUser</span>
+<span class="hljs-keyword">where</span>
+    B: <span class="hljs-built_in">Send</span> + <span class="hljs-built_in">Sync</span>,
+{
+    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Rejection</span> = AuthRedirect;
+
+    <span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">from_request_parts</span>(
+        parts: &amp;<span class="hljs-keyword">mut</span> Parts, _: &amp;B,
+    ) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-keyword">Self</span>, <span class="hljs-keyword">Self</span>::Rejection&gt; {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">method</span> = parts.method.<span class="hljs-title function_ invoke__">clone</span>();
+
+        <span class="hljs-comment">// 1. Extract session cookie</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">session_cookie</span> = cookies
+            .<span class="hljs-title function_ invoke__">get</span>(SESSION_COOKIE_NAME.<span class="hljs-title function_ invoke__">as_str</span>())
+            .<span class="hljs-title function_ invoke__">ok_or_else</span>(|| AuthRedirect::<span class="hljs-title function_ invoke__">new</span>(method.<span class="hljs-title function_ invoke__">clone</span>()))?;
+
+        <span class="hljs-comment">// 2. Validate session → get user</span>
+        <span class="hljs-keyword">let</span> (session_user, csrf_token) =
+            <span class="hljs-title function_ invoke__">get_user_and_csrf_token_from_session</span>(...)
+                .<span class="hljs-keyword">await</span>
+                .<span class="hljs-title function_ invoke__">map_err</span>(|_| AuthRedirect::<span class="hljs-title function_ invoke__">new</span>(method.<span class="hljs-title function_ invoke__">clone</span>()))?;
+
+        <span class="hljs-title function_ invoke__">Ok</span>(AuthUser::<span class="hljs-title function_ invoke__">from</span>(session_user))
+    }
+}
+</code></pre>
+</div>
+<div>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// AuthRedirect: redirect on GET, 401 otherwise</span>
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> <span class="hljs-keyword">for</span> <span class="hljs-title class_">AuthRedirect</span> {
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">into_response</span>(<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> Response {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.method == Method::GET {
+            Redirect::<span class="hljs-title function_ invoke__">temporary</span>(LOGIN_URL).<span class="hljs-title function_ invoke__">into_response</span>()
+        } <span class="hljs-keyword">else</span> {
+            (StatusCode::UNAUTHORIZED,
+             <span class="hljs-string">&quot;Unauthorized&quot;</span>).<span class="hljs-title function_ invoke__">into_response</span>()
+        }
+    }
+}
+</code></pre>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// Option&lt;AuthUser&gt;: explicit OptionalFromRequestParts</span>
+<span class="hljs-keyword">impl</span>&lt;B&gt; OptionalFromRequestParts&lt;B&gt; <span class="hljs-keyword">for</span> <span class="hljs-title class_">AuthUser</span>
+<span class="hljs-keyword">where</span>
+    B: <span class="hljs-built_in">Send</span> + <span class="hljs-built_in">Sync</span>,
+{
+    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Rejection</span> = AuthRedirect;
+
+    <span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">from_request_parts</span>(...)
+        <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Option</span>&lt;<span class="hljs-keyword">Self</span>&gt;, <span class="hljs-keyword">Self</span>::Rejection&gt;
+    {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">result</span> =
+            &lt;AuthUser <span class="hljs-keyword">as</span> FromRequestParts&lt;B&gt;&gt;
+                ::<span class="hljs-title function_ invoke__">from_request_parts</span>(parts, state).<span class="hljs-keyword">await</span>;
+        <span class="hljs-title function_ invoke__">Ok</span>(result.<span class="hljs-title function_ invoke__">ok</span>()) <span class="hljs-comment">// Err → None, no redirect</span>
+    }
+}
+</code></pre>
+</div>
+</div>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -6086,67 +6134,61 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="authuser-fromrequestparts-implementation"><code>AuthUser</code>: <code>FromRequestParts</code> Implementation</h2>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="middleware-why-not-just-use-the-extractor">Middleware: Why Not Just Use the Extractor?</h2>
 <div class="columns">
 <div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">impl</span>&lt;B&gt; FromRequestParts&lt;B&gt; <span class="hljs-keyword">for</span> <span class="hljs-title class_">AuthUser</span>
-<span class="hljs-keyword">where</span>
-    B: <span class="hljs-built_in">Send</span> + <span class="hljs-built_in">Sync</span>,
-{
-    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Rejection</span> = AuthRedirect;
-
-    <span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">from_request_parts</span>(
-        parts: &amp;<span class="hljs-keyword">mut</span> Parts, _: &amp;B,
-    ) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-keyword">Self</span>, <span class="hljs-keyword">Self</span>::Rejection&gt; {
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">method</span> = parts.method.<span class="hljs-title function_ invoke__">clone</span>();
-
-        <span class="hljs-comment">// 1. Extract session cookie</span>
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">session_cookie</span> = cookies
-            .<span class="hljs-title function_ invoke__">get</span>(SESSION_COOKIE_NAME.<span class="hljs-title function_ invoke__">as_str</span>())
-            .<span class="hljs-title function_ invoke__">ok_or_else</span>(|| AuthRedirect::<span class="hljs-title function_ invoke__">new</span>(method.<span class="hljs-title function_ invoke__">clone</span>()))?;
-
-        <span class="hljs-comment">// 2. Validate session → get user</span>
-        <span class="hljs-keyword">let</span> (session_user, csrf_token) =
-            <span class="hljs-title function_ invoke__">get_user_and_csrf_token_from_session</span>(...)
-                .<span class="hljs-keyword">await</span>
-                .<span class="hljs-title function_ invoke__">map_err</span>(|_| AuthRedirect::<span class="hljs-title function_ invoke__">new</span>(method.<span class="hljs-title function_ invoke__">clone</span>()))?;
-
-        <span class="hljs-title function_ invoke__">Ok</span>(AuthUser::<span class="hljs-title function_ invoke__">from</span>(session_user))
-    }
-}
-</code></pre>
+<p><strong><code>AuthUser</code> extractor:</strong></p>
+<ul>
+<li>Always redirects on auth failure</li>
+<li>Always fetches user from DB</li>
+<li>Great for web pages that need user info</li>
+</ul>
+<p><strong>Problem:</strong> APIs should return 401 JSON, not redirect HTML. And sometimes you just need &quot;is this user logged in?&quot; without a DB query.</p>
 </div>
 <div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// AuthRedirect: redirect on GET, 401 otherwise</span>
-<span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> <span class="hljs-keyword">for</span> <span class="hljs-title class_">AuthRedirect</span> {
-    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">into_response</span>(<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> Response {
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.method == Method::GET {
-            Redirect::<span class="hljs-title function_ invoke__">temporary</span>(LOGIN_URL).<span class="hljs-title function_ invoke__">into_response</span>()
-        } <span class="hljs-keyword">else</span> {
-            (StatusCode::UNAUTHORIZED,
-             <span class="hljs-string">&quot;Unauthorized&quot;</span>).<span class="hljs-title function_ invoke__">into_response</span>()
-        }
-    }
-}
-</code></pre>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// Option&lt;AuthUser&gt;: explicit OptionalFromRequestParts</span>
-<span class="hljs-keyword">impl</span>&lt;B&gt; OptionalFromRequestParts&lt;B&gt; <span class="hljs-keyword">for</span> <span class="hljs-title class_">AuthUser</span>
-<span class="hljs-keyword">where</span>
-    B: <span class="hljs-built_in">Send</span> + <span class="hljs-built_in">Sync</span>,
-{
-    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Rejection</span> = AuthRedirect;
-
-    <span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">from_request_parts</span>(...)
-        <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-type">Option</span>&lt;<span class="hljs-keyword">Self</span>&gt;, <span class="hljs-keyword">Self</span>::Rejection&gt;
-    {
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">result</span> =
-            &lt;AuthUser <span class="hljs-keyword">as</span> FromRequestParts&lt;B&gt;&gt;
-                ::<span class="hljs-title function_ invoke__">from_request_parts</span>(parts, state).<span class="hljs-keyword">await</span>;
-        <span class="hljs-title function_ invoke__">Ok</span>(result.<span class="hljs-title function_ invoke__">ok</span>()) <span class="hljs-comment">// Err → None, no redirect</span>
-    }
-}
-</code></pre>
+<p><strong>Middleware gives 2 axes of control:</strong></p>
+<p><em>Response type:</em></p>
+<ul>
+<li><code>_redirect</code> → Web pages (GET redirects to login)</li>
+<li><code>_401</code> → APIs (always returns 401)</li>
+</ul>
+<p><em>Extension injected:</em></p>
+<ul>
+<li><code>_user</code> → DB query, <code>Extension&lt;AuthUser&gt;</code></li>
+<li>Non-<code>_user</code> → No DB query, <code>Extension&lt;CsrfToken&gt;</code> only</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Unauthenticated</th>
+<th>DB Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is_authenticated_401</code></td>
+<td>401</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>is_authenticated_user_401</code></td>
+<td>401</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>is_authenticated_redirect</code></td>
+<td>Redirect</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>is_authenticated_user_redirect</code></td>
+<td>Redirect</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
@@ -6366,61 +6408,46 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="middleware-why-not-just-use-the-extractor">Middleware: Why Not Just Use the Extractor?</h2>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="newtype-wrappers-compile-time-safety">Newtype Wrappers: Compile-Time Safety</h2>
 <div class="columns">
 <div>
-<p><strong><code>AuthUser</code> extractor:</strong></p>
-<ul>
-<li>Always redirects on auth failure</li>
-<li>Always fetches user from DB</li>
-<li>Great for web pages that need user info</li>
-</ul>
-<p><strong>Problem:</strong> APIs should return 401 JSON, not redirect HTML. And sometimes you just need &quot;is this user logged in?&quot; without a DB query.</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">CsrfToken</span>(<span class="hljs-type">String</span>);
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">UserId</span>(<span class="hljs-type">String</span>);
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">SessionId</span>(<span class="hljs-type">String</span>);
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">SessionCookie</span>(<span class="hljs-type">String</span>);
+</code></pre>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// Without newtypes - compiles but wrong!</span>
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">check</span>(session_id: &amp;<span class="hljs-type">str</span>, user_id: &amp;<span class="hljs-type">str</span>);
+<span class="hljs-title function_ invoke__">check</span>(user_id, session_id); <span class="hljs-comment">// Oops!</span>
+
+<span class="hljs-comment">// With newtypes - compile error!</span>
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">check</span>(session_id: SessionId,
+         user_id: UserId);
+<span class="hljs-title function_ invoke__">check</span>(user_id, session_id); <span class="hljs-comment">// Error!</span>
+</code></pre>
 </div>
 <div>
-<p><strong>Middleware gives 2 axes of control:</strong></p>
-<p><em>Response type:</em></p>
-<ul>
-<li><code>_redirect</code> → Web pages (GET redirects to login)</li>
-<li><code>_401</code> → APIs (always returns 401)</li>
-</ul>
-<p><em>Extension injected:</em></p>
-<ul>
-<li><code>_user</code> → DB query, <code>Extension&lt;AuthUser&gt;</code></li>
-<li>Non-<code>_user</code> → No DB query, <code>Extension&lt;CsrfToken&gt;</code> only</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Variant</th>
-<th>Unauthenticated</th>
-<th>DB Query</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>is_authenticated_401</code></td>
-<td>401</td>
-<td>No</td>
-</tr>
-<tr>
-<td><code>is_authenticated_user_401</code></td>
-<td>401</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><code>is_authenticated_redirect</code></td>
-<td>Redirect</td>
-<td>No</td>
-</tr>
-<tr>
-<td><code>is_authenticated_user_redirect</code></td>
-<td>Redirect</td>
-<td>Yes</td>
-</tr>
-</tbody>
-</table>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">UserId</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>(id: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-keyword">Self</span>, SessionError&gt; {
+        <span class="hljs-keyword">if</span> id.<span class="hljs-title function_ invoke__">is_empty</span>() {
+            <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">Err</span>(SessionError::<span class="hljs-title function_ invoke__">Validation</span>(
+                <span class="hljs-string">&quot;User ID cannot be empty&quot;</span>.<span class="hljs-title function_ invoke__">into</span>()));
+        }
+        <span class="hljs-keyword">if</span> id.<span class="hljs-title function_ invoke__">len</span>() &gt; <span class="hljs-number">255</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">Err</span>(SessionError::<span class="hljs-title function_ invoke__">Validation</span>(
+                <span class="hljs-string">&quot;User ID too long&quot;</span>.<span class="hljs-title function_ invoke__">into</span>()));
+        }
+        <span class="hljs-keyword">if</span> !id.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">all</span>(|c| c.<span class="hljs-title function_ invoke__">is_ascii_alphanumeric</span>()
+            || matches!(c, <span class="hljs-string">&#x27;-&#x27;</span> | <span class="hljs-string">&#x27;_&#x27;</span> | <span class="hljs-string">&#x27;.&#x27;</span> | <span class="hljs-string">&#x27;@&#x27;</span> | <span class="hljs-string">&#x27;+&#x27;</span>)) {
+            <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">Err</span>(SessionError::<span class="hljs-title function_ invoke__">Validation</span>(
+                <span class="hljs-string">&quot;Invalid characters&quot;</span>.<span class="hljs-title function_ invoke__">into</span>()));
+        }
+        <span class="hljs-title function_ invoke__">Ok</span>(<span class="hljs-title function_ invoke__">UserId</span>(id))
+    }
+}
+</code></pre>
+<p><strong>If you have a <code>UserId</code>, it's guaranteed valid.</strong> No re-validation needed.</p>
 </div>
 </div>
 </section>
@@ -6640,48 +6667,23 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="newtype-wrappers-compile-time-safety">Newtype Wrappers: Compile-Time Safety</h2>
-<div class="columns">
-<div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">CsrfToken</span>(<span class="hljs-type">String</span>);
-<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">UserId</span>(<span class="hljs-type">String</span>);
-<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">SessionId</span>(<span class="hljs-type">String</span>);
-<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">SessionCookie</span>(<span class="hljs-type">String</span>);
-</code></pre>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// Without newtypes - compiles but wrong!</span>
-<span class="hljs-keyword">fn</span> <span class="hljs-title function_">check</span>(session_id: &amp;<span class="hljs-type">str</span>, user_id: &amp;<span class="hljs-type">str</span>);
-<span class="hljs-title function_ invoke__">check</span>(user_id, session_id); <span class="hljs-comment">// Oops!</span>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="error-hierarchy-with-thiserror">Error Hierarchy with <code>thiserror</code></h2>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-meta">#[derive(Error, Debug)]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">CoordinationError</span> {
+    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Unauthorized access&quot;</span>)]</span>
+    Unauthorized,
+    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Resource not found: {resource_type} {resource_id}&quot;</span>)]</span>
+    ResourceNotFound { resource_type: <span class="hljs-type">String</span>, resource_id: <span class="hljs-type">String</span> },
 
-<span class="hljs-comment">// With newtypes - compile error!</span>
-<span class="hljs-keyword">fn</span> <span class="hljs-title function_">check</span>(session_id: SessionId,
-         user_id: UserId);
-<span class="hljs-title function_ invoke__">check</span>(user_id, session_id); <span class="hljs-comment">// Error!</span>
-</code></pre>
-</div>
-<div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">UserId</span> {
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>(id: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-keyword">Self</span>, SessionError&gt; {
-        <span class="hljs-keyword">if</span> id.<span class="hljs-title function_ invoke__">is_empty</span>() {
-            <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">Err</span>(SessionError::<span class="hljs-title function_ invoke__">Validation</span>(
-                <span class="hljs-string">&quot;User ID cannot be empty&quot;</span>.<span class="hljs-title function_ invoke__">into</span>()));
-        }
-        <span class="hljs-keyword">if</span> id.<span class="hljs-title function_ invoke__">len</span>() &gt; <span class="hljs-number">255</span> {
-            <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">Err</span>(SessionError::<span class="hljs-title function_ invoke__">Validation</span>(
-                <span class="hljs-string">&quot;User ID too long&quot;</span>.<span class="hljs-title function_ invoke__">into</span>()));
-        }
-        <span class="hljs-keyword">if</span> !id.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">all</span>(|c| c.<span class="hljs-title function_ invoke__">is_ascii_alphanumeric</span>()
-            || matches!(c, <span class="hljs-string">&#x27;-&#x27;</span> | <span class="hljs-string">&#x27;_&#x27;</span> | <span class="hljs-string">&#x27;.&#x27;</span> | <span class="hljs-string">&#x27;@&#x27;</span> | <span class="hljs-string">&#x27;+&#x27;</span>)) {
-            <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">Err</span>(SessionError::<span class="hljs-title function_ invoke__">Validation</span>(
-                <span class="hljs-string">&quot;Invalid characters&quot;</span>.<span class="hljs-title function_ invoke__">into</span>()));
-        }
-        <span class="hljs-title function_ invoke__">Ok</span>(<span class="hljs-title function_ invoke__">UserId</span>(id))
-    }
+    <span class="hljs-comment">// Wrap module-specific errors</span>
+    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;OAuth2 error: {0}&quot;</span>)]</span>   <span class="hljs-title function_ invoke__">OAuth2Error</span>(OAuth2Error),
+    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Passkey error: {0}&quot;</span>)]</span>  <span class="hljs-title function_ invoke__">PasskeyError</span>(PasskeyError),
+    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Session error: {0}&quot;</span>)]</span>  <span class="hljs-title function_ invoke__">SessionError</span>(SessionError),
+    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;User error: {0}&quot;</span>)]</span>     <span class="hljs-title function_ invoke__">UserError</span>(UserError),
 }
 </code></pre>
-<p><strong>If you have a <code>UserId</code>, it's guaranteed valid.</strong> No re-validation needed.</p>
-</div>
-</div>
+<p>Each module has its own error type. The coordination layer wraps them all.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -6899,23 +6901,32 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="error-hierarchy-with-thiserror">Error Hierarchy with <code>thiserror</code></h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-meta">#[derive(Error, Debug)]</span>
-<span class="hljs-keyword">pub</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">CoordinationError</span> {
-    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Unauthorized access&quot;</span>)]</span>
-    Unauthorized,
-    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Resource not found: {resource_type} {resource_id}&quot;</span>)]</span>
-    ResourceNotFound { resource_type: <span class="hljs-type">String</span>, resource_id: <span class="hljs-type">String</span> },
-
-    <span class="hljs-comment">// Wrap module-specific errors</span>
-    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;OAuth2 error: {0}&quot;</span>)]</span>   <span class="hljs-title function_ invoke__">OAuth2Error</span>(OAuth2Error),
-    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Passkey error: {0}&quot;</span>)]</span>  <span class="hljs-title function_ invoke__">PasskeyError</span>(PasskeyError),
-    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;Session error: {0}&quot;</span>)]</span>  <span class="hljs-title function_ invoke__">SessionError</span>(SessionError),
-    <span class="hljs-meta">#[error(<span class="hljs-string">&quot;User error: {0}&quot;</span>)]</span>     <span class="hljs-title function_ invoke__">UserError</span>(UserError),
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="from-impls-with-auto-logging"><code>From</code> Impls with Auto-Logging</h2>
+<div class="columns">
+<div>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">From</span>&lt;OAuth2Error&gt;
+    <span class="hljs-keyword">for</span> <span class="hljs-title class_">CoordinationError</span>
+{
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">from</span>(err: OAuth2Error) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">error</span> = <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">OAuth2Error</span>(err);
+        tracing::error!(<span class="hljs-string">&quot;{}&quot;</span>, error);
+        error  <span class="hljs-comment">// Auto-log on conversion!</span>
+    }
 }
 </code></pre>
-<p>Each module has its own error type. The coordination layer wraps them all.</p>
+</div>
+<div>
+<p>Every <code>?</code> that crosses a module boundary automatically logs:</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// ? triggers From impl + logging</span>
+<span class="hljs-keyword">let</span> <span class="hljs-variable">token</span> = <span class="hljs-title function_ invoke__">exchange_code</span>(code)
+    .<span class="hljs-keyword">await</span>?; <span class="hljs-comment">// OAuth2Error -&gt; logged</span>
+<span class="hljs-keyword">let</span> <span class="hljs-variable">user</span> = <span class="hljs-title function_ invoke__">get_user</span>(id)
+    .<span class="hljs-keyword">await</span>?; <span class="hljs-comment">// UserError -&gt; logged</span>
+</code></pre>
+<p>No manual <code>tracing::error!()</code> needed.</p>
+</div>
+</div>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -7133,30 +7144,31 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="from-impls-with-auto-logging"><code>From</code> Impls with Auto-Logging</h2>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="security-constant-time-comparison">Security: Constant-Time Comparison</h2>
 <div class="columns">
 <div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">From</span>&lt;OAuth2Error&gt;
-    <span class="hljs-keyword">for</span> <span class="hljs-title class_">CoordinationError</span>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">use</span> subtle::ConstantTimeEq;
+
+<span class="hljs-comment">// CSRF token verification</span>
+<span class="hljs-keyword">if</span> header_csrf_token
+    .<span class="hljs-title function_ invoke__">as_bytes</span>()
+    .<span class="hljs-title function_ invoke__">ct_eq</span>(session_csrf_token
+        .<span class="hljs-title function_ invoke__">as_str</span>().<span class="hljs-title function_ invoke__">as_bytes</span>())
+    .<span class="hljs-title function_ invoke__">into</span>()
 {
-    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">from</span>(err: OAuth2Error) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> {
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">error</span> = <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">OAuth2Error</span>(err);
-        tracing::error!(<span class="hljs-string">&quot;{}&quot;</span>, error);
-        error  <span class="hljs-comment">// Auto-log on conversion!</span>
-    }
+    <span class="hljs-comment">// Token matches</span>
 }
 </code></pre>
 </div>
 <div>
-<p>Every <code>?</code> that crosses a module boundary automatically logs:</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// ? triggers From impl + logging</span>
-<span class="hljs-keyword">let</span> <span class="hljs-variable">token</span> = <span class="hljs-title function_ invoke__">exchange_code</span>(code)
-    .<span class="hljs-keyword">await</span>?; <span class="hljs-comment">// OAuth2Error -&gt; logged</span>
-<span class="hljs-keyword">let</span> <span class="hljs-variable">user</span> = <span class="hljs-title function_ invoke__">get_user</span>(id)
-    .<span class="hljs-keyword">await</span>?; <span class="hljs-comment">// UserError -&gt; logged</span>
-</code></pre>
-<p>No manual <code>tracing::error!()</code> needed.</p>
+<p><strong>Why not just <code>==</code>?</strong></p>
+<ul>
+<li>Regular <code>==</code> short-circuits on first mismatch</li>
+<li>Attacker measures response time to guess bytes</li>
+<li><code>ct_eq</code> always takes the same time</li>
+</ul>
+<p>Used for CSRF tokens, session validation, and other security-sensitive comparisons.</p>
 </div>
 </div>
 </section>
@@ -7376,33 +7388,42 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="security-constant-time-comparison">Security: Constant-Time Comparison</h2>
-<div class="columns">
-<div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">use</span> subtle::ConstantTimeEq;
-
-<span class="hljs-comment">// CSRF token verification</span>
-<span class="hljs-keyword">if</span> header_csrf_token
-    .<span class="hljs-title function_ invoke__">as_bytes</span>()
-    .<span class="hljs-title function_ invoke__">ct_eq</span>(session_csrf_token
-        .<span class="hljs-title function_ invoke__">as_str</span>().<span class="hljs-title function_ invoke__">as_bytes</span>())
-    .<span class="hljs-title function_ invoke__">into</span>()
-{
-    <span class="hljs-comment">// Token matches</span>
-}
-</code></pre>
-</div>
-<div>
-<p><strong>Why not just <code>==</code>?</strong></p>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="csrf-protection-batteries-included">CSRF Protection: Batteries Included</h2>
+<p> </p>
 <ul>
-<li>Regular <code>==</code> short-circuits on first mismatch</li>
-<li>Attacker measures response time to guess bytes</li>
-<li><code>ct_eq</code> always takes the same time</li>
+<li><strong>Auto-generated</strong>: 32-byte random token created on every session creation</li>
+<li><strong>Auto-verified</strong>: <code>X-CSRF-Token</code> header checked automatically in middleware &amp; <code>AuthUser</code> extractor</li>
+<li><strong>Auto-delivered</strong>: Token included in every authenticated response header</li>
+<li><strong>Dedicated endpoint</strong>: <code>GET /o2p/user/csrf_token</code> → JSON <code>{ &quot;csrf_token&quot;: &quot;...&quot; }</code></li>
 </ul>
-<p>Used for CSRF tokens, session validation, and other security-sensitive comparisons.</p>
-</div>
-</div>
+<p> </p>
+<table>
+<thead>
+<tr>
+<th>Request</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET / HEAD / OPTIONS</td>
+<td>Skipped (safe methods)</td>
+</tr>
+<tr>
+<td>POST + <code>X-CSRF-Token</code> header <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.2/assets/svg/2705.svg" data-marp-twemoji=""/></td>
+<td>Auto-verified via <code>ct_eq</code> — mismatch → reject</td>
+</tr>
+<tr>
+<td>POST + no header + form Content-Type</td>
+<td>Passed to handler (manual check)</td>
+</tr>
+<tr>
+<td>POST + no header + other Content-Type</td>
+<td>Rejected (403)</td>
+</tr>
+</tbody>
+</table>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -7620,42 +7641,45 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="csrf-protection-batteries-included">CSRF Protection: Batteries Included</h2>
-<p> </p>
-<ul>
-<li><strong>Auto-generated</strong>: 32-byte random token created on every session creation</li>
-<li><strong>Auto-verified</strong>: <code>X-CSRF-Token</code> header checked automatically in middleware &amp; <code>AuthUser</code> extractor</li>
-<li><strong>Auto-delivered</strong>: Token included in every authenticated response header</li>
-<li><strong>Dedicated endpoint</strong>: <code>GET /o2p/user/csrf_token</code> → JSON <code>{ &quot;csrf_token&quot;: &quot;...&quot; }</code></li>
-</ul>
-<p> </p>
-<table>
-<thead>
-<tr>
-<th>Request</th>
-<th>Result</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GET / HEAD / OPTIONS</td>
-<td>Skipped (safe methods)</td>
-</tr>
-<tr>
-<td>POST + <code>X-CSRF-Token</code> header <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.2/assets/svg/2705.svg" data-marp-twemoji=""/></td>
-<td>Auto-verified via <code>ct_eq</code> — mismatch → reject</td>
-</tr>
-<tr>
-<td>POST + no header + form Content-Type</td>
-<td>Passed to handler (manual check)</td>
-</tr>
-<tr>
-<td>POST + no header + other Content-Type</td>
-<td>Rejected (403)</td>
-</tr>
-</tbody>
-</table>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="csrf-usage-patterns">CSRF: Usage Patterns</h2>
+<div class="columns">
+<div>
+<p><strong>AJAX — fully automatic</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// 1. Get token from response header</span>
+<span class="hljs-keyword">const</span> csrf = response.<span class="hljs-property">headers</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;X-CSRF-Token&#x27;</span>);
+
+<span class="hljs-comment">// 2. Include in subsequent requests</span>
+<span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;/api/action&#x27;</span>, {
+  <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,
+  <span class="hljs-attr">headers</span>: { <span class="hljs-string">&#x27;X-CSRF-Token&#x27;</span>: csrf },
+  <span class="hljs-attr">credentials</span>: <span class="hljs-string">&#x27;include&#x27;</span>,
+  <span class="hljs-attr">body</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data),
+});
+<span class="hljs-comment">// Middleware verifies automatically <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.2/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+</code></pre>
+</div>
+<div>
+<p><strong>HTML Form — manual check in handler</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;csrf_token&quot;</span>
+       <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;{{ csrf_token }}&quot;</span>&gt;</span>
+</code></pre>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">handler</span>(
+    user: AuthUser,
+    <span class="hljs-title function_ invoke__">Form</span>(form): Form&lt;MyForm&gt;,
+) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
+    <span class="hljs-keyword">if</span> !user.csrf_via_header_verified {
+        <span class="hljs-keyword">if</span> !form.csrf_token.<span class="hljs-title function_ invoke__">as_bytes</span>()
+            .<span class="hljs-title function_ invoke__">ct_eq</span>(user.csrf_token.<span class="hljs-title function_ invoke__">as_bytes</span>()).<span class="hljs-title function_ invoke__">into</span>()
+        {
+            <span class="hljs-keyword">return</span> StatusCode::FORBIDDEN.<span class="hljs-title function_ invoke__">into_response</span>();
+        }
+    }
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+</div>
+</div>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -7873,45 +7897,27 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="csrf-usage-patterns">CSRF: Usage Patterns</h2>
-<div class="columns">
-<div>
-<p><strong>AJAX — fully automatic</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-javascript"><span class="hljs-comment">// 1. Get token from response header</span>
-<span class="hljs-keyword">const</span> csrf = response.<span class="hljs-property">headers</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;X-CSRF-Token&#x27;</span>);
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="atomic-sql-no-explicit-transactions">Atomic SQL: No Explicit Transactions</h2>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// &quot;Delete user, but only if they&#x27;re not the last admin&quot;</span>
+<span class="hljs-comment">// Done in a SINGLE SQL statement - no transaction needed</span>
 
-<span class="hljs-comment">// 2. Include in subsequent requests</span>
-<span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;/api/action&#x27;</span>, {
-  <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,
-  <span class="hljs-attr">headers</span>: { <span class="hljs-string">&#x27;X-CSRF-Token&#x27;</span>: csrf },
-  <span class="hljs-attr">credentials</span>: <span class="hljs-string">&#x27;include&#x27;</span>,
-  <span class="hljs-attr">body</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data),
-});
-<span class="hljs-comment">// Middleware verifies automatically <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.2/assets/svg/2705.svg" data-marp-twemoji=""/></span>
-</code></pre>
-</div>
-<div>
-<p><strong>HTML Form — manual check in handler</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;csrf_token&quot;</span>
-       <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;{{ csrf_token }}&quot;</span>&gt;</span>
-</code></pre>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">handler</span>(
-    user: AuthUser,
-    <span class="hljs-title function_ invoke__">Form</span>(form): Form&lt;MyForm&gt;,
-) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoResponse</span> {
-    <span class="hljs-keyword">if</span> !user.csrf_via_header_verified {
-        <span class="hljs-keyword">if</span> !form.csrf_token.<span class="hljs-title function_ invoke__">as_bytes</span>()
-            .<span class="hljs-title function_ invoke__">ct_eq</span>(user.csrf_token.<span class="hljs-title function_ invoke__">as_bytes</span>()).<span class="hljs-title function_ invoke__">into</span>()
-        {
-            <span class="hljs-keyword">return</span> StatusCode::FORBIDDEN.<span class="hljs-title function_ invoke__">into_response</span>();
-        }
-    }
-    <span class="hljs-comment">// ...</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">delete_user_if_not_last_admin_postgres</span>(
+    pool: &amp;Pool&lt;Postgres&gt;, id: UserId,
+) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-type">bool</span>, UserError&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">result</span> = sqlx::<span class="hljs-title function_ invoke__">query</span>(&amp;<span class="hljs-built_in">format!</span>(
+        <span class="hljs-string">r#&quot;DELETE FROM {table}
+           WHERE id = $1
+           AND (SELECT COUNT(*) FROM {table}
+                WHERE is_admin = true) &gt; 1&quot;#</span>
+    ))
+    .<span class="hljs-title function_ invoke__">bind</span>(id.<span class="hljs-title function_ invoke__">as_str</span>())
+    .<span class="hljs-title function_ invoke__">execute</span>(pool).<span class="hljs-keyword">await</span>?;
+
+    <span class="hljs-title function_ invoke__">Ok</span>(result.<span class="hljs-title function_ invoke__">rows_affected</span>() &gt; <span class="hljs-number">0</span>)
 }
 </code></pre>
-</div>
-</div>
+<p>Business logic <strong>in SQL</strong> = atomic by default. No race conditions.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="34" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -8129,245 +8135,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="atomic-sql-no-explicit-transactions">Atomic SQL: No Explicit Transactions</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-comment">// &quot;Delete user, but only if they&#x27;re not the last admin&quot;</span>
-<span class="hljs-comment">// Done in a SINGLE SQL statement - no transaction needed</span>
-
-<span class="hljs-keyword">pub</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">delete_user_if_not_last_admin_postgres</span>(
-    pool: &amp;Pool&lt;Postgres&gt;, id: UserId,
-) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-type">bool</span>, UserError&gt; {
-    <span class="hljs-keyword">let</span> <span class="hljs-variable">result</span> = sqlx::<span class="hljs-title function_ invoke__">query</span>(&amp;<span class="hljs-built_in">format!</span>(
-        <span class="hljs-string">r#&quot;DELETE FROM {table}
-           WHERE id = $1
-           AND (SELECT COUNT(*) FROM {table}
-                WHERE is_admin = true) &gt; 1&quot;#</span>
-    ))
-    .<span class="hljs-title function_ invoke__">bind</span>(id.<span class="hljs-title function_ invoke__">as_str</span>())
-    .<span class="hljs-title function_ invoke__">execute</span>(pool).<span class="hljs-keyword">await</span>?;
-
-    <span class="hljs-title function_ invoke__">Ok</span>(result.<span class="hljs-title function_ invoke__">rows_affected</span>() &gt; <span class="hljs-number">0</span>)
-}
-</code></pre>
-<p>Business logic <strong>in SQL</strong> = atomic by default. No race conditions.</p>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="35" data-paginate="true" data-theme="default" data-style="section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-" lang="C" data-marpit-pagination="35" style="--paginate:true;--theme:default;--style:section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="sql-dialect-differences">SQL Dialect Differences</h2>
 <div class="columns">
 <div>
@@ -8396,7 +8164,7 @@ sqlx::query_as::&lt;_, User&gt;(&amp;<span class="hljs-built_in">format!</span>(
 </div>
 <p>Supporting 3 databases means handling these quirks per-backend.</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="36" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="35" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -8504,7 +8272,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-" lang="C" class="lead" data-marpit-pagination="36" style="--paginate:true;--class:lead;--theme:default;--style:section {
+" lang="C" class="lead" data-marpit-pagination="35" style="--paginate:true;--class:lead;--theme:default;--style:section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -8612,8 +8380,261 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h1 id="integrating-with-your-app">Integrating with Your App</h1>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="36" data-paginate="true" data-theme="default" data-style="section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+" lang="C" data-marpit-pagination="36" style="--paginate:true;--theme:default;--style:section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="integrating-your-app-1n-demo-todo">Integrating Your App: 1:N (demo-todo)</h2>
+<div class="columns">
+<div>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-sql"><span class="hljs-keyword">CREATE TABLE</span> todos (
+    id        SERIAL <span class="hljs-keyword">PRIMARY KEY</span>,
+    user_id   TEXT <span class="hljs-keyword">NOT NULL</span>,        <span class="hljs-comment">-- FK to users.id</span>
+    title     TEXT <span class="hljs-keyword">NOT NULL</span>,
+    completed <span class="hljs-type">BOOLEAN</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">FALSE</span>
+);
+<span class="hljs-keyword">CREATE</span> INDEX idx_todos_user_id <span class="hljs-keyword">ON</span> todos(user_id);
+</code></pre>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">todos_router</span>() <span class="hljs-punctuation">-&gt;</span> Router&lt;AppState&gt; {
+    Router::<span class="hljs-title function_ invoke__">new</span>()
+        .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/todos&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(list_todos).<span class="hljs-title function_ invoke__">post</span>(create_todo))
+        .<span class="hljs-title function_ invoke__">route_layer</span>(<span class="hljs-title function_ invoke__">from_fn</span>(is_authenticated_redirect))
+}
+</code></pre>
+</div>
+<div>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">create_todo</span>(
+    <span class="hljs-title function_ invoke__">State</span>(state): State&lt;AppState&gt;,
+    user: AuthUser,
+    <span class="hljs-title function_ invoke__">Form</span>(form): Form&lt;TodoForm&gt;,
+) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;Response, ...&gt; {
+    db::<span class="hljs-title function_ invoke__">create_todo</span>(
+        &amp;state.pool,
+        &amp;user.id,     <span class="hljs-comment">// ──&gt; saved as todos.user_id</span>
+        &amp;form.title,
+    ).<span class="hljs-keyword">await</span>?;
+    <span class="hljs-title function_ invoke__">Ok</span>(Redirect::<span class="hljs-title function_ invoke__">to</span>(<span class="hljs-string">&quot;/&quot;</span>).<span class="hljs-title function_ invoke__">into_response</span>())
+}
+</code></pre>
+</div>
+</div>
+<p><code>AuthUser.id</code> is the only thing your app needs from the library — everything else is your own DB.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="37" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -8831,260 +8852,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="integrating-your-app-1n-demo-todo">Integrating Your App: 1:N (demo-todo)</h2>
-<div class="columns">
-<div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-sql"><span class="hljs-keyword">CREATE TABLE</span> todos (
-    id        SERIAL <span class="hljs-keyword">PRIMARY KEY</span>,
-    user_id   TEXT <span class="hljs-keyword">NOT NULL</span>,        <span class="hljs-comment">-- FK to users.id</span>
-    title     TEXT <span class="hljs-keyword">NOT NULL</span>,
-    completed <span class="hljs-type">BOOLEAN</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">FALSE</span>
-);
-<span class="hljs-keyword">CREATE</span> INDEX idx_todos_user_id <span class="hljs-keyword">ON</span> todos(user_id);
-</code></pre>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">todos_router</span>() <span class="hljs-punctuation">-&gt;</span> Router&lt;AppState&gt; {
-    Router::<span class="hljs-title function_ invoke__">new</span>()
-        .<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&quot;/todos&quot;</span>, <span class="hljs-title function_ invoke__">get</span>(list_todos).<span class="hljs-title function_ invoke__">post</span>(create_todo))
-        .<span class="hljs-title function_ invoke__">route_layer</span>(<span class="hljs-title function_ invoke__">from_fn</span>(is_authenticated_redirect))
-}
-</code></pre>
-</div>
-<div>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-rust"><span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">create_todo</span>(
-    <span class="hljs-title function_ invoke__">State</span>(state): State&lt;AppState&gt;,
-    user: AuthUser,
-    <span class="hljs-title function_ invoke__">Form</span>(form): Form&lt;TodoForm&gt;,
-) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;Response, ...&gt; {
-    db::<span class="hljs-title function_ invoke__">create_todo</span>(
-        &amp;state.pool,
-        &amp;user.id,     <span class="hljs-comment">// ──&gt; saved as todos.user_id</span>
-        &amp;form.title,
-    ).<span class="hljs-keyword">await</span>?;
-    <span class="hljs-title function_ invoke__">Ok</span>(Redirect::<span class="hljs-title function_ invoke__">to</span>(<span class="hljs-string">&quot;/&quot;</span>).<span class="hljs-title function_ invoke__">into_response</span>())
-}
-</code></pre>
-</div>
-</div>
-<p><code>AuthUser.id</code> is the only thing your app needs from the library — everything else is your own DB.</p>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="38" data-paginate="true" data-theme="default" data-style="section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-" lang="C" data-marpit-pagination="38" style="--paginate:true;--theme:default;--style:section {
-  font-size: 24px;
-  display: flex !important;
-  flex-flow: column nowrap !important;
-  justify-content: flex-start !important;
-  padding: 40px 60px 25px 60px !important;
-}
-section:not(.lead) &gt; h2:first-of-type {
-  margin-top: 0 !important;
-  margin-bottom: 0.15em;
-}
-section.lead {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
-  padding: 0 !important;
-}
-code {
-  font-size: 19px;
-}
-pre {
-  font-size: 18px;
-  margin: 0.2em 0;
-  padding: 0.4em;
-  line-height: 1.4;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 0.2em;
-}
-h2 {
-  font-size: 32px;
-  margin-top: 0;
-  margin-bottom: 0.15em;
-}
-h3 {
-  font-size: 24px;
-  margin: 0.1em 0;
-}
-table {
-  font-size: 21px;
-}
-ul, ol {
-  margin: 0.1em 0;
-}
-li {
-  margin: 0.05em 0;
-  line-height: 1.4;
-}
-p {
-  margin: 0.2em 0;
-}
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.columns pre {
-  font-size: 15px;
-}
-.columns-60-40 {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.with-qr {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 2em;
-  align-items: center;
-  flex: 1;
-}
-.with-qr img {
-  display: block;
-}
-section .with-qr &gt; div:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-section .with-qr &gt; div:last-child p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.columns-40-60 {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0.8em;
-  align-content: start;
-}
-.center-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.checkpoint-list li {
-  margin: 0.3em 0;
-}
-.checkpoint-list code {
-  background: #eee;
-  padding: 0.1em 0.4em;
-}
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="integrating-your-app-11-demo-profile">Integrating Your App: 1:1 (demo-profile)</h2>
 <div class="columns">
 <div>
@@ -9123,7 +8891,7 @@ section .with-qr &gt; div:last-child p {
 </div>
 <p><code>user_id TEXT PRIMARY KEY</code> enforces 1:1 at the DB level — no separate <code>id</code> column needed.</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="39" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="38" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -9231,7 +8999,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-" lang="C" class="lead" data-marpit-pagination="39" style="--paginate:true;--class:lead;--theme:default;--style:section {
+" lang="C" class="lead" data-marpit-pagination="38" style="--paginate:true;--class:lead;--theme:default;--style:section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -9339,8 +9107,241 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h1 id="wrap-up">Wrap-up</h1>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h1 id="live-coding-putting-it-all-together">Live Coding: Putting It All Together</h1>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="39" data-paginate="true" data-theme="default" data-style="section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+" lang="C" data-marpit-pagination="39" style="--paginate:true;--theme:default;--style:section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="what-well-build">What We'll Build</h2>
+<p> </p>
+<p>Everything we just covered, live, from an empty directory: <code>cargo new</code> to a working login with a protected page — in real time.</p>
+<div class="checkpoint-list">
+<ol>
+<li><code>step-01</code> — <code>cargo new</code> + add dependencies</li>
+<li><code>step-02</code> — <code>.env</code> for SQLite (zero setup)</li>
+<li><code>step-03</code> — <code>init()</code> + merge router → <strong>built-in login UI works</strong></li>
+<li><code>step-04</code> — protect a route with the <code>AuthUser</code> extractor</li>
+<li><code>step-05</code> — same route, but anonymous access allowed (<code>Option&lt;AuthUser&gt;</code>)</li>
+<li><code>step-06</code> — swap the extractor for middleware — 401 vs redirect</li>
+</ol>
+</div>
+<p> </p>
+<p>Each step is a tagged git commit. If I fall behind, I jump straight to the tag instead of typing it out — same code either way.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="40" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -9558,11 +9559,47 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="crate-structure">Crate Structure</h2>
-<p><img src="../diagrams/crate-structure.svg" alt="center" style="width:800px;" /></p>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="live-coding-recap">Live Coding Recap</h2>
+<p> </p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>What it adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>step-01</code></td>
+<td>Empty Axum project + deps</td>
+</tr>
+<tr>
+<td><code>step-02</code></td>
+<td><code>.env</code> — SQLite, no external DB</td>
+</tr>
+<tr>
+<td><code>step-03</code></td>
+<td><code>init()</code> + merged router → working login UI</td>
+</tr>
+<tr>
+<td><code>step-04</code></td>
+<td><code>AuthUser</code> extractor on a protected route</td>
+</tr>
+<tr>
+<td><code>step-05</code></td>
+<td><code>Option&lt;AuthUser&gt;</code> — same route, anonymous allowed</td>
+</tr>
+<tr>
+<td><code>step-06</code></td>
+<td>Middleware variant — 401 without a redirect</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p>From an empty directory to session-backed auth with account management: <strong>~6 commits.</strong></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="41" data-paginate="true" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="41" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -9670,7 +9707,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-" lang="C" data-marpit-pagination="41" style="--paginate:true;--theme:default;--style:section {
+" lang="C" class="lead" data-marpit-pagination="41" style="--paginate:true;--class:lead;--theme:default;--style:section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -9778,27 +9815,8 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="future-plans">Future Plans</h2>
-<ul>
-<li><strong>DPoP (Demonstration of Proof-of-Possession)</strong>
-<ul>
-<li>Bind tokens to a cryptographic key</li>
-<li>Prevent token theft/replay</li>
-</ul>
-</li>
-<li><strong>Bearer Token support</strong>
-<ul>
-<li>API authentication beyond session cookies</li>
-</ul>
-</li>
-<li><strong>FedCM (Federated Credential Management)</strong>
-<ul>
-<li>Browser-native identity UI (experimental, already partially implemented)</li>
-</ul>
-</li>
-<li><strong>More OAuth2 providers</strong></li>
-</ul>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h1 id="wrap-up">Wrap-up</h1>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="42" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -10016,15 +10034,9 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="summary">Summary</h2>
-<p> </p>
-<ul>
-<li><strong>Easy</strong>: Add passwordless auth to your Axum app in minutes — Built-in UI included</li>
-<li><strong>Secure</strong>: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies</li>
-<li><strong>Flexible</strong>: Switch between SQLite, PostgreSQL, MySQL, and Redis with a single <code>.env</code> change</li>
-<li><strong>Transparent</strong>: LazyLock globals, newtypes, and <code>thiserror</code> hierarchies keep the internals inspectable</li>
-</ul>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="crate-structure">Crate Structure</h2>
+<p><img src="../diagrams/crate-structure.svg" alt="center" style="width:800px;" /></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="43" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -10242,24 +10254,29 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h2 id="thank-you--questions">Thank You! / Questions?</h2>
-<div class="with-qr">
-<div>
-<h3 id="about-me">About me:</h3>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="future-plans">Future Plans</h2>
 <ul>
-<li><strong>Kimitoshi Takahashi</strong></li>
-<li>Self-employed, reskilling in Rust</li>
-<li>Let's start a startup together!</li>
+<li><strong>DPoP (Demonstration of Proof-of-Possession)</strong>
+<ul>
+<li>Bind tokens to a cryptographic key</li>
+<li>Prevent token theft/replay</li>
 </ul>
-</div>
-<div>
-<p><img src="../../shared/qr-github.svg" alt="" style="width:200px;" /> GitHub</p>
-<p><img src="../../shared/qr-contact.svg" alt="" style="width:200px;" /> Contact</p>
-</div>
-</div>
+</li>
+<li><strong>Bearer Token support</strong>
+<ul>
+<li>API authentication beyond session cookies</li>
+</ul>
+</li>
+<li><strong>FedCM (Federated Credential Management)</strong>
+<ul>
+<li>Browser-native identity UI (experimental, already partially implemented)</li>
+</ul>
+</li>
+<li><strong>More OAuth2 providers</strong></li>
+</ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="44" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="44" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -10367,7 +10384,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-" lang="C" class="lead" data-marpit-pagination="44" style="--paginate:true;--class:lead;--theme:default;--style:section {
+" lang="C" data-marpit-pagination="44" style="--paginate:true;--theme:default;--style:section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -10475,8 +10492,15 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
-<h1 id="extra-slides">Extra Slides</h1>
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="summary">Summary</h2>
+<p> </p>
+<ul>
+<li><strong>Easy</strong>: Add passwordless auth to your Axum app in minutes — Built-in UI included</li>
+<li><strong>Secure</strong>: Passkey (phishing-resistant) + OAuth2, with CSRF protection and secure session cookies</li>
+<li><strong>Flexible</strong>: Switch between SQLite, PostgreSQL, MySQL, and Redis with a single <code>.env</code> change</li>
+<li><strong>Transparent</strong>: LazyLock globals, newtypes, and <code>thiserror</code> hierarchies keep the internals inspectable</li>
+</ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="45" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
@@ -10694,7 +10718,459 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h2 id="thank-you--questions">Thank You! / Questions?</h2>
+<div class="with-qr">
+<div>
+<h3 id="about-me">About me:</h3>
+<ul>
+<li><strong>Kimitoshi Takahashi</strong></li>
+<li>Self-employed, reskilling in Rust</li>
+<li>Let's start a startup together!</li>
+</ul>
+</div>
+<div>
+<p><img src="../../shared/qr-github.svg" alt="" style="width:200px;" /> GitHub</p>
+<p><img src="../../shared/qr-contact.svg" alt="" style="width:200px;" /> Contact</p>
+</div>
+</div>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="46" data-paginate="true" data-class="lead" data-theme="default" data-style="section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+" lang="C" class="lead" data-marpit-pagination="46" style="--paginate:true;--class:lead;--theme:default;--style:section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+;" data-marpit-pagination-total="48" data-size="16:9">
+<h1 id="extra-slides">Extra Slides</h1>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="47" data-paginate="true" data-theme="default" data-style="section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+" lang="C" data-marpit-pagination="47" style="--paginate:true;--theme:default;--style:section {
+  font-size: 24px;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  justify-content: flex-start !important;
+  padding: 40px 60px 25px 60px !important;
+}
+section:not(.lead) &gt; h2:first-of-type {
+  margin-top: 0 !important;
+  margin-bottom: 0.15em;
+}
+section.lead {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  padding: 0 !important;
+}
+code {
+  font-size: 19px;
+}
+pre {
+  font-size: 18px;
+  margin: 0.2em 0;
+  padding: 0.4em;
+  line-height: 1.4;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 0.2em;
+}
+h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+h3 {
+  font-size: 24px;
+  margin: 0.1em 0;
+}
+table {
+  font-size: 21px;
+}
+ul, ol {
+  margin: 0.1em 0;
+}
+li {
+  margin: 0.05em 0;
+  line-height: 1.4;
+}
+p {
+  margin: 0.2em 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.columns pre {
+  font-size: 15px;
+}
+.columns-60-40 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.with-qr {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  flex: 1;
+}
+.with-qr img {
+  display: block;
+}
+section .with-qr &gt; div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+section .with-qr &gt; div:last-child p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.columns-40-60 {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.8em;
+  align-content: start;
+}
+.center-content p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.checkpoint-list li {
+  margin: 0.3em 0;
+}
+.checkpoint-list code {
+  background: #eee;
+  padding: 0.1em 0.4em;
+}
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="testing-strategy">Testing Strategy</h2>
 <ul>
 <li>Integration tests run against <strong>every</strong> backend: SQLite, PostgreSQL, MySQL</li>
@@ -10703,7 +11179,7 @@ section .with-qr &gt; div:last-child p {
 <li>Trade-off accepted deliberately — same reasoning as the LazyLock design itself</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="46" data-paginate="true" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="48" data-paginate="true" data-theme="default" data-style="section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -10811,7 +11287,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-" lang="C" data-marpit-pagination="46" style="--paginate:true;--theme:default;--style:section {
+" lang="C" data-marpit-pagination="48" style="--paginate:true;--theme:default;--style:section {
   font-size: 24px;
   display: flex !important;
   flex-flow: column nowrap !important;
@@ -10919,7 +11395,7 @@ section .with-qr &gt; div:last-child p {
   background: #eee;
   padding: 0.1em 0.4em;
 }
-;" data-marpit-pagination-total="46" data-size="16:9">
+;" data-marpit-pagination-total="48" data-size="16:9">
 <h2 id="frominto-clean-layer-boundaries">From/Into: Clean Layer Boundaries</h2>
 <div class="columns">
 <div>

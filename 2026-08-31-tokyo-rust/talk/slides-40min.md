@@ -214,11 +214,12 @@ I wanted to build **exactly what you just saw** — in Rust.
 &nbsp;
 
 1. **How OAuth2 & Passkey Work**
-2. **Live Coding: Zero to Auth**
+2. **Using the Library**
 3. **Storage & the LazyLock Design Decision**
 4. **Rust Design Patterns Under the Hood**
 5. **Integrating with Your App**
-6. **Wrap-up**
+6. **Live Coding: Putting It All Together**
+7. **Wrap-up**
 
 ---
 
@@ -309,99 +310,61 @@ Why offer both: OAuth2 for onboarding friction, Passkey for the fast/offline-fri
 
 <!-- _class: lead -->
 
-# Live Coding: Zero to Auth
+# Using the Library
 
 ---
 
-## What We'll Build
-
+## .env Setup (Minimal)
 &nbsp;
-
-A brand-new Axum app, wired up with `oauth2-passkey`, live — from `cargo new` to a working login with a protected page.
-
-<div class="checkpoint-list">
-
-1. `step-01` — `cargo new` + add dependencies
-2. `step-02` — `.env` for SQLite (zero setup)
-3. `step-03` — `init()` + merge router → **built-in login UI works**
-4. `step-04` — protect a route with the `AuthUser` extractor
-5. `step-05` — same route, but anonymous access allowed (`Option<AuthUser>`)
-6. `step-06` — swap the extractor for middleware — 401 vs redirect
-
-</div>
-
-&nbsp;
-
-Each step is a tagged git commit. If I fall behind, I jump straight to the tag instead of typing it out — same code either way.
-
----
-
-## Checkpoint 1-2: Dependencies & `.env`
-
-<div class="columns">
-<div>
-
-```toml
-# Cargo.toml
-[dependencies]
-oauth2-passkey = "0.1"
-oauth2-passkey-axum = "0.1"
-axum = "0.7"
-tokio = { version = "1", features = ["full"] }
-dotenvy = "0.15"
-```
-
-</div>
-<div>
 
 ```env
-# .env
 ORIGIN='http://localhost:3001'
 
+# Google OAuth2 credentials
 OAUTH2_GOOGLE_CLIENT_ID='xxx.apps.googleusercontent.com'
 OAUTH2_GOOGLE_CLIENT_SECRET='xxx'
 
-# SQLite + in-memory cache — no DB setup required
+# SQLite + in-memory cache (no DB setup required)
 GENERIC_DATA_STORE_TYPE=sqlite
 GENERIC_DATA_STORE_URL='sqlite:/tmp/auth.db'
 GENERIC_CACHE_STORE_TYPE=memory
 GENERIC_CACHE_STORE_URL='memory'
 ```
 
-</div>
-</div>
-
-No database to install. `cargo run` from a clean checkout works immediately.
+- Data store: SQLite, PostgreSQL, MySQL
+- Cache store: memory, Redis
 
 ---
 
-## Checkpoint 3: `main.rs` — 3 Lines to Auth
+## How to Use
 
 ```rust
 use oauth2_passkey_axum::{
-    AuthUser, oauth2_passkey_full_router, // 1. Import
+    AuthUser, oauth2_passkey_full_router, // 1, Import
 };
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    dotenvy::dotenv().ok();
-    oauth2_passkey_axum::init().await?;        // 2. Initialize
+    dotenv().ok();
+    oauth2_passkey_axum::init().await?;       // 2. Initialize
 
     let app = Router::new()
         .route("/", get(index))
-        .merge(oauth2_passkey_full_router());  // 3. Merge router
+        .merge(oauth2_passkey_full_router()); // 3. Merge router
 
-    // Auth endpoints are now live at /o2p/*
-    axum::serve(listener, app).await?;
+    // Auth endpoints are now at /o2p/*
+    spawn_http_server(3001, app).await?;
     Ok(())
 }
 ```
 
-Run it, open `/o2p/login` — full login UI, account management, admin panel. Nothing else written yet.
+Under `/o2p/*`, we have:
+- OAuth2 endpoints and Passkey endpoints
+- Built-in login UI, account management, and admin panel
 
 ---
 
-## Checkpoint 4-5: Protecting a Route
+## Page Protection: AuthUser Extractor
 
 ```rust
 // Required auth - redirects to login if not authenticated
@@ -418,11 +381,18 @@ async fn public(user: Option<AuthUser>) -> impl IntoResponse {
 }
 ```
 
-One extractor argument. No middleware, no state, no manual session lookup.
+Implemented via Axum's `FromRequestParts` trait:
+- `AuthUser` → GET: redirect to login, others: 401
+- `Option<AuthUser>` → `OptionalFromRequestParts` impl returns `None` on failure — no redirect
+
+Limitation: always hits DB, GET always redirects. Middleware gives more control: skip DB, or return 401 even on GET.
 
 ---
 
-## Checkpoint 6: Swapping in Middleware
+## Page Protection: Middleware
+&nbsp;
+
+Middleware gives more control: **skip DB, or return 401 even on GET.**
 
 ```rust
 let app = Router::new()
@@ -437,26 +407,17 @@ async fn h1(Extension(csrf): Extension<CsrfToken>) { ... }
 async fn h2(Extension(user): Extension<AuthUser>) { ... }
 ```
 
-Why you'd reach for this instead of the extractor — next section.
-
 ---
 
-## Live Coding Recap
-
+## Page Protection: Middleware Variants
 &nbsp;
 
-| Tag | What it adds |
-|-----|----------------|
-| `step-01` | Empty Axum project + deps |
-| `step-02` | `.env` — SQLite, no external DB |
-| `step-03` | `init()` + merged router → working login UI |
-| `step-04` | `AuthUser` extractor on a protected route |
-| `step-05` | `Option<AuthUser>` — same route, anonymous allowed |
-| `step-06` | Middleware variant — 401 without a redirect |
-
-&nbsp;
-
-From an empty directory to session-backed auth with account management: **~6 commits.**
+| Variant | Unauthenticated | DB Query | Handler Extension |
+|---------|-----------------|----------|------------------|
+| `is_authenticated_401` | 401 | No | `CsrfToken` |
+| `is_authenticated_user_401` | 401 | Yes | `AuthUser` |
+| `is_authenticated_redirect` | Redirect to login | No | `CsrfToken` |
+| `is_authenticated_user_redirect` | Redirect to login | Yes | `AuthUser` |
 
 ---
 
@@ -1145,6 +1106,54 @@ async fn update_profile(
 </div>
 
 `user_id TEXT PRIMARY KEY` enforces 1:1 at the DB level — no separate `id` column needed.
+
+---
+
+<!-- _class: lead -->
+
+# Live Coding: Putting It All Together
+
+---
+
+## What We'll Build
+
+&nbsp;
+
+Everything we just covered, live, from an empty directory: `cargo new` to a working login with a protected page — in real time.
+
+<div class="checkpoint-list">
+
+1. `step-01` — `cargo new` + add dependencies
+2. `step-02` — `.env` for SQLite (zero setup)
+3. `step-03` — `init()` + merge router → **built-in login UI works**
+4. `step-04` — protect a route with the `AuthUser` extractor
+5. `step-05` — same route, but anonymous access allowed (`Option<AuthUser>`)
+6. `step-06` — swap the extractor for middleware — 401 vs redirect
+
+</div>
+
+&nbsp;
+
+Each step is a tagged git commit. If I fall behind, I jump straight to the tag instead of typing it out — same code either way.
+
+---
+
+## Live Coding Recap
+
+&nbsp;
+
+| Tag | What it adds |
+|-----|----------------|
+| `step-01` | Empty Axum project + deps |
+| `step-02` | `.env` — SQLite, no external DB |
+| `step-03` | `init()` + merged router → working login UI |
+| `step-04` | `AuthUser` extractor on a protected route |
+| `step-05` | `Option<AuthUser>` — same route, anonymous allowed |
+| `step-06` | Middleware variant — 401 without a redirect |
+
+&nbsp;
+
+From an empty directory to session-backed auth with account management: **~6 commits.**
 
 ---
 
